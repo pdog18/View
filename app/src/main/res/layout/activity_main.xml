@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.a18.path.MainActivity">
 
-    <com.example.a18.path.SpiderWebView android:layout_width="match_parent"
-                                        android:id="@+id/swb"
-                                        android:layout_height="match_parent"/>
+    <com.example.a18.path.SpiderWebView
+        android:id="@+id/swb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    />
 </FrameLayout>

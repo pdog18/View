@@ -1,6 +1,7 @@
 package com.example.a18.path;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -25,6 +26,7 @@ public class SpiderWebView extends View {
 
     static int FLAG = 6;
 
+    private Path mPath;
 
     //记录从中心原点到六个顶点的pathmeasure，用作百分比获取坐标使用
     PathMeasure[] mPathMeasures = new PathMeasure[FLAG];
@@ -32,12 +34,20 @@ public class SpiderWebView extends View {
 
     Paint mPaint;
     Paint bluePaint;
-    Paint greenPaint;
+    Paint mPointPaint;
 
-    private Path mPath;
+    int mPointColor;
+    int mRangeColor;
+
 
     public SpiderWebView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SpiderWebView);
+        mPointColor = a.getColor(R.styleable.SpiderWebView_point_color, Color.GREEN);
+        mRangeColor = a.getColor(R.styleable.SpiderWebView_range_color, 0x440000ff);
+
+        a.recycle();
+
         init();
     }
 
@@ -52,12 +62,12 @@ public class SpiderWebView extends View {
 
         bluePaint = new Paint();
         bluePaint.setStyle(Paint.Style.FILL);
-        bluePaint.setColor(0x440000ff);
+        bluePaint.setColor(mRangeColor);
 
-        greenPaint = new Paint();
-        greenPaint.setStyle(Paint.Style.FILL);
-        greenPaint.setColor(Color.GREEN);
-        greenPaint.setStrokeWidth(10);
+        mPointPaint = new Paint();
+        mPointPaint.setStyle(Paint.Style.FILL);
+        mPointPaint.setColor(mPointColor);
+        mPointPaint.setStrokeWidth(10);
 
         mPath = createPath(80, 6);
     }
@@ -167,7 +177,7 @@ public class SpiderWebView extends View {
 
             //绘制进度的顶点
             for (int i = 0; i < FLAG; i++) {
-                canvas.drawCircle(progressPoints[i][0], progressPoints[i][1], 10, greenPaint);
+                canvas.drawCircle(progressPoints[i][0], progressPoints[i][1], 10, mPointPaint);
             }
         }
     }

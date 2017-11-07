@@ -14,6 +14,5 @@ public class MainActivity extends AppCompatActivity {
         SpiderWebView viewById = (SpiderWebView) findViewById(R.id.swb);
         viewById.setProgress(0.2f, 0.4f, 0.6f, 0.8f, 1.0f, 0.2f);
 
-
     }
 }
