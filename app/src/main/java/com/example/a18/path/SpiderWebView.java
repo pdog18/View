@@ -62,9 +62,10 @@ public class SpiderWebView extends View {
         mPath = createPath(80, 6);
     }
 
+    float angle = 360 / FLAG;
+
     private Path createPath(float bias, int count) {
         Path path = new Path();
-        float angle = 360 / FLAG;
 
         //画出count 个六边形
         while (count > 0) {
@@ -72,21 +73,22 @@ public class SpiderWebView extends View {
             count--;
 
             float height = (float) (side * Math.sin(Math.PI * angle / 180));
+            float width = (float) (side * Math.cos(Math.PI * angle / 180));
             //移动到y轴上某一点
             path.moveTo(side, 0);
 
             // TODO: 2017/11/6 动态计算各个角度应该划线的方向以及长度
             //向指定方向划线
             if (angle >= 0 && angle <= 90) {
-                path.rLineTo(-side / 2, -height);
+                path.rLineTo(-width, -height);
             } else {
-                path.rLineTo(-side / 2, -height);
+                path.rLineTo(-width, -height);
             }
-            path.rLineTo(-side, 0);
-            path.rLineTo(-side / 2, height);
-            path.rLineTo(side / 2, height);
-            path.rLineTo(side, 0);
-            path.rLineTo(side / 2, -height);
+            path.rLineTo(-width * 2, 0);
+            path.rLineTo(-width, height);
+            path.rLineTo(width, height);
+            path.rLineTo(width * 2, 0);
+            path.rLineTo(width, -height);
         }
 
         //计算六个顶点坐标，将中心点与顶点连接
