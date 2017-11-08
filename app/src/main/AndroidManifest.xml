@@ -23,6 +23,8 @@
         </activity>
         <activity android:name=".wave.WaveActivity">
         </activity>
+        <activity android:name=".parabola.ParabolaActivity">
+        </activity>
     </application>
 
 </manifest>

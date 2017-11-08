@@ -1,7 +1,7 @@
 package com.example.a18.path.wave;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.example.a18.path.R;
@@ -16,7 +16,6 @@ public class WaveActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ((WaveView) view).start();
-
             }
         });
     }
