@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.a18.path.bezier.BezierActivity">
+    tools:context="com.example.a18.path.wave.WaveActivity">
 
-    <com.example.a18.path.bezier.BezierView android:id="@+id/bezier"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"/>
+    <com.example.a18.path.wave.WaveView android:id="@+id/bezier"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"/>
 </FrameLayout>

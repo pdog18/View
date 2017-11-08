@@ -21,7 +21,7 @@
         </activity>
         <activity android:name=".path.PathActivity">
         </activity>
-        <activity android:name=".bezier.BezierActivity">
+        <activity android:name=".wave.WaveActivity">
         </activity>
     </application>
 

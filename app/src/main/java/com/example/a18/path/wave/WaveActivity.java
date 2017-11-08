@@ -1,4 +1,4 @@
-package com.example.a18.path.bezier;
+package com.example.a18.path.wave;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.example.a18.path.R;
 
-public class BezierActivity extends AppCompatActivity {
+public class WaveActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +15,7 @@ public class BezierActivity extends AppCompatActivity {
         findViewById(R.id.bezier).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((BezierView) view).start();
+                ((WaveView) view).start();
 
             }
         });

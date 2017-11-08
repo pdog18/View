@@ -1,4 +1,4 @@
-package com.example.a18.path.bezier;
+package com.example.a18.path.wave;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -17,14 +17,14 @@ import android.view.animation.LinearInterpolator;
  * email: pdog@qq.com
  * time: 2017/11/8  12 :34
  */
-public class BezierView extends View {
+public class WaveView extends View {
 
     private Paint mPaint;
     private Path mPath;
     private int mWidth;
     private int mHeight;
 
-    public BezierView(Context context, @Nullable AttributeSet attrs) {
+    public WaveView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
