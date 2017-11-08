@@ -1,4 +1,4 @@
-package com.example.a18.path;
+package com.example.a18.path.path;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 
 /**
- * desc: todo 描述本类功能
  * author: 18
  * email: pdog@qq.com
  * time: 2017/11/5  10 :47
@@ -30,6 +29,7 @@ public class PathView extends View {
     }
 
     private static final String TAG = "PathView";
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
@@ -43,7 +43,7 @@ public class PathView extends View {
                 break;
             case MeasureSpec.EXACTLY:
                 int i = MeasureSpec.makeMeasureSpec(1080, MeasureSpec.EXACTLY);
-                setMeasuredDimension(i,heightMeasureSpec);
+                setMeasuredDimension(i, heightMeasureSpec);
                 return;
             case MeasureSpec.UNSPECIFIED:
                 Log.e(TAG, String.format("UNSPECIFIED%s", "widthmode"));
@@ -53,7 +53,7 @@ public class PathView extends View {
             case MeasureSpec.AT_MOST:
                 Log.e(TAG, String.format("AT_MOST%s", "heightMode"));
                 int i = MeasureSpec.makeMeasureSpec(heightSize / 2, MeasureSpec.AT_MOST);
-                setMeasuredDimension(widthMeasureSpec,i);
+                setMeasuredDimension(widthMeasureSpec, i);
                 return;
 
             case MeasureSpec.EXACTLY:
@@ -64,9 +64,9 @@ public class PathView extends View {
                 break;
         }
 
-        Log.e(TAG,widthSize + "");
-        Log.e(TAG,heightSize + "");
-        super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+        Log.e(TAG, widthSize + "");
+        Log.e(TAG, heightSize + "");
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
 
     }
@@ -84,17 +84,17 @@ public class PathView extends View {
 
 
         mPath = new Path();
-        mPath.addRect(-200,-200,200,200, Path.Direction.CCW);
-        mPath.setLastPoint(-300,300);
-        mPath.offset(300,0);
+        mPath.addRect(-200, -200, 200, 200, Path.Direction.CCW);
+        mPath.setLastPoint(-300, 300);
+        mPath.offset(300, 0);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.translate(getWidth() >> 1, getHeight() >> 1);
 
-        canvas.drawLine(-getWidth(),0,getWidth(),0,redPaint);
-        canvas.drawLine(0,-getHeight(),0,getHeight(),redPaint);
+        canvas.drawLine(-getWidth(), 0, getWidth(), 0, redPaint);
+        canvas.drawLine(0, -getHeight(), 0, getHeight(), redPaint);
         canvas.drawPath(mPath, mPaint);
     }
 }

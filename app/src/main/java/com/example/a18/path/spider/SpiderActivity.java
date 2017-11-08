@@ -1,9 +1,11 @@
-package com.example.a18.path;
+package com.example.a18.path.spider;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.a18.path.R;
+
+public class SpiderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.example.a18.path;
+package com.example.a18.path.spider;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,6 +10,8 @@ import android.graphics.PathMeasure;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.example.a18.path.R;
 
 /**
  * desc: spider web
