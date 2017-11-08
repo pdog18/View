@@ -25,6 +25,10 @@
         </activity>
         <activity android:name=".parabola.ParabolaActivity">
         </activity>
+        <activity android:name=".gift.GiftActivity">
+        </activity>
+        <activity android:name=".bezier.BezierActivity">
+        </activity>
     </application>
 
 </manifest>
