@@ -15,7 +15,6 @@ public class ParabolaActivity extends AppCompatActivity {
         findViewById(R.id.pv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 ((ParabolaView) v).start();
                 System.out.println("start");
             }
