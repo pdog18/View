@@ -31,6 +31,10 @@
         </activity>
         <activity android:name=".chart.ChartActivity">
         </activity>
+        <activity android:name=".canvas1.Canvas1Activity">
+        </activity>
+        <activity android:name=".flipper.FlipperActivity">
+        </activity>
     </application>
 
 </manifest>
