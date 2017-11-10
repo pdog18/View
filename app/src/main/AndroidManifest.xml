@@ -29,6 +29,8 @@
         </activity>
         <activity android:name=".bezier.BezierActivity">
         </activity>
+        <activity android:name=".chart.ChartActivity">
+        </activity>
     </application>
 
 </manifest>

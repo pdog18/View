@@ -2,7 +2,6 @@ package com.example.a18.path.wave;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.example.a18.path.R;
 
@@ -12,11 +11,13 @@ public class WaveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bezier);
-        findViewById(R.id.bezier).setOnClickListener(new View.OnClickListener() {
+        final WaveView viewById = (WaveView) findViewById(R.id.bezier);
+        viewById.post(new Runnable() {
             @Override
-            public void onClick(View view) {
-                ((WaveView) view).start();
+            public void run() {
+                viewById.start();
             }
         });
+
     }
 }
