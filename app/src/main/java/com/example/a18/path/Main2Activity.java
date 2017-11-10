@@ -56,7 +56,7 @@ public class Main2Activity extends AppCompatActivity {
                 final Class clazz = mList.get(i);
                 TextView textView = new TextView(viewGroup.getContext());
                 ViewGroup.LayoutParams params = new ViewPager.LayoutParams();
-                params.height = 200;
+                params.height = 150;
                 params.width = ViewGroup.LayoutParams.MATCH_PARENT;
                 textView.setLayoutParams(params);
                 textView.setText(clazz.getSimpleName());
