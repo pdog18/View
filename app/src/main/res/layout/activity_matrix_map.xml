@@ -5,12 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.a18.path.canvas1.Canvas1Activity">
+    tools:context="com.example.a18.path.matrix.MatrixMapActivity">
+    <com.example.a18.path.matrix.MatrixMapView
 
-    <ImageView
-        android:id="@+id/img"
-        android:background="@mipmap/ic_launcher"
-        android:layout_width="300dp" android:layout_height="300dp"/>
-
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </FrameLayout>

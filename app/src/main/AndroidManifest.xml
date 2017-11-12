@@ -37,6 +37,10 @@
         </activity>
         <activity android:name=".superscript.SuperScriptActivity">
         </activity>
+        <activity android:name=".scale.ScaleActivity">
+        </activity>
+        <activity android:name=".matrix.MatrixMapActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -83,5 +83,6 @@ public class GiftView extends View {
 
 //        Drawable drawable = new ShapeDrawable(new PathShape());
 
+
     }
 }
