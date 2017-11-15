@@ -74,10 +74,11 @@ public class DRChartView extends View {
 //        path.moveTo(0,);
         Log.e(TAG,w + "");
         Log.e(TAG, h + " h ");
-        path.moveTo(points[0],points[1]);
-        for (int i = 2; i < 21; i+=2) {
+        path.moveTo(0,h);
+        for (int i = 0; i < 21; i+=2) {
             path.lineTo(points[i],points[i+1]);
         }
+        path.lineTo(w,h);
         paint.setPathEffect(new CornerPathEffect(40));
         underKPaint.setPathEffect(new CornerPathEffect(40));
 
@@ -96,7 +97,7 @@ public class DRChartView extends View {
 
     public void start(){
         System.out.println("start");
-        ofInt.setDuration(2000);
+        ofInt.setDuration(500);
         ofInt.start();
 
     }
