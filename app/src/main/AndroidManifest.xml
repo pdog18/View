@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.a18.path">
+    package="com.example.a18.path">
+
+
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+
 
     <application
         android:allowBackup="true"
@@ -10,37 +17,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".spider.SpiderActivity">
-        </activity>
+        <activity android:name=".spider.SpiderActivity"></activity>
         <activity android:name=".Main2Activity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".path.PathActivity">
-        </activity>
-        <activity android:name=".wave.WaveActivity">
-        </activity>
-        <activity android:name=".parabola.ParabolaActivity">
-        </activity>
-        <activity android:name=".gift.GiftActivity">
-        </activity>
-        <activity android:name=".bezier.BezierActivity">
-        </activity>
-        <activity android:name=".chart.ChartActivity">
-        </activity>
-        <activity android:name=".canvas1.Canvas1Activity">
-        </activity>
-        <activity android:name=".flipper.FlipperActivity">
-        </activity>
-        <activity android:name=".superscript.SuperScriptActivity">
-        </activity>
-        <activity android:name=".scale.ScaleActivity">
-        </activity>
-        <activity android:name=".matrix.MatrixMapActivity">
-        </activity>
+        <activity android:name=".path.PathActivity"></activity>
+        <activity android:name=".wave.WaveActivity"></activity>
+        <activity android:name=".parabola.ParabolaActivity"></activity>
+        <activity android:name=".gift.GiftActivity"></activity>
+        <activity android:name=".bezier.BezierActivity"></activity>
+        <activity android:name=".chart.ChartActivity"></activity>
+        <activity android:name=".canvas1.Canvas1Activity"></activity>
+        <activity android:name=".flipper.FlipperActivity"></activity>
+        <activity android:name=".superscript.SuperScriptActivity"></activity>
+        <activity android:name=".scale.ScaleActivity"></activity>
+        <activity android:name=".matrix.MatrixMapActivity"></activity>
+        <activity android:name=".adbconnect.AdbConnectActivity"></activity>
     </application>
 
 </manifest>
