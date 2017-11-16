@@ -18,9 +18,11 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 public class NumberAnim extends View {
 
-    private final Paint paint;
+    private static final String TAG = "NumberAnim";
 
+    private final Paint paint;
     private Paint linePaint;
+
     private ObjectAnimator objectAnimator;
 
     public NumberAnim(Context context, @Nullable AttributeSet attrs) {
@@ -35,14 +37,16 @@ public class NumberAnim extends View {
         linePaint.setColor(Color.BLACK);
 
         setLayerType(LAYER_TYPE_SOFTWARE, null);
+
+
+        float height = paint.getFontSpacing();
+        allHeight = (int) (height * 11);
     }
 
-    private static final String TAG = "NumberAnim";
+    int allHeight;  //11个字符的高度
+
 
     String[] numbers ;
-
-
-    int allHeight;
     {
         numbers = new String[30];
         for (int i = 0; i < 30; i++) {
@@ -50,12 +54,6 @@ public class NumberAnim extends View {
         }
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        float height = paint.getFontSpacing();
-        allHeight = (int) (height * 11);
-    }
 
 
     @Override
@@ -65,6 +63,8 @@ public class NumberAnim extends View {
         setMeasuredDimension(MeasureSpec.makeMeasureSpec((int) width,MeasureSpec.EXACTLY),heightMeasureSpec);
     }
 
+
+    //启动滚动数字动画
     public void start() {
         System.out.println("start");
         float fontSpacing = paint.getFontSpacing();
@@ -93,6 +93,8 @@ public class NumberAnim extends View {
     int startY = 0;
 
     int index = 5;
+
+
     private void setProgress(float progress) {
         if (startY == 0){
             startY = ((int) ((index ) * paint.getFontSpacing()) );
@@ -111,14 +113,6 @@ public class NumberAnim extends View {
             scrollBy(0, dy);
         }
 
-
-
-
-        System.out.println(getScrollY() + " scrollx");
-    }
-
-    private float getProgress() {
-        return 1;
     }
 
     @Override
