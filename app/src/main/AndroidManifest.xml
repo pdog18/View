@@ -34,7 +34,9 @@
         <activity android:name=".scale.ScaleActivity" />
         <activity android:name=".matrix.MatrixMapActivity" />
         <activity android:name=".adbconnect.AdbConnectActivity" />
-        <activity android:name=".drchart.DRChartActivity"></activity>
+        <activity android:name=".drchart.DRChartActivity" />
+        <activity android:name=".patcheffect.PathEffectActivity" />
+        <activity android:name=".number.NumberActivity"></activity>
     </application>
 
 </manifest>
