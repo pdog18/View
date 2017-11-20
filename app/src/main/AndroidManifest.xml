@@ -35,7 +35,8 @@
         <activity android:name=".matrix.MatrixMapActivity" />
         <activity android:name=".adbconnect.AdbConnectActivity" />
         <activity android:name=".patcheffect.PathEffectActivity" />
-        <activity android:name=".number.NumberActivity"></activity>
+        <activity android:name=".number.NumberActivity" />
+        <activity android:name=".znfxchart.ZnfxActivity"></activity>
     </application>
 
 </manifest>
