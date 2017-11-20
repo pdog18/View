@@ -12,11 +12,13 @@ public class NumberActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number);
         final NumberAnim numberAnim = (NumberAnim) findViewById(R.id.na);
-        numberAnim.post(new Runnable() {
-            @Override
-            public void run() {
-                numberAnim.start();
-            }
-        });
+         NumberAnim2 view = (NumberAnim2) findViewById(R.id.num2);
+
+
+
+
+        ScrollNumber scroll3 = (ScrollNumber) findViewById(R.id.scroll3);
+        scroll3.post(scroll3 :: startScroll);
     }
+
 }
