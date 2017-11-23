@@ -48,8 +48,5 @@ public class ZnfxActivity extends AppCompatActivity {
                         .setWidth(10)
                         .setColor(Color.RED)
                         .build());
-
-        znfx.startAnim();
-
     }
 }

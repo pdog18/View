@@ -55,7 +55,7 @@ public class Practice11PieChartView extends View {
         results.add(new Result(300, 60, "#FFC107", "Marshmallow"));
         results.add(new Result(3, 7, "#9C27B0", "Gingerbread"));
         results.add(new Result(13, 20, "#9E9E9E", "Ice Cream Sandwich"));
-        results.add(new Result(36, 40, "#009688", "Jelly Bean"));
+        results.add(new Result(36, 40, "#009688", "Jelly User"));
         results.add(new Result(80, 98, "#2196F3", "KitKat"));
         centerPoint.x = (right - left) / 2 + left;
         centerPoint.y = (bottom - top) / 2 + top;

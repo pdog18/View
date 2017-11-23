@@ -72,11 +72,9 @@ public class ZNFXChart extends View {
     }
 
     public void startAnim(){
-
         post(new Runnable() {
             @Override
             public void run() {
-
                 if (!pathCreated) {
                     Log.e(TAG, "startAnim:  Path 未创建" );
                     createKLinePath();

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -37,7 +38,9 @@
         <activity android:name=".patcheffect.PathEffectActivity" />
         <activity android:name=".number.NumberActivity" />
         <activity android:name=".znfxchart.ZnfxActivity" />
-        <activity android:name=".scratchview.ScratchActivity"></activity>
+        <activity android:name=".scratchview.ScratchActivity" />
+        <activity android:name=".jxyview.JxyActivity" />
+        <activity android:name=".retrofitrequest.RetrofitActivity"></activity>
     </application>
 
 </manifest>
