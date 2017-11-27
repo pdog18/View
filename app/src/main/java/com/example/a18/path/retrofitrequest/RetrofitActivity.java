@@ -100,4 +100,8 @@ public class RetrofitActivity extends AppCompatActivity implements Callback<Stri
     public void body(View view){
         run(api.body(new User("dog", 25)));
     }
+
+    public void postWithQuery(View view) {
+        run(api.postWithQuery("value"));
+    }
 }

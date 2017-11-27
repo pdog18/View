@@ -51,5 +51,9 @@ public interface API {
     Call<String> body(@Body User body);
 
 
+    @POST("path")
+    Call<String> postWithQuery(@Query("key")String value);
+
+
 
 }
