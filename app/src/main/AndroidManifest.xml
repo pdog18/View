@@ -41,7 +41,8 @@
         <activity android:name=".scratchview.ScratchActivity" />
         <activity android:name=".jxyview.JxyActivity" />
         <activity android:name=".retrofitrequest.RetrofitActivity" />
-        <activity android:name=".proterduff.ProterDuffActivity"></activity>
+        <activity android:name=".proterduff.ProterDuffActivity" />
+        <activity android:name=".arcseekbar.ArcSeekbarActivity"></activity>
     </application>
 
 </manifest>
