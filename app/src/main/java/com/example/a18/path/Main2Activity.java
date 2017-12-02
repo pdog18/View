@@ -88,7 +88,7 @@ public class Main2Activity extends AppCompatActivity {
                 if (aClass.equals(Main2Activity.class)) {
                     continue;
                 }
-                mList.add(aClass);
+                mList.add(0,aClass);
             }
         } catch (PackageManager.NameNotFoundException | ClassNotFoundException e) {
             e.printStackTrace();

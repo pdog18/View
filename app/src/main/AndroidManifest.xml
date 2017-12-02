@@ -42,7 +42,8 @@
         <activity android:name=".jxyview.JxyActivity" />
         <activity android:name=".retrofitrequest.RetrofitActivity" />
         <activity android:name=".proterduff.ProterDuffActivity" />
-        <activity android:name=".arcseekbar.ArcSeekbarActivity"></activity>
+        <activity android:name=".arcseekbar.ArcSeekbarActivity" />
+        <activity android:name=".scrollchart.ScrollChartActivity"></activity>
     </application>
 
 </manifest>
