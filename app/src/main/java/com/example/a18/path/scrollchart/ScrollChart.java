@@ -23,6 +23,7 @@ public class ScrollChart extends View {
     private float[] temp;
 
 
+
     int gapWidth = 5;
     int girdWidth = 110;
     private int maxLength;
@@ -64,7 +65,6 @@ public class ScrollChart extends View {
                 if (getScrollX() > maxLength -getWidth()){
                     scrollTo(maxLength-getWidth(),0);
                 }
-
 
                 Log.d(TAG, "onScroll: " + getScrollX()  + "maxlength    =  "+maxLength);
                 return true;

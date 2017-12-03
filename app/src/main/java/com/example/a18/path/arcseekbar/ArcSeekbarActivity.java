@@ -16,7 +16,7 @@ public class ArcSeekbarActivity extends AppCompatActivity {
 
         ((DragView) findViewById(R.id.dv)).setOnProgressChangeListener(new DragView.ProgressChangeListener() {
             @Override
-            public void onProgressChange(float percent) {
+            public void onProgressChanged(float percent) {
                 Toast.makeText(ArcSeekbarActivity.this, "percent = " + percent, Toast.LENGTH_SHORT).show();
             }
         });
