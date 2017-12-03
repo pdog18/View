@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <com.example.a18.path.arcseekbar.DragView
+    <com.example.a18.path.arcseekbar.ArcSeekbar
         android:layout_width="match_parent"
         android:id="@+id/dv"
         android:background="@color/colorPrimary"

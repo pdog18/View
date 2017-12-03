@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <com.example.a18.path.scrollchart.ScrollChart
+        android:id="@+id/scrollchart"
         android:layout_width="match_parent"
         android:layout_height="300dp" />
 

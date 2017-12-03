@@ -11,15 +11,15 @@ import android.graphics.PathEffect;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 /**
  * Created by pdog on 2017/12/1.
+ *
  */
 
-public class DragView extends View {
+public class ArcSeekbar extends View {
     private static final String TAG = "DragView";
     private Path dashArcPath;
     private PathEffect dashArcPathEffect;
@@ -43,15 +43,15 @@ public class DragView extends View {
     private int bodyHeight;
     private int bodyPercent = 20;
 
-    public DragView(Context context) {
+    public ArcSeekbar(Context context) {
         this(context, null);
     }
 
-    public DragView(Context context, AttributeSet attrs) {
+    public ArcSeekbar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DragView(Context context, AttributeSet attrs, int defStyle) {
+    public ArcSeekbar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
         init();
