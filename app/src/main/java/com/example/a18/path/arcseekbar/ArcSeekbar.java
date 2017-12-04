@@ -25,15 +25,14 @@ public class ArcSeekbar extends View {
     private static final String TAG = "DragView";
     private Path dashArcPath;
     private PathEffect dashArcPathEffect;
-    private Paint dashPathPaint;
+    private Paint arcPathPaint;
     private PointF point = new PointF();
 
     int topGap;
 
     private Path solidArcPath;
-    private Paint slideBlockPaint;
+    private Paint slideblockPaint;
     int blockRadius = 40;
-
 
     Region mBlockRegion;
 
@@ -41,10 +40,8 @@ public class ArcSeekbar extends View {
 
     private int rightGap = 100;
     private int dashRadius;
-    private int bodyHeight;
-    private int bodyPercent = 20;
 
-    private double currAngle;
+    private double angle;
 
     public ArcSeekbar(Context context) {
         this(context, null);
@@ -61,16 +58,16 @@ public class ArcSeekbar extends View {
     }
 
     private void init() {
-        dashPathPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        dashPathPaint.setStrokeWidth(3);
-        dashPathPaint.setColor(Color.WHITE);
-        dashPathPaint.setStyle(Paint.Style.STROKE);
+        arcPathPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+        arcPathPaint.setStrokeWidth(3);
+        arcPathPaint.setColor(Color.WHITE);
+        arcPathPaint.setStyle(Paint.Style.STROKE);
 
-        slideBlockPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        slideBlockPaint.setColor(Color.WHITE);
-        slideBlockPaint.setStrokeWidth(blockRadius * 2);
-        slideBlockPaint.setShadowLayer(5, 5, 5, Color.DKGRAY);
-        slideBlockPaint.setStrokeCap(Paint.Cap.ROUND);
+        slideblockPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        slideblockPaint.setColor(Color.WHITE);
+        slideblockPaint.setStrokeWidth(blockRadius * 2);
+        slideblockPaint.setShadowLayer(5, 5, 5, Color.DKGRAY);
+        slideblockPaint.setStrokeCap(Paint.Cap.ROUND);
     }
 
     @Override
@@ -79,8 +76,6 @@ public class ArcSeekbar extends View {
         dashRadius = (int) (getHeight() / 2.5);
 
         topGap =  getHeight() / 2 - dashRadius;
-
-        bodyHeight = dashRadius * 2;
 
         createDashPath();
 
@@ -127,29 +122,39 @@ public class ArcSeekbar extends View {
                 float eventY = event.getY();
                 float eventX = event.getX();
 
-
-                createBlockPoint(eventX,eventY);
+                generateBlockPoint(eventX,eventY);
 
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                int nearest = getNearest();
+                generateNearestBlockPoint();
 
                 invalidate();
                 if (changeListener != null) {
-                    changeListener.onProgressChanged(nearest);
+                    // FIXME: 2017/12/4
+                    changeListener.onProgressChanged(1);
                 }
                 break;
         }
         return true;
     }
 
+    private void generateNearestBlockPoint() {
+        double a = angle;
+        double y = Math.cos(a) * dashRadius;
+        double x = Math.sin(a) * dashRadius;
+
+        Log.d(TAG, "y = Math.cos(a) * dashRadius;    " + y);
+        Log.d(TAG, "x = Math.sin(a) * dashRadius;    " + x);
+
+    }
+
     @SuppressWarnings("all")
-    private void createBlockPoint(float eventX, float eventY) {
+    private void generateBlockPoint(float eventX, float eventY) {
         float x = (getWidth() - rightGap - eventX);
         float y =  (getHeight() / 2 - eventY);
-        currAngle = 180 * Math.atan2(x,y)/Math.PI;
+        angle =  Math.atan2(x,y);
 
         // 1. 算出触点对应圆心的斜边
         double eventZ = Math.hypot(x, y);
@@ -158,19 +163,9 @@ public class ArcSeekbar extends View {
         double ratio = eventZ / dashRadius;
         // 3. 根据比例算出对应的x 和 y
         point.set(((float) (x / ratio)), ((float) (y / ratio)));
-        Log.d(TAG, "createBlockPoint:  x "  + x);
-        Log.d(TAG, "createBlockPoint:  y "  + y);
-        Log.d(TAG, "createBlockPoint:  z "  + eventZ);
-        Log.d(TAG, "createBlockPoint:  ratio "  + ratio);
-        Log.d(TAG, " x = " + point.x  +   "    y = " + point.y);
-
     }
 
 
-    private int getNearest() {
-        int nearest = 0;
-        return nearest;
-    }
 
 
     @Override
@@ -184,17 +179,17 @@ public class ArcSeekbar extends View {
     private void drawArcPath(Canvas canvas) {
         canvas.save();
         canvas.translate(getWidth() - rightGap, getHeight() / 2);
-        dashPathPaint.setPathEffect(dashArcPathEffect);
-        canvas.drawPath(dashArcPath, dashPathPaint);
-        dashPathPaint.setPathEffect(null);
-        canvas.drawPath(solidArcPath, dashPathPaint);
+        arcPathPaint.setPathEffect(dashArcPathEffect);
+        canvas.drawPath(dashArcPath, arcPathPaint);
+        arcPathPaint.setPathEffect(null);
+        canvas.drawPath(solidArcPath, arcPathPaint);
         canvas.restore();
     }
 
     private void drawSlideBlock(Canvas canvas) {
         int save = canvas.save();
         canvas.translate(getWidth() - rightGap, getHeight()/2);
-        canvas.drawPoint(-point.x, - point.y,slideBlockPaint);
+        canvas.drawPoint(-point.x, - point.y, slideblockPaint);
         canvas.restoreToCount(save);
     }
 
