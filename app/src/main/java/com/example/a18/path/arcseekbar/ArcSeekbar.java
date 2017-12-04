@@ -8,9 +8,11 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathEffect;
+import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -24,6 +26,7 @@ public class ArcSeekbar extends View {
     private Path dashArcPath;
     private PathEffect dashArcPathEffect;
     private Paint dashPathPaint;
+    private PointF point = new PointF();
 
     int topGap;
 
@@ -32,8 +35,6 @@ public class ArcSeekbar extends View {
     int blockRadius = 40;
 
 
-    int mBlockOffsetY = -1;
-    int mBlockOffsetX = -1;
     Region mBlockRegion;
 
     ProgressChangeListener changeListener;
@@ -42,6 +43,8 @@ public class ArcSeekbar extends View {
     private int dashRadius;
     private int bodyHeight;
     private int bodyPercent = 20;
+
+    private double currAngle;
 
     public ArcSeekbar(Context context) {
         this(context, null);
@@ -65,7 +68,9 @@ public class ArcSeekbar extends View {
 
         slideBlockPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         slideBlockPaint.setColor(Color.WHITE);
+        slideBlockPaint.setStrokeWidth(blockRadius * 2);
         slideBlockPaint.setShadowLayer(5, 5, 5, Color.DKGRAY);
+        slideBlockPaint.setStrokeCap(Paint.Cap.ROUND);
     }
 
     @Override
@@ -73,10 +78,8 @@ public class ArcSeekbar extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         dashRadius = (int) (getHeight() / 2.5);
 
-        mBlockOffsetY = getHeight() / 2 - dashRadius;
-        mBlockOffsetX = 0;
+        topGap =  getHeight() / 2 - dashRadius;
 
-        topGap = mBlockOffsetY;
         bodyHeight = dashRadius * 2;
 
         createDashPath();
@@ -84,6 +87,8 @@ public class ArcSeekbar extends View {
         createSolidPath();
 
         createBlockSlideRegion(w, h);
+
+        point.set(0,dashRadius);            //确保滑块初始位置为上方
     }
 
 
@@ -120,28 +125,18 @@ public class ArcSeekbar extends View {
                 return (mBlockRegion.contains(((int) event.getX()), ((int) event.getY())));
             case MotionEvent.ACTION_MOVE:
                 float eventY = event.getY();
-                mBlockOffsetY = (int) eventY;
-                mBlockOffsetX = 0;
-                int dy = mBlockOffsetY - getHeight() / 2;
+                float eventX = event.getX();
 
-                // 3种情况
-                if (Math.abs(dy) < dashRadius) {                   // 1， 在圆弧中移动
-                    mBlockOffsetX = getOffsetX();
-                } else if (dy >= dashRadius) {                     // 2， 超出圆弧下方
-                    mBlockOffsetY = getHeight() / 2 + dashRadius;
-                } else {                                           // 3， 超出圆弧上方
-                    mBlockOffsetY = getHeight() / 2 - dashRadius;
-                }
+
+                createBlockPoint(eventX,eventY);
+
                 invalidate();
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 int nearest = getNearest();
 
-                mBlockOffsetY = (int) (nearest * (bodyHeight * 1.0f / bodyPercent) + topGap);
-                mBlockOffsetX = getOffsetX();
                 invalidate();
-
                 if (changeListener != null) {
                     changeListener.onProgressChanged(nearest);
                 }
@@ -150,27 +145,31 @@ public class ArcSeekbar extends View {
         return true;
     }
 
-    private int getNearest() {
-        int nearest = 0;
+    @SuppressWarnings("all")
+    private void createBlockPoint(float eventX, float eventY) {
+        float x = (getWidth() - rightGap - eventX);
+        float y =  (getHeight() / 2 - eventY);
+        currAngle = 180 * Math.atan2(x,y)/Math.PI;
 
-        float percent = (mBlockOffsetY - topGap) / (bodyHeight * 1f);
-        float cellHalf = (100f / bodyPercent) / 100f / 2f;
+        // 1. 算出触点对应圆心的斜边
+        double eventZ = Math.hypot(x, y);
 
-        for (int i = 0; i < bodyPercent * 2; i++) {
-            float v = percent - cellHalf * i;
-            if (Math.abs(v) <= cellHalf) {
-                nearest = (i + 1) / 2;
-                break;
-            }
-        }
-        return nearest;
+        // 2. 计算斜边对应半径的比例
+        double ratio = eventZ / dashRadius;
+        // 3. 根据比例算出对应的x 和 y
+        point.set(((float) (x / ratio)), ((float) (y / ratio)));
+        Log.d(TAG, "createBlockPoint:  x "  + x);
+        Log.d(TAG, "createBlockPoint:  y "  + y);
+        Log.d(TAG, "createBlockPoint:  z "  + eventZ);
+        Log.d(TAG, "createBlockPoint:  ratio "  + ratio);
+        Log.d(TAG, " x = " + point.x  +   "    y = " + point.y);
+
     }
 
 
-    public int getOffsetX() {
-        int dy = mBlockOffsetY - getHeight() / 2;
-        double x = Math.sqrt(dashRadius * dashRadius - dy * dy);
-        return ((int) -x);
+    private int getNearest() {
+        int nearest = 0;
+        return nearest;
     }
 
 
@@ -194,9 +193,8 @@ public class ArcSeekbar extends View {
 
     private void drawSlideBlock(Canvas canvas) {
         int save = canvas.save();
-        canvas.translate(getWidth() - rightGap, 0);
-        canvas.translate(mBlockOffsetX, mBlockOffsetY);
-        canvas.drawCircle(0, 0, blockRadius, slideBlockPaint);
+        canvas.translate(getWidth() - rightGap, getHeight()/2);
+        canvas.drawPoint(-point.x, - point.y,slideBlockPaint);
         canvas.restoreToCount(save);
     }
 

@@ -5,9 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by pdog on 2017/12/3.
@@ -41,6 +44,45 @@ public class MotionEventViewGrounp extends FrameLayout {
     float rawX;
     float rawY;
 
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        if (getChildCount() == 0 ){
+            return;
+        }
+
+        System.out.println(((View) getParent()).getMeasuredHeight());
+        int mode = MeasureSpec.getMode(widthMeasureSpec);
+        int size = MeasureSpec.getSize(widthMeasureSpec);
+        switch (mode) {
+            case MeasureSpec.UNSPECIFIED:
+                Log.d(TAG, "onMeasure:      UNSPECIFIED" );
+                Log.d(TAG, "onMeasure:  size =  " + size);
+
+                break;
+            case MeasureSpec.AT_MOST:
+                Log.d(TAG, "onMeasure:      AT_MOST " );
+                Log.d(TAG, "onMeasure:  size =  " + size);
+
+                break;
+            case MeasureSpec.EXACTLY:
+                Log.d(TAG, "onMeasure:      EXACTLY" );
+                Log.d(TAG, "onMeasure:  size =  " + size);
+
+                    break;
+        }
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        if (getChildCount() != 0) {
+            Log.d(TAG, "onLayout: ");
+        }
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
@@ -51,7 +93,10 @@ public class MotionEventViewGrounp extends FrameLayout {
                 rawX = event.getRawX();
                 rawY = event.getRawY();
                 invalidate();
-                break;
+return true;
+                case MotionEvent.ACTION_UP:
+                    requestLayout();
+                    break;
         }
 
 
