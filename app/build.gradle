@@ -39,4 +39,6 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
     compile 'com.squareup.retrofit2:converter-scalars:2.2.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+
+    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 }
