@@ -44,7 +44,8 @@
         <activity android:name=".proterduff.ProterDuffActivity" />
         <activity android:name=".arcseekbar.ArcSeekbarActivity" />
         <activity android:name=".scrollchart.ScrollChartActivity" />
-        <activity android:name=".motionevent.MotionEventActivity"></activity>
+        <activity android:name=".motionevent.MotionEventActivity" />
+        <activity android:name=".cardviewpager.CardViewPagerActivity"></activity>
     </application>
 
 </manifest>

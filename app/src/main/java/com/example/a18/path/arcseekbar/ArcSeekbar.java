@@ -30,7 +30,6 @@ public class ArcSeekbar extends View {
     private PointF resultPoint = new PointF();
     private PointF canvasPoint = new PointF();
 
-    private float topGap;
 
     private Path solidArcPath;
     private Paint slideblockPaint;
@@ -108,8 +107,6 @@ public class ArcSeekbar extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         dashRadius = (int) (getHeight() / 2.5);
 
-        topGap = getHeight() / 2 - dashRadius;
-
         createDashPath();
 
         createSolidPath();
@@ -160,7 +157,6 @@ public class ArcSeekbar extends View {
                 generateNearestBlockPoint(getPointOfCircleCenter(event));
                 invalidate();
                 if (changeListener != null) {
-                    // FIXME: 2017/12/4
                     changeListener.onProgressChanged(index);
                 }
                 break;

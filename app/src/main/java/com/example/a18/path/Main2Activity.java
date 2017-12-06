@@ -63,9 +63,12 @@ public class Main2Activity extends AppCompatActivity {
 
                 textView.setGravity(Gravity.CENTER);
 
-                textView.setOnClickListener(view1 -> {
-                    Intent intent = new Intent(Main2Activity.this, clazz);
-                    startActivity(intent);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(Main2Activity.this, clazz);
+                        startActivity(intent);
+                    }
                 });
                 return textView;
             }
