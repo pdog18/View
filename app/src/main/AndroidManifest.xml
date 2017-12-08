@@ -45,7 +45,9 @@
         <activity android:name=".arcseekbar.ArcSeekbarActivity" />
         <activity android:name=".scrollchart.ScrollChartActivity" />
         <activity android:name=".motionevent.MotionEventActivity" />
-        <activity android:name=".cardviewpager.CardViewPagerActivity"></activity>
+        <activity android:name=".cardviewpager.CardViewPagerActivity" />
+        <activity android:name=".flexbox.FlexboxActivity" />
+        <activity android:name=".cardrecyclerview.CardRecyclerviewActivity"></activity>
     </application>
 
 </manifest>
