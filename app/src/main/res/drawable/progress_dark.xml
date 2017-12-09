@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@android:id/progress">
+        <!-- 定义ClipDrawable的剪裁方向为垂直 -->
+        <clip
+            android:clipOrientation="vertical"
+            android:gravity="bottom">
+            <shape>
+                <corners
+                    android:topLeftRadius="4dp"
+                    android:topRightRadius="4dp" />
+                <gradient
+                    android:angle="90"
+                    android:endColor="#6EA5FF"
+                    android:startColor="#6EA5FF" />
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>

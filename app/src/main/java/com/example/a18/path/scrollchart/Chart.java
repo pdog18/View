@@ -149,8 +149,6 @@ public class Chart extends View {
         canvas.clipRect(chartClipRect);
         canvas.translate(0, getHeight());
         for (int i = 0; i < length; i++) {
-            Log.d(TAG, "drawChartCell: " + rectFs[i].left);
-            Log.d(TAG, "drawChartCell: " + rectFs[i].top);
             if (i == index) {
                 paintG.setColor(drakBlue);
             } else {

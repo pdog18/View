@@ -5,13 +5,18 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.a18.path.R;
 
 public class CardRecyclerviewActivity extends AppCompatActivity {
+
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,38 @@ public class CardRecyclerviewActivity extends AppCompatActivity {
                 return 100;
             }
         });
+
+
+        editText = findViewById(R.id.et);
+
+    }
+
+    public void btn(View v){
+        String s = editText.getText().toString();
+        if (TextUtils.isEmpty(s)) {
+            return;
+        }
+
+        String[] split = s.split(" ");
+
+        if (split.length !=3) {
+            Toast.makeText(this, "length !=3", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        for (int i = 0; i < 3; i++) {
+            int temp = Integer.valueOf(split[i]);
+            split[i] = Integer.toHexString(temp);
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(split[0])
+                .append(split[1])
+                .append(split[2]);
+
+        editText.setText(builder.toString());
+
+        editText.setSelection(builder.toString().length());
 
     }
 }

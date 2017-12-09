@@ -3,4 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+
+
+
+    <color name="progress6EA5FF">#6EA5FF</color>
+    <color name="progressC4DAFF">#C4DAFF</color>
+
+
 </resources>

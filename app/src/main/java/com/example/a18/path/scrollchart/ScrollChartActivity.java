@@ -1,12 +1,18 @@
 package com.example.a18.path.scrollchart;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.widget.ProgressBar;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.a18.path.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScrollChartActivity extends AppCompatActivity {
 
@@ -16,6 +22,8 @@ public class ScrollChartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scroll_chart);
 
         Chart chart = findViewById(R.id.chart);
+
+
     }
 
 }
