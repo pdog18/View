@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,6 +21,15 @@ public class PieChart extends View {
     private Paint paint;
     private RectF rectF;
 
+    float holeRadiusRate = 0.75f;
+    int radius;
+    PointF center = new PointF();
+    private int[] angles;
+    private int[] colors;
+    private int startAngle = 269;
+    private int currAngle = startAngle;
+    private int gap = 2;        //中间的留白
+
     public PieChart(Context context) {
         this(context, null);
     }
@@ -31,6 +41,11 @@ public class PieChart extends View {
     public PieChart(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initPaint();
+
+        angles = new int[]{90, 270};
+        colors = new int[]{
+                Color.rgb(110, 206, 241),
+                Color.rgb(80, 146, 255)};
     }
 
     private void initPaint() {
@@ -42,32 +57,28 @@ public class PieChart extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        rectF = new RectF(0.1f * w, 0.1f * h, w * 0.9f, h * 0.9f);
+        float padding = 0.1f;
+        rectF = new RectF(padding*w,padding*h,(1-padding)*w,(1-padding)*h);
+        radius = ((int) (rectF.height() * (1-padding)* holeRadiusRate/ 2));
+        center.x = w / 2;
+        center.y = h / 2;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-
-        paint.setColor(Color.rgb(110, 206, 241));
-        canvas.drawArc(rectF, 270, 90, true, paint);
-
-        paint.setColor(Color.rgb(80, 146, 255));
-        canvas.drawArc(rectF, 0, 270, true, paint);
-
-
-
-        paint.setColor(Color.WHITE);
-        canvas.drawArc(rectF,269,2,true,paint);
+        for (int i = 0; i < angles.length; i++) {
+            paint.setColor(Color.WHITE);
+            canvas.drawArc(rectF, currAngle, gap, true, paint);
+            currAngle += gap;
+            paint.setColor(colors[i]);
+            canvas.drawArc(rectF, currAngle, angles[i] - gap, true, paint);
+            currAngle += (angles[i] - gap);
+        }
 
         paint.setColor(Color.WHITE);
-        canvas.drawArc(rectF,-1,2,true,paint);
-
-
-
-        paint.setColor(Color.WHITE);
-        canvas.drawCircle(getWidth()/2,getHeight()/2,getWidth()/3,paint);
+        canvas.drawCircle(center.x, center.y, radius, paint);
     }
 
     private static final String TAG = "PieChart";
