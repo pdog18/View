@@ -43,10 +43,10 @@
 
     </RelativeLayout>
 
-    <com.example.a18.path.scrollchart.ScrollC
+    <com.example.a18.path.scrollchart.ScrollChart
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </com.example.a18.path.scrollchart.ScrollC>
+    </com.example.a18.path.scrollchart.ScrollChart>
 
 </LinearLayout>

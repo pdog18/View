@@ -37,7 +37,7 @@
 
 
 
-        <com.example.a18.path.scrollchart.RV
+        <com.example.a18.path.scrollchart.RecyeclerViewWithBaseLine
             android:layout_width="match_parent"
             android:id="@+id/recyclerview"
             android:layout_height="200dp"/>

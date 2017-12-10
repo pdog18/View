@@ -3,12 +3,12 @@ package com.example.a18.path.scrollchart;
 /**
  * Created by pdog on 2017/12/8.
  */
-class U <T>{
+class Wrap<T>{
 
     T body;
     boolean dark;
 
-    public U(T body) {
+    public Wrap(T body) {
         this.body = body;
     }
 

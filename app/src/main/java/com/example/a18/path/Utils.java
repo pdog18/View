@@ -9,4 +9,8 @@ public class Utils {
         final float scale = context.getResources().getDisplayMetrics().density;
         return  (px / scale + 0.5f);
     }
+
+    public static Context getApp() {
+        return App.getApp();
+    }
 }

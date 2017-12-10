@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 /**
- * Created by pdog on 2017/12/8.
+ * 柱状图下方的带三角形指示器的文字
  */
 
 @SuppressWarnings("all")

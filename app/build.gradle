@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion 26
@@ -45,4 +46,10 @@ dependencies {
     compile 'com.google.android:flexbox:0.3.1'
 
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
+
+
+
+    api 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

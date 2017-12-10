@@ -9,6 +9,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".App"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -47,7 +48,8 @@
         <activity android:name=".motionevent.MotionEventActivity" />
         <activity android:name=".cardviewpager.CardViewPagerActivity" />
         <activity android:name=".flexbox.FlexboxActivity" />
-        <activity android:name=".cardrecyclerview.CardRecyclerviewActivity"></activity>
+        <activity android:name=".cardrecyclerview.CardRecyclerviewActivity" />
+        <activity android:name=".piechart.PieChartActivity"></activity>
     </application>
 
 </manifest>
