@@ -10,11 +10,31 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "arm64-v8a", "x86_64"
+        }
+
     }
+
+    signingConfigs{
+        signConfig {
+            storeFile file ('key')//签名文件路径，
+            //keystore的路径通常使用项目根目录的相对路径，但也可以是使用绝对路径，尽管这不推荐
+            storePassword 'Gj565656' //密码
+            keyAlias 'key0'
+            keyPassword 'Gj565656'  //密码
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug{
+            signingConfig signingConfigs.signConfig // 配置debug包的签名
         }
     }
     compileOptions {
@@ -23,9 +43,11 @@ android {
     }
 
 
+
 }
 
 dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.1.0'
@@ -48,8 +70,17 @@ dependencies {
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
 
 
+    api 'com.jakewharton.timber:timber:4.6.0'
 
     api 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+
+    // 3D地图so及jar
+    compile 'com.amap.api:3dmap:latest.integration'
+    // 定位功能
+    compile 'com.amap.api:location:latest.integration'
+    // 搜索功能
+    compile 'com.amap.api:search:latest.integration'
 }
+

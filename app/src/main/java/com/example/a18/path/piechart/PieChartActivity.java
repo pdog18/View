@@ -24,8 +24,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 public class PieChartActivity extends AppCompatActivity {
-
-    com.github.mikephil.charting.charts.PieChart mChart;
+    PieChart2 mChart;
 
     @BindView(R.id.my_pie_chart)
     PieChart mypiechart;
@@ -41,12 +40,11 @@ public class PieChartActivity extends AppCompatActivity {
 
     private void initMyChart() {
 
-
     }
 
 
     private void initMPChart() {
-        mChart = findViewById(R.id.mp_pie_chart);
+        mChart = findViewById(R.id.my_pie_chart);
 
         mChart.setUsePercentValues(true);
         mChart.getDescription().setEnabled(false);
@@ -81,12 +79,13 @@ public class PieChartActivity extends AppCompatActivity {
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
         for (int i = 0; i < count; i++) {
-            entries.add(new PieEntry((float) (Math.random() * mult) + mult / 5));
+            entries.add(new PieEntry((float) (Math.random() * mult) + mult / 5,"label = " + i));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Election Results");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
+        dataSet.setValueLineColor(Color.BLUE);
 
         // add a lot of colors
 
