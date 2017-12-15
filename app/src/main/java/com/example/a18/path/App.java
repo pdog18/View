@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.facebook.stetho.Stetho;
+
 import timber.log.Timber;
 
 /**
@@ -21,6 +23,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         app =this;
+        Stetho.initializeWithDefaults(this);
+
 
         Timber.plant(new Timber.DebugTree() {
             @Override

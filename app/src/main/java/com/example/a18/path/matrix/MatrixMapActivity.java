@@ -56,7 +56,7 @@ public class MatrixMapActivity extends AppCompatActivity {
                     view.setBackground(null);
                 }
                 switch (checkedId) {
-                    case R.id.rd_rotate:
+                    case R.id.rd_mark:
                         tv_scale_x.setBackgroundColor(Color.argb(255, 244, 154, 43));
                         tv_scale_y.setBackgroundColor(Color.argb(255, 244, 154, 43));
                         tv_skew_x.setBackgroundColor(Color.argb(255, 244, 154, 43));

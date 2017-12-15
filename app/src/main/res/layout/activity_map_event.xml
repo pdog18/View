@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent">
+
+    </com.amap.api.maps.MapView>
+
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/setZoomControlsEnabled"
+            android:text="setZoomControlsEnabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/setCompassEnabled"
+            android:text="setCompassEnabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+           <Button
+            android:id="@+id/rd_mark"
+            android:text="rd_rotate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+
+    </LinearLayout>
+
+</FrameLayout>
