@@ -77,7 +77,8 @@
             android:name="com.amap.api.v2.apikey"
             android:value="f8fb6c26b0c1b0874d6885137ab0f2ef" />
 
-        <activity android:name=".map.MapEventActivity"></activity>
+        <activity android:name=".map.MapEventActivity" />
+        <activity android:name=".invest.InvestActivity"></activity>
     </application>
 
 </manifest>
