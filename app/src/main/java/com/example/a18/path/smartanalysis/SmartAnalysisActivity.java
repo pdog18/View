@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.a18.path.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class SmartAnalysisActivity extends AppCompatActivity {
 
@@ -15,6 +16,9 @@ public class SmartAnalysisActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smart_analysis);
+        ButterKnife.bind(this);
+        smartChart.setData(new MockChartData());
+
 
     }
 }

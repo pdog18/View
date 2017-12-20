@@ -76,7 +76,7 @@ public class ZNFXChart extends View {
             @Override
             public void run() {
                 if (!pathCreated) {
-                    Log.e(TAG, "startAnim:  Path 未创建" );
+                    Log.e(TAG, "exposeChart:  Path 未创建" );
                     createKLinePath();
                 }
                 animator.setDuration(2000);
