@@ -20,9 +20,8 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import timber.log.Timber;
 
 import static com.example.a18.path.Utils.dp2px;
 
@@ -35,6 +34,7 @@ public class SmartChart extends View {
     private String endDate = "2017/12/19";
     private String rectDate = "2015/05/12";
 
+    private String title = "指数走势图";
 
     int leftGap = dp2px(20);
     int bottomGap = dp2px(35);
@@ -45,31 +45,28 @@ public class SmartChart extends View {
     private Paint linePaint;
     private Paint descriptionPaint;
     private TextPaint textPaint;
+    private TextPaint titlePaint;
     private PointF pointInChart;        //这个点总是处在图表当中，不会超出图片左右两侧
 
-    int topColor = Color.parseColor("#97ed4c");
-    int middleColor = Color.parseColor("#47f8d0");
-    int bottomColor = Color.parseColor("#ffffff");
     int textColor = Color.parseColor("#e6edff");
     int mainBlue = Color.parseColor("#5092ff");
 
     private float blockRadius = dp2px(16);
 
-    private Path topPath;
-    private Path middlePath;
-    private Path bottomPath;
+    private List<Path> chartPaths = new ArrayList<>();
 
     private Path slideBlockDashPath; //用path 而不是用drawLine 是为了方便画虚线
     private PathEffect dashChartLineEffect;
     private PathEffect slideBlockDashEffect;
 
-    private RectF solidPathClipRect;
 
     float descriptionWidth;
     float descriptionY;
-    private RectF slideTopRect;
 
     boolean needSlideDescript;
+    private RectF slideTopRect;
+
+    private RectF solidPathClipRect;
     private Rect animateClipRect = new Rect(0, 0, 0, -chartRegionHeight);
     private ValueAnimator animator;
     private boolean needSlideBlock = false;
@@ -146,7 +143,7 @@ public class SmartChart extends View {
         super.onSizeChanged(w, h, oldw, oldh);
 
         chartRegionWidth = w - leftGap * 2;
-        cellWidth = chartRegionWidth / (data.getSize() -1);
+        cellWidth = chartRegionWidth / (data.getSize() - 1);
         initPoint();
 
         createPaths();
@@ -207,15 +204,15 @@ public class SmartChart extends View {
 
 
     private void createPaths() {
-        topPath = buildPath(data.getTop());
-        middlePath = buildPath(data.getMiddle());
-        bottomPath = buildPath(data.getBottom());
+        for (int i = 0; i < data.getAll().size(); i++) {
+            chartPaths.add(buildPath(data.getAll().get(i)));
+        }
     }
 
     private Path buildPath(List<Integer> list) {
         Path path = new Path();
 
-        path.moveTo(0,valueMap(list.get(0)));
+        path.moveTo(0, valueMap(list.get(0)));
 
         for (int i = 1; i < list.size(); i++) {
             path.lineTo(cellWidth * i, valueMap(list.get(i)));
@@ -225,7 +222,7 @@ public class SmartChart extends View {
 
     private int valueMap(int before) {
         int highest = data.getHighest();
-        return (int) (- before * (chartRegionHeight * 1.0f /highest));
+        return (int) (-before * (chartRegionHeight * 1.0f / highest));
     }
 
     private void initPoint() {
@@ -239,7 +236,7 @@ public class SmartChart extends View {
         if (x < leftGap) {      //超出图表左侧
             pointX = 0;
         } else if (x > leftGap + chartRegionWidth) {    // 超出图表右侧
-            pointX = chartRegionWidth ;
+            pointX = chartRegionWidth;
         } else {
             pointX = x - leftGap;
         }
@@ -264,8 +261,7 @@ public class SmartChart extends View {
         if (x - textWidth / 2 < 0) {       //顶部圆角矩形超出图表左侧
             offset = textWidth / 2 - x;
         } else if (x + textWidth / 2 > chartRegionWidth) {        //  顶部圆角矩形超出图表右侧
-            offset = chartRegionWidth - (x + textWidth / 2) ;
-            Timber.d(">>> %s",offset);
+            offset = chartRegionWidth - (x + textWidth / 2);
         }
 
         int top = -(chartRegionHeight + dp2px(30));
@@ -285,7 +281,7 @@ public class SmartChart extends View {
         slideBlockPaint.setColor(Color.WHITE);
         slideBlockPaint.setStrokeWidth(blockRadius);
         slideBlockPaint.setStrokeCap(Paint.Cap.ROUND);
-        slideBlockPaint.setShadowLayer(dp2px(3), dp2px(2), dp2px(2), Color.BLACK);
+        slideBlockPaint.setShadowLayer(dp2px(3), dp2px(2), dp2px(2), Color.GRAY);
 
         linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         linePaint.setStrokeWidth(dp2px(2));
@@ -301,6 +297,11 @@ public class SmartChart extends View {
         textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setTextSize(dp2px(10));
         textPaint.setColor(textColor);
+
+        titlePaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        titlePaint.setTextSize(dp2px(15));
+        titlePaint.setColor(Color.WHITE);
+
     }
 
     @Override
@@ -309,6 +310,8 @@ public class SmartChart extends View {
         if (!needSlideDescript) {
             drawDescription(canvas);
         }
+
+        drawTitle(canvas);
 
         int save = canvas.save();
         canvas.translate(leftGap, getHeight() - bottomGap);
@@ -321,30 +324,29 @@ public class SmartChart extends View {
 
         drawDate(canvas);
         drawSlide(canvas);
+    }
 
+    private void drawTitle(Canvas canvas) {
+        canvas.drawText(title, leftGap, dp2px(35), titlePaint);
     }
 
 
     private void drawDashPaths(Canvas canvas) {
         linePaint.setPathEffect(dashChartLineEffect);
-        linePaint.setColor(topColor);
-        canvas.drawPath(topPath, linePaint);
-        linePaint.setColor(middleColor);
-        canvas.drawPath(middlePath, linePaint);
-        linePaint.setColor(bottomColor);
-        canvas.drawPath(bottomPath, linePaint);
+        for (int i = 0; i < data.getAll().size(); i++) {
+            linePaint.setColor(data.getColor(i));
+            canvas.drawPath(chartPaths.get(i),linePaint);
+        }
     }
 
     private void drawSolidPaths(Canvas canvas) {
         linePaint.setPathEffect(null);
         canvas.save();
         canvas.clipRect(solidPathClipRect);
-        linePaint.setColor(topColor);
-        canvas.drawPath(topPath, linePaint);
-        linePaint.setColor(middleColor);
-        canvas.drawPath(middlePath, linePaint);
-        linePaint.setColor(bottomColor);
-        canvas.drawPath(bottomPath, linePaint);
+        for (int i = 0; i < data.getAll().size(); i++) {
+            linePaint.setColor(data.getColor(i));
+            canvas.drawPath(chartPaths.get(i),linePaint);
+        }
         canvas.restore();
     }
 
@@ -368,7 +370,7 @@ public class SmartChart extends View {
         }
         canvas.restore();
 
-        if (needSlideDescript){
+        if (needSlideDescript) {
             //4. 如果有需要在图表上画出数值
             drawValueOnLine(canvas);
         }
@@ -379,16 +381,21 @@ public class SmartChart extends View {
 
     private void drawValueOnLine(Canvas canvas) {
         float touchX = pointInChart.x;
-        textPaint.setColor(topColor);
-        float acrossY = -getAcrossY(touchX, 0);
-        String value = String.valueOf(data.getTop().get(0));
-        float length = textPaint.measureText(value);
-        if (touchX < length){
-            textPaint.setTextAlign(Paint.Align.LEFT);
-        }else {
-            textPaint.setTextAlign(Paint.Align.RIGHT);
+        int index = getIndex(touchX);
+
+        for (int i = 0; i < 3; i++) {
+            textPaint.setColor(data.getColor(i));
+            String value = data.getAll().get(i).get(index).toString();
+            float length = textPaint.measureText(value);
+
+            if (touchX < length) {
+                textPaint.setTextAlign(Paint.Align.LEFT);
+            } else {
+                textPaint.setTextAlign(Paint.Align.RIGHT);
+            }
+            float acrossY = getAcrossY(touchX, i);
+            canvas.drawText(value, touchX, acrossY, textPaint);
         }
-        canvas.drawText(value, touchX , acrossY, textPaint);
     }
 
     private void drawTopRoundRect(Canvas canvas) {
@@ -419,24 +426,24 @@ public class SmartChart extends View {
         int capWidth = dp2px(6);
         float centerY = descriptionY;
         canvas.save();
-        canvas.translate(leftGap + capWidth, dp2px(30));
+        canvas.translate(leftGap + capWidth, dp2px(49));
 
         //抵押资产
-        pointPaint.setColor(topColor);
+        pointPaint.setColor(data.getColor(0));
         canvas.drawPoint(0, centerY, pointPaint);
         canvas.translate(capWidth, 0);
 
         canvas.drawText("抵押资产", 0, 0, paint);
         canvas.translate(descriptionWidth + capWidth * 2, 0);
         //债权增长
-        pointPaint.setColor(middleColor);
+        pointPaint.setColor(data.getColor(1));
         canvas.drawPoint(0, centerY, pointPaint);
 
         canvas.translate(capWidth, 0);
         canvas.drawText("债权增长", 0, 0, paint);
         canvas.translate(descriptionWidth + capWidth * 2, 0);
         //资金成本
-        pointPaint.setColor(bottomColor);
+        pointPaint.setColor(data.getColor(2));
         canvas.drawPoint(0, centerY, pointPaint);
 
         canvas.translate(capWidth, 0);
@@ -458,16 +465,16 @@ public class SmartChart extends View {
     }
 
     private float getAcrossY(float touchXInChart, int type) {
-        //1. 根据 touchXInChart 找到 左边的一个 x,
+        List<Integer> list = data.getAll().get(type);
 
-        // 如果处在最右边，那么返回最后一个
-        if (touchXInChart == chartRegionWidth){
-            return data.getTop().get(data.getSize()-1);
-        }else {
-            int index = (int) (touchXInChart / cellWidth);
+        // 如果处在最右边，那么返回最后一个坐标的高度
+        if (touchXInChart == chartRegionWidth) {
+            return valueMap(list.get(data.getSize() - 1));
+        } else {
+            int index = getIndex(touchXInChart);
 
-            float leftY = data.getTop().get(index);
-            float rightY = data.getTop().get(index + 1);
+            float leftY = list.get(index);
+            float rightY = list.get(index + 1);
 
 
             float leftX = index * cellWidth;
@@ -475,7 +482,11 @@ public class SmartChart extends View {
             float offsetY = rightY - leftY;
 
             float radio = (touchXInChart - leftX) / cellWidth;
-            return offsetY * radio + leftY;
+            return valueMap((int) (offsetY * radio + leftY));
         }
+    }
+
+    private int getIndex(float touchXInChart) {
+        return (int) (touchXInChart / cellWidth);
     }
 }
