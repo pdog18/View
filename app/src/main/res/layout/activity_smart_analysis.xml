@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.example.a18.path.smartanalysis.SmartChart
+    <com.example.a18.path.smartanalysis.SmartChart2
         android:id="@+id/smartview"
         android:background="#5db6fb"
         android:layout_width="match_parent"
-        android:layout_height="307dp" />
+        android:layout_height="300dp" />
 
 
 </LinearLayout>

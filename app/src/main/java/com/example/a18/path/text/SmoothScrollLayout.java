@@ -11,7 +11,6 @@ import timber.log.Timber;
 /**
  * 评级处缓慢上下滑动的控件
  */
-
 public class SmoothScrollLayout extends LinearLayout {
     Scroller scroller;
     public SmoothScrollLayout(Context context) {

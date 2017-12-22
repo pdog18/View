@@ -28,7 +28,7 @@ import static com.example.a18.path.Utils.dp2px;
 /**
  * 智能分析图标📈，😨
  */
-public class SmartChart extends View {
+public class SmartChart2 extends View {
 
     private String startDate = "2014/08/09";
     private String endDate = "2017/12/19";
@@ -84,15 +84,15 @@ public class SmartChart extends View {
     private int gradeRangeIndex;
 
 
-    public SmartChart(Context context) {
+    public SmartChart2(Context context) {
         this(context, null);
     }
 
-    public SmartChart(Context context, AttributeSet attrs) {
+    public SmartChart2(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SmartChart(Context context, AttributeSet attrs, int defStyle) {
+    public SmartChart2(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
         initPaint();
@@ -223,7 +223,7 @@ public class SmartChart extends View {
                     }
                     break;
             }
-            SmartChart.this.invalidate();
+            SmartChart2.this.invalidate();
         });
         gradeRangeAnimation.start();
     }

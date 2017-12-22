@@ -17,7 +17,7 @@ public class SmartAnalysisActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smart_analysis);
         ButterKnife.bind(this);
-        smartChart.setData(new MockChartData());
+        smartChart.setData(MockSmartAnalysis.getInstance());
 
 
     }
