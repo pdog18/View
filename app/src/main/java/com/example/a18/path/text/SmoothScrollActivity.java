@@ -24,8 +24,8 @@ public class SmoothScrollActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_text);
         ButterKnife.bind(this);
 
@@ -42,6 +42,7 @@ public class SmoothScrollActivity extends AppCompatActivity {
             textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100));
             scrollLayout.addView(textView);
         }
+
 
 
     }

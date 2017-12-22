@@ -48,7 +48,7 @@ public class SmoothScrollLayout extends LinearLayout {
 
     public void smoothTo(int position) {
         Timber.d("position = %s", position);
-        scroller.startScroll(0,getScrollY(),0,childHeight[position],3000);
+        scroller.startScroll(0,getScrollY(),0,childHeight[position] -getScrollY(),3000);
         invalidate();
     }
 
