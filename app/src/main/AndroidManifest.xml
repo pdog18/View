@@ -79,7 +79,8 @@
 
         <activity android:name=".map.MapEventActivity" />
         <activity android:name=".invest.InvestActivity" />
-        <activity android:name=".smartanalysis.SmartAnalysisActivity"></activity>
+        <activity android:name=".smartanalysis.SmartAnalysisActivity" />
+        <activity android:name=".text.SmoothScrollActivity"></activity>
     </application>
 
 </manifest>
