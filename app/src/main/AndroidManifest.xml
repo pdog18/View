@@ -26,7 +26,6 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
-
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -72,19 +71,16 @@
         <activity android:name=".piechart.PieChartActivity" />
         <activity android:name=".map.MapActivity" />
 
-
         <service android:name="com.amap.api.location.APSService" />
-
-
-        <service
-            android:name=".map.MyService"
-            android:enabled="true"
-            android:exported="true"/>
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="f8fb6c26b0c1b0874d6885137ab0f2ef" />
 
+        <activity android:name=".map.MapEventActivity" />
+        <activity android:name=".invest.InvestActivity" />
+        <activity android:name=".smartanalysis.SmartAnalysisActivity" />
+        <activity android:name=".text.SmoothScrollActivity"></activity>
     </application>
 
 </manifest>

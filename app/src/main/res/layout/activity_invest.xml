@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="年化收益 = (投资内收益 / 本金)（投资天数 / 365） * 100%" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="年化收益 = 本金 * 年化收益率" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="实际收益 = 本金 * 年化收益率 * 投资天数 / 365" />
+
+    <EditText
+        android:id="@+id/本金"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="输入本金，单位为元" />
+
+    <EditText
+        android:id="@+id/年化收益率"
+        android:inputType="numberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入年化收益率,3.9% 则输入3.9" />
+
+    <EditText
+        android:id="@+id/投资天数"
+        android:inputType="numberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入投资天数" />
+
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/计算收益"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="计算收益" />
+
+    <Button
+        android:id="@+id/计算一年收益"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="计算一年收益" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/n个月"
+        android:hint="输入指定个月"
+        android:inputType="number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/计算n月收益"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="计算n月收益" />
+    </LinearLayout>
+
+    <ProgressBar
+        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

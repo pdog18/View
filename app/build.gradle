@@ -17,9 +17,9 @@ android {
 
     }
 
-    signingConfigs{
+    signingConfigs {
         signConfig {
-            storeFile file ('key')//签名文件路径，
+            storeFile file('key')//签名文件路径，
             //keystore的路径通常使用项目根目录的相对路径，但也可以是使用绝对路径，尽管这不推荐
             storePassword 'Gj565656' //密码
             keyAlias 'key0'
@@ -33,7 +33,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-        debug{
+        debug {
             signingConfig signingConfigs.signConfig // 配置debug包的签名
         }
     }
@@ -43,8 +43,8 @@ android {
     }
 
 
-
 }
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -52,16 +52,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.1.0'
-    compile 'io.reactivex.rxjava2:rxjava:2.0.6'
-    compile('com.squareup.retrofit2:retrofit:2.2.0') {
-        exclude module: 'okhttp'
-    }
-    compile 'com.squareup.okhttp3:okhttp:3.9.1'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
-    compile 'com.google.code.gson:gson:2.8.2'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
-    compile 'com.squareup.retrofit2:converter-scalars:2.2.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
     api 'com.android.support:cardview-v7:26.1.0'
 
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
@@ -83,5 +73,19 @@ dependencies {
     compile 'com.amap.api:location:latest.integration'
     // 搜索功能
     compile 'com.amap.api:search:latest.integration'
+
+    api 'com.facebook.stetho:stetho:1.5.0'
+
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'
+    api 'io.reactivex.rxjava2:rxjava:2.1.7'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
+    api 'com.squareup.retrofit2:retrofit:2.3.0'
+    api 'com.squareup.retrofit2:converter-gson:2.3.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    api 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+
+    api 'com.google.code.gson:gson:2.8.2'
 }
 

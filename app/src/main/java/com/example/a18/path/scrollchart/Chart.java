@@ -118,7 +118,7 @@ public class Chart extends View {
         animator.addUpdateListener(animation -> {
             float animatedFraction = animation.getAnimatedFraction();
             chartClipRect.top = getHeight() - getHeight() * animatedFraction;
-            Log.d(TAG, "startAnim: " + chartClipRect.top);
+            Log.d(TAG, "exposeChart: " + chartClipRect.top);
             invalidate();
         });
         animator.setDuration(3000);
