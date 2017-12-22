@@ -75,6 +75,8 @@ public class ChartDataHelper {
      * @return
      */
     public float getHeightOnPath(MotionEvent event, float offset, int type) {
+        // FIXME: 2017/12/22
+        return 0f;
     }
 
 
