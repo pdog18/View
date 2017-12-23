@@ -36,10 +36,10 @@ public class SmartChart extends View {
 
     private String title = "指数走势图";
 
-    int leftGap = dp2px(20);
-    int bottomGap = dp2px(35);
-    int chartRegionHeight = dp2px(206);
-    float chartRegionWidth;
+    private int leftGap = dp2px(20);
+    private int bottomGap = dp2px(35);
+    private int chartRegionHeight = dp2px(206);
+    private float chartRegionWidth;
     private Paint baseLinePaint;
     private Paint slideBlockPaint;
     private Paint linePaint;
@@ -47,15 +47,15 @@ public class SmartChart extends View {
     private Paint gradePaint;
     private TextPaint textPaint;
     private TextPaint titlePaint;
-    private PointF pointInChart;        //这个点总是处在图表当中，不会超出图片左右两侧
+    private PointF touchPointOfChart;        //这个点总是处在图表当中，不会超出图片左右两侧
 
-    int textColor = Color.parseColor("#e6edff");
-    int mainBlue = Color.parseColor("#5092ff");
+    private int textColor = Color.parseColor("#e6edff");
+    private int mainBlue = Color.parseColor("#5092ff");
 
-    int topColor = Color.parseColor("#97ed4c");
-    int middleColor = Color.parseColor("#47f8d0");
-    int bottomColor = Color.parseColor("#ffffff");
-    int[] colors = {topColor, middleColor, bottomColor};
+    private int topColor = Color.parseColor("#97ed4c");
+    private int middleColor = Color.parseColor("#47f8d0");
+    private int bottomColor = Color.parseColor("#ffffff");
+    private int[] colors = {topColor, middleColor, bottomColor};
 
 
     private float blockRadius = dp2px(16);
@@ -67,10 +67,10 @@ public class SmartChart extends View {
     private PathEffect slideBlockDashEffect;
 
 
-    float descriptionWidth;
-    float descriptionY;
+    private float descriptionWidth;
+    private float descriptionY;
 
-    boolean needSlideDescript;
+    private boolean needSlideDescript;
     private RectF slideTopRect;
 
     private RectF solidPathClipRect;
@@ -78,10 +78,10 @@ public class SmartChart extends View {
     private ValueAnimator exposeAnimation;
     private boolean needSlideBlock = false;
 
-    float cellWidth;
+    private float cellWidth;
     private ValueAnimator gradeRangeAnimation;
-    private List<MockSmartAnalysis.GradeRange> gradeRange;
     private int gradeRangeIndex;
+    private ValueAnimator bounceAnimation;
 
 
     public SmartChart(Context context) {
@@ -98,19 +98,14 @@ public class SmartChart extends View {
         initPaint();
         initEffect();
         measureTextWidth();
-
-
     }
 
-    MockSmartAnalysis data;
-    int dataSize;
+    private ChartDataHelper helper;
+    private int dataSize;
 
-    public void setData(MockSmartAnalysis data) {
-        this.data = data;
-        this.dataSize = data.getXList().size();
-        gradeRange = data.getGradeRange();
-        gradeRangeIndex = data.getGradeRange().size() - 1;
-
+    public void setData(ChartDataHelper helper) {
+        this.helper = helper;
+        this.dataSize = helper.getSize();
         createPaths();
     }
 
@@ -134,16 +129,17 @@ public class SmartChart extends View {
             return super.onTouchEvent(event);
         }
         Paint paint = slideBlockPaint;
+        updatePoint(event.getX(), event.getY());
+
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 paint.setStrokeWidth(blockRadius * 1.375f);
                 needSlideDescript = true;
-                checkGradeRangeChange(event.getX() - leftGap);
+                checkGradeRangeChange(touchPointOfChart.x);
                 return true;
 
             case MotionEvent.ACTION_MOVE:
-                updatePoint(((int) event.getX()), ((int) event.getY()));
-                checkGradeRangeChange(event.getX() - leftGap);
+                checkGradeRangeChange(touchPointOfChart.x);
                 invalidate();
                 return true;
             case MotionEvent.ACTION_UP:
@@ -159,9 +155,9 @@ public class SmartChart extends View {
     private void checkGradeRangeChange(float touchX) {
 
         int last = gradeRangeIndex;
-        int curr  = data.getIndex(cellWidth, touchX < 0 ? 0: (int) touchX, gradeRange);
+        int curr = helper.getGradeByTouch(touchX < 0 ? 0 : touchX, cellWidth);
         if (last != curr & gradeRangeChangeListener != null) {
-            gradeRangeChangeListener.onGradeRangeChange(last,curr);
+            gradeRangeChangeListener.onGradeRangeChange(last, curr);
         }
         gradeRangeIndex = curr;
     }
@@ -181,8 +177,7 @@ public class SmartChart extends View {
         exposeChart();
     }
 
-    public void startGradeRange(boolean reverse) {
-
+    public void startRiskGradeRange(boolean reverse) {
         int currAlpha = gradePaint.getAlpha();
         int time = 2000;
         if (gradeRangeAnimation != null && gradeRangeAnimation.isRunning()) {
@@ -230,16 +225,16 @@ public class SmartChart extends View {
 
     @Override
     protected void onDetachedFromWindow() {
-        if (exposeAnimation != null) {
-            exposeAnimation.cancel();
-            exposeAnimation = null;
-        }
-
-        if (gradeRangeAnimation != null) {
-            gradeRangeAnimation.cancel();
-            gradeRangeAnimation = null;
-        }
+        cancelAnimation(exposeAnimation);
+        cancelAnimation(gradeRangeAnimation);
+        cancelAnimation(bounceAnimation);
         super.onDetachedFromWindow();
+    }
+
+    private void cancelAnimation(ValueAnimator animator) {
+        if (animator != null) {
+            animator.cancel();
+        }
     }
 
     public void exposeChart() {
@@ -263,46 +258,31 @@ public class SmartChart extends View {
     //slideblock 弹动
     private void bounceSlideBlock() {
         needSlideBlock = true;
-        pointInChart = new PointF(chartRegionWidth, 0);
+        touchPointOfChart = new PointF(chartRegionWidth, 0);
 
-        exposeAnimation.removeAllListeners();
-        exposeAnimation.removeAllUpdateListeners();
-        exposeAnimation = exposeAnimation.clone();
-        exposeAnimation.setInterpolator(new OvershootInterpolator(3));
-        exposeAnimation.addUpdateListener(animation -> {
+        bounceAnimation = ValueAnimator.ofFloat(1.0f);
+        bounceAnimation.setDuration(2000);
+        bounceAnimation.setInterpolator(new OvershootInterpolator(3));
+        bounceAnimation.addUpdateListener(animation -> {
             float v = animation.getAnimatedFraction();
             float radius = blockRadius * v;
             slideBlockPaint.setStrokeWidth(radius);
             invalidate();
         });
-        exposeAnimation.start();
+        bounceAnimation.start();
     }
-
 
     private void createPaths() {
         cellWidth = chartRegionWidth / (dataSize - 1);
 
-        chartPaths.clear();
-        chartPaths.add(buildPath(data.getAssetValueIndexList()));       //抵押资产
-        chartPaths.add(buildPath(data.getDebetIndexList()));            //债权
-        chartPaths.add(buildPath(data.getAssetCostIndexList()));        //资金成本
-    }
-
-    private Path buildPath(List<Double> list) {
-        Path path = new Path();
-
-        path.moveTo(0, valueMap(list.get(0)));
-
-        for (int i = 1; i < list.size(); i++) {
-            path.lineTo(cellWidth * i, valueMap(list.get(i)));
+        if (cellWidth == 0) {
+            return;
         }
-        return path;
-    }
 
-    private int valueMap(double before) {
-        double topmost = data.getTopmost();
-
-        return (int) (-before * (chartRegionHeight * 1.0f / topmost));
+        chartPaths.clear();
+        chartPaths.add(helper.buildPath(helper.getLists(0),cellWidth,chartRegionHeight));       //抵押资产
+        chartPaths.add(helper.buildPath(helper.getLists(1),cellWidth,chartRegionHeight));       //债权
+        chartPaths.add(helper.buildPath(helper.getLists(2),cellWidth,chartRegionHeight));       //资金成本
     }
 
     private void initPoint() {
@@ -311,7 +291,7 @@ public class SmartChart extends View {
     }
 
 
-    private void updatePoint(int x, int y) {
+    private void updatePoint(float x, float y) {
         float pointX;
         if (x < leftGap) {      //超出图表左侧
             pointX = 0;
@@ -320,15 +300,15 @@ public class SmartChart extends View {
         } else {
             pointX = x - leftGap;
         }
-        pointInChart.set(pointX, y);
+        touchPointOfChart.set(pointX, y);
         slideBlockDashPath.reset();
         slideBlockDashPath.moveTo(0, 0);
         slideBlockDashPath.rLineTo(0, -chartRegionHeight);
 
-        updateRoundRect(pointInChart.x);
+        updateRoundRect(touchPointOfChart.x);
 
 
-        solidPathClipRect.right = pointInChart.x;
+        solidPathClipRect.right = touchPointOfChart.x;
 
     }
 
@@ -405,12 +385,13 @@ public class SmartChart extends View {
         canvas.translate(leftGap, getHeight() - bottomGap);
         drawCoordinateSystem(canvas);
 
-        if (data == null) {
+        if (helper == null) {
             return;
         }
         canvas.clipRect(animateClipRect);
         drawDashPaths(canvas);
         drawSolidPaths(canvas);
+
 
         drawGradeRange(canvas);
         canvas.restoreToCount(save);
@@ -420,20 +401,20 @@ public class SmartChart extends View {
     }
 
     private void drawGradeRange(Canvas canvas) {
-        int size = gradeRange.size();
         int height = getHeight();
 
-        for (int i = 0; i < size; i++) {
-            int endIndex = gradeRange.get(i).endIndex;
+        List<ChartDataHelper.Range> ranges = helper.getRiskGradeMap();
+        for (ChartDataHelper.Range range : ranges) {
+            int endIndex = range.endIndex;
             canvas.drawLine(endIndex * cellWidth, 0, endIndex * cellWidth, -height, gradePaint);
-            textPaint.setTextAlign(Paint.Align.CENTER);
         }
-        for (int i = 0; i < size; i++) {
-            int endIndex = gradeRange.get(i).endIndex;
-            int startIndex = gradeRange.get(i).startIndex;
+
+        for (ChartDataHelper.Range range : ranges) {
+            int endIndex = range.endIndex;
+            int startIndex = range.startIndex;
             float centerX = (endIndex * cellWidth - startIndex * cellWidth) / 2 + startIndex * cellWidth;
 
-            canvas.drawText(gradeRange.get(i).risk, centerX, 0, gradePaint);
+            canvas.drawText(String.valueOf(range.grade), centerX, 0, gradePaint);
         }
     }
 
@@ -468,7 +449,7 @@ public class SmartChart extends View {
         canvas.save();
         canvas.translate(leftGap, getHeight() - bottomGap);
         canvas.save();
-        canvas.translate(pointInChart.x, 0);
+        canvas.translate(touchPointOfChart.x, 0);
         //1 . 画圆形滑块
         canvas.drawPoint(0, 0, slideBlockPaint);
 
@@ -490,12 +471,12 @@ public class SmartChart extends View {
     }
 
     private void drawValueOnLine(Canvas canvas) {
-        float touchX = pointInChart.x;
+        float touchX = touchPointOfChart.x;
         int index = getIndex(touchX);
 
         for (int i = 0; i < 3; i++) {
             textPaint.setColor(colors[i]);
-            String value = getListAtIndex(i).get(index).toString();
+            String value = String.valueOf(helper.getLists(i)[index]);
             float length = textPaint.measureText(value);
 
             if (touchX < length) {
@@ -503,7 +484,7 @@ public class SmartChart extends View {
             } else {
                 textPaint.setTextAlign(Paint.Align.RIGHT);
             }
-            float acrossY = getAcrossY(touchX, i);
+            float acrossY = helper.getHeightOnPath(touchX,cellWidth, i,chartRegionHeight);
             canvas.drawText(value, touchX, acrossY, textPaint);
         }
     }
@@ -518,7 +499,7 @@ public class SmartChart extends View {
         paint.setColor(mainBlue);
         float abs = Math.abs(topRect.right) - Math.abs(topRect.left);
         int centerX = (int) (abs / 2);
-        canvas.drawText(rectDate, centerX, topRect.bottom - topRect.height() / 4, paint);
+        canvas.drawText(helper.getDateAtIndex(touchPointOfChart.x,cellWidth), centerX, topRect.bottom - topRect.height() / 4, paint);
     }
 
 
@@ -567,57 +548,51 @@ public class SmartChart extends View {
         canvas.translate(leftGap, getHeight() - dp2px(15));
         textPaint.setColor(textColor);
         textPaint.setTextAlign(Paint.Align.LEFT);
-        canvas.drawText(startDate, 0, 0, textPaint);
+        canvas.drawText(helper.getStartDate(), 0, 0, textPaint);
         textPaint.setTextAlign(Paint.Align.RIGHT);
         canvas.translate(chartRegionWidth, 0);
-        canvas.drawText(endDate, 0, 0, textPaint);
+        canvas.drawText(helper.getEndDate(), 0, 0, textPaint);
         canvas.restore();
     }
 
-    private float getAcrossY(float touchXInChart, int type) {
-        List<Double> list = getListAtIndex(type);
-
-        // 如果处在最右边，那么返回最后一个坐标的高度
-        if (touchXInChart == chartRegionWidth) {
-            return valueMap(list.get(dataSize - 1));
-        } else {
-            int index = getIndex(touchXInChart);
-
-            double leftY = list.get(index);
-            double rightY = list.get(index + 1);
-
-
-            float leftX = index * cellWidth;
-
-            double offsetY = rightY - leftY;
-
-            float radio = (touchXInChart - leftX) / cellWidth;
-            return valueMap((int) (offsetY * radio + leftY));
-        }
-    }
+//    private float getAcrossY(float touchXInChart, int type) {
+//        List<Double> list = getListAtIndex(type);
+//
+//        // 如果处在最右边，那么返回最后一个坐标的高度
+//        if (touchXInChart == chartRegionWidth) {
+//            return valueMap(list.get(dataSize - 1));
+//        } else {
+//            int index = getIndex(touchXInChart);
+//
+//            double leftY = list.get(index);
+//            double rightY = list.get(index + 1);
+//
+//
+//            float leftX = index * cellWidth;
+//
+//            double offsetY = rightY - leftY;
+//
+//            float radio = (touchXInChart - leftX) / cellWidth;
+//            return valueMap((int) (offsetY * radio + leftY));
+//        }
+//    }
 
     private int getIndex(float touchXInChart) {
         return (int) (touchXInChart / cellWidth);
     }
 
-    private List<Double> getListAtIndex(int index) {
-        if (index == 0) {
-            return data.getAssetValueIndexList();
-        }
-        if (index == 1) {
-            return data.getDebetIndexList();
-        } else {
 
-            return data.getAssetCostIndexList();
-        }
-    }
-
-    GradeRangeChangeListener gradeRangeChangeListener;
+    private GradeRangeChangeListener gradeRangeChangeListener;
 
     public void setGradeRangeChangeListener(GradeRangeChangeListener listener) {
         this.gradeRangeChangeListener = listener;
     }
-    public interface GradeRangeChangeListener{
+
+    public interface GradeRangeChangeListener {
         void onGradeRangeChange(int last, int curr);
+    }
+
+    public int getLeftGap() {
+        return leftGap;
     }
 }
