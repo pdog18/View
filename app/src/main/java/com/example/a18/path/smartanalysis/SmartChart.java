@@ -80,7 +80,7 @@ public class SmartChart extends View {
 
     private HashMap<Integer, ValueAnimator> animatorMap;
 
-    private int oldPage = PAGE_ASSETS;
+    private int currentPage = PAGE_ASSETS;
 
 
     private static final int ANIM_EXPOSE = 0;
@@ -189,16 +189,16 @@ public class SmartChart extends View {
 
 
     public void changePage(int newPage) {
-        if (newPage == oldPage) {
+        if (newPage == currentPage) {
             return;
         }
         rangeAnimation(newPage);
-        oldPage = newPage;
+        currentPage = newPage;
     }
 
     //评级分区和策略分区的动画效果
     private void rangeAnimation(int newPage) {
-        int last = oldPage;
+        int last = currentPage;
         int curr = newPage;
 
         //需要隐藏动画
@@ -436,7 +436,6 @@ public class SmartChart extends View {
             drawDescription(canvas);
         }
 
-
         drawTitle(canvas);
 
         int save = canvas.save();
@@ -450,8 +449,14 @@ public class SmartChart extends View {
         drawDashPaths(canvas);
         drawSolidPaths(canvas);
 
-        drawRiskGradeRange(canvas, helper.getRiskGradeMap(), gradePaint);
-        drawPolicyRange(canvas, helper.getPolicyMap(), policyPaint);
+        if (currentPage == PAGE_RISK_GRADE) {
+            drawRiskGradeRange(canvas, helper.getRiskGradeMap(), gradePaint);
+        }
+
+        if (currentPage == PAGE_POLICY) {
+            drawPolicyRange(canvas, helper.getPolicyMap(), policyPaint);
+        }
+
         canvas.restoreToCount(save);
 
         drawDate(canvas);
@@ -528,7 +533,7 @@ public class SmartChart extends View {
         }
         canvas.restore();
 
-        if (needSlideDescript) {
+        if (needSlideDescript && currentPage == PAGE_ASSETS) {
             //4. 如果有需要在图表上画出数值
             drawValueOnLine(canvas);
         }
