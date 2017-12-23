@@ -78,21 +78,22 @@ public class ChartDataHelper {
             int curr = list.get(i);
 
             if (last != curr) {
+                if (!ranges.isEmpty()) {    //调整上一个Range的结束点
+                    ranges.get(ranges.size() - 1).endIndex = i;
+                }
                 Range range = new Range();
                 range.startIndex = i;
                 range.grade = curr;
-                range.endIndex = i;
                 Timber.d("makeRange:不相等，也不是第一个,向集合中添加 %s", curr);
                 ranges.add(range);
-            } else {
-                Timber.d("makeRange:相等，也不是第一个  刷新最后一个的endIndex");
+            }
+            if (i == size - 1) {        //确定最后一个的Range的结束点
                 ranges.get(ranges.size() - 1).endIndex = i;
             }
             last = curr;
         }
 
         return ranges;
-
     }
 
     //通过返回的比率获得对应坐标的具体数值
@@ -197,7 +198,7 @@ public class ChartDataHelper {
         PointF[] points = getPointFList(type);
 
         // 如果处在最右边，那么返回最后一个坐标的高度
-        if (getCellIndex(touchX,cellWidth) == size) {
+        if (getCellIndex(touchX,cellWidth) == size - 1) {
             return points[size - 1].y;
         } else {
             int index = getCellIndex(touchX,cellWidth);
@@ -207,22 +208,18 @@ public class ChartDataHelper {
             float leftY = leftPoint.y;
             float rightY = rightPoint.y;
 
-
             float leftX = leftPoint.x;
 
             float offsetY = rightY - leftY;
 
             float radio = (touchX - leftX) / cellWidth;
             return valueMapAtChart((offsetY * radio + leftY), chartRegionHeight);
-
         }
     }
 
     public PointF[] getPointFList(int type) {
         return pointFList.get(type);
     }
-
-
 
     /**
      * 4. 根据当前的触摸点，获得触摸点处的[评级]
@@ -266,10 +263,6 @@ public class ChartDataHelper {
      * @return 当前触摸点位于的数据对应的index
      */
     public int getCellIndex(float touchX, float cellWidth) {
-        int v = (int) (touchX / cellWidth);
-        if (v == 50)
-            Timber.d("touchX = %s   cellWidth %s ", touchX, cellWidth);
-
         return (int) (touchX / cellWidth);
     }
 

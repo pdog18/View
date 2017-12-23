@@ -8,7 +8,7 @@ public class MockSmartAnalysis {
 
     public static MockSmartAnalysis singleton() {
         MockSmartAnalysis data = new MockSmartAnalysis();
-        int size = 50;
+        int size = 30;
 
         data.setAssetCost(126000);
         data.setAssetValue(10000);

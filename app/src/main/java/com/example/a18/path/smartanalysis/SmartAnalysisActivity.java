@@ -31,26 +31,27 @@ public class SmartAnalysisActivity extends AppCompatActivity {
                 Timber.d("last = %s  , curr = %s", last ,curr);
             }
         });
+
     }
 
     @OnClick(R.id.btn1)
     void btn1() {
-
+        smartChart.changePage(0);
     }
 
-    boolean aBoolean;
     @OnClick(R.id.btn2)
     void btn2() {
-        smartChart.startRiskGradeRange(aBoolean ^= true);
+        smartChart.changePage(1);
+
     }
 
     @OnClick(R.id.btn3)
     void btn3() {
-
+        smartChart.changePage(2);
     }
 
     @OnClick(R.id.btn4)
     void btn4() {
-
+        smartChart.changePage(3);
     }
 }

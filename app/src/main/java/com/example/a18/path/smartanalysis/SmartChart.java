@@ -13,6 +13,7 @@ import android.graphics.PathEffect;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.support.annotation.NonNull;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -21,6 +22,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.example.a18.path.Utils.dp2px;
@@ -29,11 +31,6 @@ import static com.example.a18.path.Utils.dp2px;
  * 智能分析图标📈，😨
  */
 public class SmartChart extends View {
-
-    private String startDate = "2014/08/09";
-    private String endDate = "2017/12/19";
-    private String rectDate = "2015/05/12";
-
     private String title = "指数走势图";
 
     private int leftGap = dp2px(20);
@@ -45,6 +42,8 @@ public class SmartChart extends View {
     private Paint linePaint;
     private Paint descriptionPaint;
     private Paint gradePaint;
+    private Paint policyPaint;
+
     private TextPaint textPaint;
     private TextPaint titlePaint;
     private PointF touchPointOfChart;        //这个点总是处在图表当中，不会超出图片左右两侧
@@ -66,7 +65,6 @@ public class SmartChart extends View {
     private PathEffect dashChartLineEffect;
     private PathEffect slideBlockDashEffect;
 
-
     private float descriptionWidth;
     private float descriptionY;
 
@@ -75,14 +73,25 @@ public class SmartChart extends View {
 
     private RectF solidPathClipRect;
     private Rect animateClipRect = new Rect(0, 0, 0, -chartRegionHeight);
-    private ValueAnimator exposeAnimation;
     private boolean needSlideBlock = false;
-
     private float cellWidth;
-    private ValueAnimator gradeRangeAnimation;
-    private int gradeRangeIndex;
-    private ValueAnimator bounceAnimation;
 
+    private int gradeRangeIndex;
+
+    private HashMap<Integer, ValueAnimator> animatorMap;
+
+    private int oldPage = PAGE_ASSETS;
+
+
+    private static final int ANIM_EXPOSE = 0;
+    private static final int ANIM_RISK_GRADE = 1;
+    private static final int ANIM_POLICY = 2;
+    private static final int ANIM_BOUNCE = 3;
+
+    private static final int PAGE_ASSETS = 0;
+    private static final int PAGE_RISK_GRADE = 1;
+    private static final int PAGE_POLICY = 2;
+    private static final int PAGE_BREAK = 3;
 
     public SmartChart(Context context) {
         this(context, null);
@@ -98,6 +107,7 @@ public class SmartChart extends View {
         initPaint();
         initEffect();
         measureTextWidth();
+        animatorMap = new HashMap<>();
     }
 
     private ChartDataHelper helper;
@@ -177,68 +187,110 @@ public class SmartChart extends View {
         exposeChart();
     }
 
-    public void startRiskGradeRange(boolean reverse) {
-        int currAlpha = gradePaint.getAlpha();
-        int time = 2000;
-        if (gradeRangeAnimation != null && gradeRangeAnimation.isRunning()) {
-            gradeRangeAnimation.cancel();
-            //修正接下来的动画时长
-            time = (int) (gradeRangeAnimation.getAnimatedFraction() * 2000);
-            gradeRangeAnimation = null;
-            currAlpha = gradePaint.getAlpha();
+
+    public void changePage(int newPage) {
+        if (newPage == oldPage) {
+            return;
+        }
+        rangeAnimation(newPage);
+        oldPage = newPage;
+    }
+
+    //评级分区和策略分区的动画效果
+    private void rangeAnimation(int newPage) {
+        int last = oldPage;
+        int curr = newPage;
+
+        //需要隐藏动画
+        if (last == PAGE_RISK_GRADE || last == PAGE_POLICY) {
+            startRiskGradeRange(false, last);
         }
 
-        gradeRangeAnimation = ValueAnimator.ofFloat(1)
+        // 需要显示动画，那么就显示动画
+        if (curr == PAGE_RISK_GRADE || curr == PAGE_POLICY) {
+            startRiskGradeRange(true, curr);
+        }
+    }
+
+    public void startRiskGradeRange(boolean show, int type) {
+        int time = 2000;
+        Paint paint;
+        ValueAnimator animator = animatorMap.get(type);
+        if (type == PAGE_RISK_GRADE) {
+            paint = gradePaint;
+        } else {
+            paint = policyPaint;
+        }
+        int currAlpha = paint.getAlpha();
+
+        if (animator != null && animator.isRunning()) {
+            animator.cancel();
+            //修正接下来的动画时长
+            time = (int) (animator.getAnimatedFraction() * 2000);
+            currAlpha = paint.getAlpha();
+            animatorMap.remove(type);
+        }
+
+        ValueAnimator valueAnimator = getValueAnimator(show, time, paint, currAlpha);
+        if (type == PAGE_RISK_GRADE) {
+            animatorMap.put(ANIM_RISK_GRADE, valueAnimator);
+        } else {
+            animatorMap.put(ANIM_POLICY, valueAnimator);
+        }
+
+        valueAnimator.start();
+    }
+
+    @NonNull
+    private ValueAnimator getValueAnimator(boolean show, int time, Paint paint, int currAlpha) {
+        ValueAnimator animator = ValueAnimator.ofFloat(1)
                 .setDuration(time);
         int finalCurrAlpha = currAlpha;
-        gradeRangeAnimation.addUpdateListener(animation -> {
-            if (reverse && finalCurrAlpha == 0) {       //需要逐渐透明，并且当前已经透明
+        Paint finalPaint = paint;
+        animator.addUpdateListener(animation -> {
+            if (!show && finalCurrAlpha == 0) {       //需要逐渐透明，并且当前已经透明
                 return;
-            } else if (!reverse && finalCurrAlpha == 255) {//需要逐渐显示，并且当前已经完全显示
+            } else if (show && finalCurrAlpha == 255) {//需要逐渐显示，并且当前已经完全显示
                 return;
             }
 
             float rate = (animation.getAnimatedFraction());
             switch (finalCurrAlpha) {
                 case 0:
-                    gradePaint.setAlpha((int) (255 * rate));
+                    finalPaint.setAlpha((int) (255 * rate));
                     break;
                 case 255:
-                    gradePaint.setAlpha((int) (255 - 255 * rate));
+                    finalPaint.setAlpha((int) (255 - 255 * rate));
                     break;
                 default:
-                    if (reverse) {
+                    if (!show) {
                         //finalCurr -> 0
                         float v1 = (finalCurrAlpha) * (1.0f - rate);
-                        gradePaint.setAlpha((int) v1);
+                        finalPaint.setAlpha((int) v1);
                     } else {
                         // finalCurr -> 255
                         float v1 = (255 - finalCurrAlpha) * rate + finalCurrAlpha;
-                        gradePaint.setAlpha((int) v1);
+                        finalPaint.setAlpha((int) v1);
                     }
                     break;
             }
             SmartChart.this.invalidate();
         });
-        gradeRangeAnimation.start();
+        return animator;
     }
 
     @Override
     protected void onDetachedFromWindow() {
-        cancelAnimation(exposeAnimation);
-        cancelAnimation(gradeRangeAnimation);
-        cancelAnimation(bounceAnimation);
+        for (ValueAnimator animator : animatorMap.values()) {
+            animator.cancel();
+        }
+        animatorMap.clear();
+        animatorMap = null;
         super.onDetachedFromWindow();
     }
 
-    private void cancelAnimation(ValueAnimator animator) {
-        if (animator != null) {
-            animator.cancel();
-        }
-    }
-
     public void exposeChart() {
-        exposeAnimation = ValueAnimator.ofFloat(1.0f);
+        ValueAnimator exposeAnimation = ValueAnimator.ofFloat(1.0f);
         exposeAnimation.setDuration(2000);
         exposeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
         exposeAnimation.addUpdateListener(animation -> {
@@ -252,7 +304,10 @@ public class SmartChart extends View {
                 bounceSlideBlock();
             }
         });
+
+        animatorMap.put(ANIM_EXPOSE, exposeAnimation);
         exposeAnimation.start();
+
     }
 
     //slideblock 弹动
@@ -260,7 +315,7 @@ public class SmartChart extends View {
         needSlideBlock = true;
         touchPointOfChart = new PointF(chartRegionWidth, 0);
 
-        bounceAnimation = ValueAnimator.ofFloat(1.0f);
+        ValueAnimator bounceAnimation = ValueAnimator.ofFloat(1.0f);
         bounceAnimation.setDuration(2000);
         bounceAnimation.setInterpolator(new OvershootInterpolator(3));
         bounceAnimation.addUpdateListener(animation -> {
@@ -269,6 +324,8 @@ public class SmartChart extends View {
             slideBlockPaint.setStrokeWidth(radius);
             invalidate();
         });
+
+        animatorMap.put(ANIM_BOUNCE, bounceAnimation);
         bounceAnimation.start();
     }
 
@@ -279,10 +336,9 @@ public class SmartChart extends View {
             return;
         }
 
-        chartPaths.clear();
-        chartPaths.add(helper.buildPath(helper.getLists(0),cellWidth,chartRegionHeight));       //抵押资产
-        chartPaths.add(helper.buildPath(helper.getLists(1),cellWidth,chartRegionHeight));       //债权
-        chartPaths.add(helper.buildPath(helper.getLists(2),cellWidth,chartRegionHeight));       //资金成本
+        chartPaths.add(helper.buildPath(helper.getLists(0), cellWidth, chartRegionHeight));       //抵押资产
+        chartPaths.add(helper.buildPath(helper.getLists(1), cellWidth, chartRegionHeight));       //债权
+        chartPaths.add(helper.buildPath(helper.getLists(2), cellWidth, chartRegionHeight));       //资金成本
     }
 
     private void initPoint() {
@@ -307,14 +363,13 @@ public class SmartChart extends View {
 
         updateRoundRect(touchPointOfChart.x);
 
-
         solidPathClipRect.right = touchPointOfChart.x;
-
     }
 
     private void updateRoundRect(float x) {
         //顶部的 圆角矩形内容会发生改变
-        float textWidth = textPaint.measureText(rectDate) + dp2px(10);
+        String dateAtIndex = helper.getDateAtIndex(x, cellWidth);
+        float textWidth = textPaint.measureText(dateAtIndex) + dp2px(10);
         float offset = 0;
 
 
@@ -360,6 +415,9 @@ public class SmartChart extends View {
         gradePaint.setTextAlign(Paint.Align.CENTER);
         gradePaint.setTextSize(dp2px(10));
 
+        policyPaint = new Paint(gradePaint);
+
+
         textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setTextSize(dp2px(12));
         textPaint.setColor(textColor);
@@ -392,21 +450,28 @@ public class SmartChart extends View {
         drawDashPaths(canvas);
         drawSolidPaths(canvas);
 
-
-        drawGradeRange(canvas);
+        drawRiskGradeRange(canvas, helper.getRiskGradeMap(), gradePaint);
+        drawPolicyRange(canvas, helper.getPolicyMap(), policyPaint);
         canvas.restoreToCount(save);
 
         drawDate(canvas);
         drawSlide(canvas);
     }
 
-    private void drawGradeRange(Canvas canvas) {
+    private void drawRiskGradeRange(Canvas canvas, List<ChartDataHelper.Range> ranges, Paint paint) {
+        drawRange(canvas, ranges, paint);
+    }
+
+    private void drawPolicyRange(Canvas canvas, List<ChartDataHelper.Range> policyMap, Paint paint) {
+        drawRange(canvas, policyMap, paint);
+    }
+
+    private void drawRange(Canvas canvas, List<ChartDataHelper.Range> ranges, Paint paint) {
         int height = getHeight();
 
-        List<ChartDataHelper.Range> ranges = helper.getRiskGradeMap();
         for (ChartDataHelper.Range range : ranges) {
             int endIndex = range.endIndex;
-            canvas.drawLine(endIndex * cellWidth, 0, endIndex * cellWidth, -height, gradePaint);
+            canvas.drawLine(endIndex * cellWidth, 0, endIndex * cellWidth, -height, paint);
         }
 
         for (ChartDataHelper.Range range : ranges) {
@@ -414,9 +479,10 @@ public class SmartChart extends View {
             int startIndex = range.startIndex;
             float centerX = (endIndex * cellWidth - startIndex * cellWidth) / 2 + startIndex * cellWidth;
 
-            canvas.drawText(String.valueOf(range.grade), centerX, 0, gradePaint);
+            canvas.drawText(String.valueOf(range.grade), centerX, 0, paint);
         }
     }
+
 
     private void drawTitle(Canvas canvas) {
         canvas.drawText(title, leftGap, dp2px(25), titlePaint);
@@ -484,7 +550,7 @@ public class SmartChart extends View {
             } else {
                 textPaint.setTextAlign(Paint.Align.RIGHT);
             }
-            float acrossY = helper.getHeightOnPath(touchX,cellWidth, i,chartRegionHeight);
+            float acrossY = helper.getHeightOnPath(touchX, cellWidth, i, chartRegionHeight);
             canvas.drawText(value, touchX, acrossY, textPaint);
         }
     }
@@ -499,7 +565,7 @@ public class SmartChart extends View {
         paint.setColor(mainBlue);
         float abs = Math.abs(topRect.right) - Math.abs(topRect.left);
         int centerX = (int) (abs / 2);
-        canvas.drawText(helper.getDateAtIndex(touchPointOfChart.x,cellWidth), centerX, topRect.bottom - topRect.height() / 4, paint);
+        canvas.drawText(helper.getDateAtIndex(touchPointOfChart.x, cellWidth), centerX, topRect.bottom - topRect.height() / 4, paint);
     }
 
 
@@ -555,27 +621,6 @@ public class SmartChart extends View {
         canvas.restore();
     }
 
-//    private float getAcrossY(float touchXInChart, int type) {
-//        List<Double> list = getListAtIndex(type);
-//
-//        // 如果处在最右边，那么返回最后一个坐标的高度
-//        if (touchXInChart == chartRegionWidth) {
-//            return valueMap(list.get(dataSize - 1));
-//        } else {
-//            int index = getIndex(touchXInChart);
-//
-//            double leftY = list.get(index);
-//            double rightY = list.get(index + 1);
-//
-//
-//            float leftX = index * cellWidth;
-//
-//            double offsetY = rightY - leftY;
-//
-//            float radio = (touchXInChart - leftX) / cellWidth;
-//            return valueMap((int) (offsetY * radio + leftY));
-//        }
-//    }
 
     private int getIndex(float touchXInChart) {
         return (int) (touchXInChart / cellWidth);
