@@ -21,9 +21,9 @@ public class SmartAnalysisActivity extends AppCompatActivity {
         setContentView(R.layout.activity_smart_analysis);
         ButterKnife.bind(this);
 
-        ChartDataHelper helper = new ChartDataHelper(MockSmartAnalysis.singleton(), smartChart);
+        ChartDataAdapter helper = new ChartDataAdapter(MockSmartAnalysis.createMock());
 
-        smartChart.setData(helper);
+        smartChart.setAdapter(helper);
 
         smartChart.setGradeRangeChangeListener(new SmartChart.GradeRangeChangeListener() {
             @Override

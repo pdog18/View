@@ -6,13 +6,13 @@ import java.util.Random;
 
 public class MockSmartAnalysis {
 
-    public static MockSmartAnalysis singleton() {
+    public static MockSmartAnalysis createMock() {
         MockSmartAnalysis data = new MockSmartAnalysis();
         int size = 30;
 
         data.setAssetCost(126000);
-        data.setAssetValue(10000);
-        data.setDebetGrowth(20000);
+        data.setAssetValue(50000);
+        data.setDebetGrowth(40000);
 
         List<String> date = new ArrayList<>();
         List<Double> assetsCostList = new ArrayList<>();
@@ -20,9 +20,9 @@ public class MockSmartAnalysis {
         List<Double> assetsValueList = new ArrayList<>();
         List<Integer> riskGradeList = new ArrayList<>();
         List<Integer> tradeStrategyList = new ArrayList<>();
-        List<Double> lsit1 = new ArrayList<>();
-        List<Double> lsit2 = new ArrayList<>();
-        List<Double> lsit3 = new ArrayList<>();
+        List<Double> list1 = new ArrayList<>();
+        List<Double> list2 = new ArrayList<>();
+        List<Double> list3 = new ArrayList<>();
 
         Random random = new Random();
 
@@ -35,9 +35,9 @@ public class MockSmartAnalysis {
 
             riskGradeList.add(i / 10);
             tradeStrategyList.add(i / 17);
-            lsit1.add(doubleValue);
-            lsit2.add(doubleValue);
-            lsit3.add(doubleValue);
+            list1.add(doubleValue);
+            list2.add(doubleValue);
+            list3.add(doubleValue);
         }
 
         data.setXList(date);
@@ -46,9 +46,9 @@ public class MockSmartAnalysis {
         data.setAssetValueIndexList(assetsValueList);
         data.setRiskGradeList(riskGradeList);
         data.setTradeStrategyList(tradeStrategyList);
-        data.setAssetValueSlopeList(lsit1);
-        data.setDebetSlopeList(lsit3);
-        data.setAssetCostSlopeList(lsit2);
+        data.setAssetValueSlopeList(list1);
+        data.setDebetSlopeList(list3);
+        data.setAssetCostSlopeList(list2);
 
         return data;
     }
