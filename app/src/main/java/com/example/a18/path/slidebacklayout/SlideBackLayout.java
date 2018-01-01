@@ -1,14 +1,16 @@
 package com.example.a18.path.slidebacklayout;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.widget.ViewDragHelper;
 import android.support.v4.widget.ViewDragHelper.Callback;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.a18.path.R;
 
@@ -20,31 +22,40 @@ public class SlideBackLayout extends FrameLayout {
     ViewDragHelper.Callback callback = new Callback() {
         @Override
         public int clampViewPositionHorizontal(View child, int left, int dx) {
-            Timber.d("dx = %s", dx);
+//            Timber.d("dx = %s", dx);
+//            Timber.d("left = %s", left);
+//            final int leftBound = getPaddingLeft();
+//            final int rightBound = getWidth() - child.getWidth();
+//            final int newLeft = Math.min(Math.max(left, leftBound), rightBound);
+//
+//            Timber.d("newLeft = %s", newLeft);
             Timber.d("left = %s", left);
-            final int leftBound = getPaddingLeft();
-            final int rightBound = getWidth() - child.getWidth();
-            final int newLeft = Math.min(Math.max(left, leftBound), rightBound);
-
-            Timber.d("newLeft = %s", newLeft);
-            return newLeft;
+            Timber.d("dx = %s", dx);
+            return left;
         }
 
         @Override
         public int getViewHorizontalDragRange(View child) {
-            return 100;
+            return child == slide ? child.getWidth() : 0;
         }
 
-
         @Override
-        public void onEdgeTouched(int edgeFlags, int pointerId) {
-            super.onEdgeTouched(edgeFlags, pointerId);
+        public void onViewReleased(View releasedChild, float xvel, float yvel) {
+            super.onViewReleased(releasedChild, xvel, yvel);
+            Timber.d("releasedChild.getLeft() = %s", releasedChild.getLeft());
 
+            if (releasedChild.getLeft() < releasedChild.getWidth()) {
+                Toast.makeText(releasedChild.getContext(), "<", Toast.LENGTH_SHORT).show();
+                viewDragHelper.settleCapturedViewAt(autoBackViewOriginLeft, autoBackViewOriginTop);
+                invalidate();
+            } else {
+                Toast.makeText(releasedChild.getContext(), "> or =", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override
         public void onEdgeDragStarted(int edgeFlags, int pointerId) {
-            viewDragHelper.captureChildView(slide,pointerId);
+            viewDragHelper.captureChildView(slide, pointerId);
         }
 
         @Override
@@ -53,6 +64,8 @@ public class SlideBackLayout extends FrameLayout {
         }
     };
     private View slide;
+    private int autoBackViewOriginLeft;
+    private int autoBackViewOriginTop;
 
     public SlideBackLayout(Context context) {
         this(context, null);
@@ -65,7 +78,7 @@ public class SlideBackLayout extends FrameLayout {
     public SlideBackLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        viewDragHelper = ViewDragHelper.create(this, 0.5f,callback);
+        viewDragHelper = ViewDragHelper.create(this, 0.5f, callback);
 
         viewDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT);
     }
@@ -74,8 +87,10 @@ public class SlideBackLayout extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         AppCompatImageView imageView = new AppCompatImageView(getContext());
-        imageView.setBackgroundResource(R.mipmap.ic_launcher_round);
-        imageView.setBackgroundColor(Color.RED);
+        LayoutParams params = new LayoutParams(300, ViewGroup.LayoutParams.MATCH_PARENT);
+        imageView.setLayoutParams(params);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        imageView.setImageResource(R.mipmap.ic_launcher_round);
         addView(imageView);
 
         Timber.d("getChildCount() = %s", getChildCount());
@@ -124,10 +139,22 @@ public class SlideBackLayout extends FrameLayout {
 
             slide.layout(slideLeft, slideTop, slideRight, slideBottom);
 
+            autoBackViewOriginLeft = slide.getLeft();
+            autoBackViewOriginTop = slide.getTop();
+
+            Timber.d("autoBackViewOriginLeft = %s", autoBackViewOriginLeft);
+            Timber.d("autoBackViewOriginTop = %s", autoBackViewOriginTop);
+
         } else {
             Timber.e("slide == null");
         }
 
     }
 
+    @Override
+    public void computeScroll() {
+        if (viewDragHelper.continueSettling(true)) {
+            invalidate();
+        }
+    }
 }
