@@ -65,7 +65,7 @@ public class Flipper extends ViewFlipper {
 
         removeAllViews();
         ViewGroup.LayoutParams params = new ViewPager.LayoutParams();
-        params.height = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = 100;
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
 
         for (String string : strings) {

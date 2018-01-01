@@ -24,11 +24,11 @@ public class $3D extends Animation {
     float scale = 1;    // <------- 像素密度
 
     /**
-     * Creates a new 3D rotation on the Y axis. The rotation is defined by its
+     * Creates MainActivity new 3D rotation on the Y axis. The rotation is defined by its
      * start angle and its end angle. Both angles are in degrees. The rotation
-     * is performed around a center point on the 2D space, definied by a pair
+     * is performed around MainActivity center point on the 2D space, definied by MainActivity pair
      * of X and Y coordinates, called centerX and centerY. When the animation
-     * starts, a translation on the Z axis (depth) is performed. The length
+     * starts, MainActivity translation on the Z axis (depth) is performed. The length
      * of the translation can be specified, as well as whether the translation
      * should be reversed in time.
      *

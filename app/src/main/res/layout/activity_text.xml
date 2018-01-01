@@ -25,8 +25,20 @@
     </com.example.a18.path.text.SmoothScrollLayout>
 
 
+    <EditText
+        android:id="@+id/et"
+        android:inputType="number"
+        android:text="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <Button
         android:id="@+id/btn"
+        android:text="animate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/print"
+        android:text="print"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

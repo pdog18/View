@@ -87,7 +87,7 @@ public class PieChartActivity extends AppCompatActivity {
         dataSet.setSelectionShift(5f);
         dataSet.setValueLineColor(Color.BLUE);
 
-        // add a lot of colors
+        // add MainActivity lot of colors
 
         ArrayList<Integer> colors = new ArrayList<Integer>();
 

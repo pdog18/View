@@ -1,16 +1,14 @@
 package com.example.a18.path.text;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.text.TextUtils;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.a18.path.R;
 
-import java.util.Random;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +19,8 @@ public class SmoothScrollActivity extends AppCompatActivity {
 
     @BindView(R.id.smooth)
     SmoothScrollLayout scrollLayout;
+    @BindView(R.id.et)
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,27 +29,38 @@ public class SmoothScrollActivity extends AppCompatActivity {
         setContentView(R.layout.activity_text);
         ButterKnife.bind(this);
 
-        Random random = new Random();
-        for (int i = 0; i < 100; i++) {
-            TextView textView = new TextView(this);
-            int color = random.nextInt(155) + 100;
+        String[] strings = {"333",
+            "222",
+            "4444",
+            "45325",
+            "44123544",
+            "44123544",
+            "4421544",
+            "666asd6",
+            "9999",};
+        SmoothAdapter adapter = new SmoothAdapter(Arrays.asList(strings));
 
-            textView.setBackgroundColor(Color.rgb(color,color,color));
-            textView.setText(i+ "");
-            if (i % 2 == 0) {
-                textView.setVisibility(View.GONE);
-            }
-            textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100));
-            scrollLayout.addView(textView);
-        }
-
-
+        scrollLayout.setAdapter(adapter);
+//        scrollLayout.setData(Arrays.asList(strings));
 
     }
 
     @OnClick(R.id.btn)
     void smooth() {
-        scrollLayout.smoothTo(20);
+        String s = editText.getText().toString();
+        if (TextUtils.isEmpty(s)) {
+            Toast.makeText(this, "empty", Toast.LENGTH_SHORT).show();
+        }
+
+        scrollLayout.smoothTo(Integer.valueOf(s));
+
+
+    }
+
+
+    @OnClick(R.id.print)
+    void print() {
+
     }
 
 }

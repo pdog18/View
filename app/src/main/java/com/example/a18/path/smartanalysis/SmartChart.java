@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import timber.log.Timber;
+
 import static com.example.a18.path.Utils.dp2px;
 
 /**
@@ -84,8 +86,6 @@ public class SmartChart extends View {
 
 
     private static final int ANIM_EXPOSE = 0;
-    private static final int ANIM_RISK_GRADE = 1;
-    private static final int ANIM_POLICY = 2;
     private static final int ANIM_BOUNCE = 3;
 
     private static final int PAGE_ASSETS = 0;
@@ -110,12 +110,12 @@ public class SmartChart extends View {
         animatorMap = new HashMap<>();
     }
 
-    private ChartDataHelper helper;
+    private ChartDataAdapter adapter;
     private int dataSize;
 
-    public void setData(ChartDataHelper helper) {
-        this.helper = helper;
-        this.dataSize = helper.getSize();
+    public void setAdapter(ChartDataAdapter adapter) {
+        this.adapter = adapter;
+        this.dataSize = adapter.getSize();
         createPaths();
     }
 
@@ -165,7 +165,7 @@ public class SmartChart extends View {
     private void checkGradeRangeChange(float touchX) {
 
         int last = gradeRangeIndex;
-        int curr = helper.getGradeByTouch(touchX < 0 ? 0 : touchX, cellWidth);
+        int curr = adapter.getGradeByTouch(touchX < 0 ? 0 : touchX, cellWidth);
         if (last != curr & gradeRangeChangeListener != null) {
             gradeRangeChangeListener.onGradeRangeChange(last, curr);
         }
@@ -193,35 +193,41 @@ public class SmartChart extends View {
             return;
         }
         rangeAnimation(newPage);
+
+        if (newPage == PAGE_BREAK) {
+            Timber.d("PAGE_BREAK = %s", PAGE_BREAK);
+            List<ChartDataAdapter.Arrow> breakArrow = adapter.getBreakArrow();
+        }
         currentPage = newPage;
     }
 
     //评级分区和策略分区的动画效果
-    private void rangeAnimation(int newPage) {
-        int last = currentPage;
-        int curr = newPage;
+    private void rangeAnimation(int currPage) {
+        int lastPage = currentPage;
 
         //需要隐藏动画
-        if (last == PAGE_RISK_GRADE || last == PAGE_POLICY) {
-            startRiskGradeRange(false, last);
+        if (lastPage == PAGE_RISK_GRADE || lastPage == PAGE_POLICY) {
+            Timber.d("rangeAnimation: 隐藏动画 ");
+            startRiskGradeRange(false, lastPage);
         }
 
         // 需要显示动画，那么就显示动画
-        if (curr == PAGE_RISK_GRADE || curr == PAGE_POLICY) {
-            startRiskGradeRange(true, curr);
+        if (currPage == PAGE_RISK_GRADE || currPage == PAGE_POLICY) {
+            Timber.d("rangeAnimation: 显示动画 ");
+            startRiskGradeRange(true, currPage);
         }
     }
 
     public void startRiskGradeRange(boolean show, int type) {
-        int time = 2000;
-        Paint paint;
-        ValueAnimator animator = animatorMap.get(type);
-        if (type == PAGE_RISK_GRADE) {
-            paint = gradePaint;
-        } else {
-            paint = policyPaint;
+        if (!show) {
+            Timber.d("startRiskGradeRange: ");
         }
+
+        int time = 2000;
+        ValueAnimator animator = animatorMap.get(type);
+        Paint paint = getPaint(type);
         int currAlpha = paint.getAlpha();
+        Timber.d("animator = %s", animator);
 
         if (animator != null && animator.isRunning()) {
             animator.cancel();
@@ -233,44 +239,52 @@ public class SmartChart extends View {
 
         ValueAnimator valueAnimator = getValueAnimator(show, time, paint, currAlpha);
         if (type == PAGE_RISK_GRADE) {
-            animatorMap.put(ANIM_RISK_GRADE, valueAnimator);
+            animatorMap.put(PAGE_RISK_GRADE, valueAnimator);
         } else {
-            animatorMap.put(ANIM_POLICY, valueAnimator);
+            animatorMap.put(PAGE_POLICY, valueAnimator);
         }
 
         valueAnimator.start();
+    }
+
+    private Paint getPaint(int type) {
+        Paint paint;
+        if (type == PAGE_RISK_GRADE) {
+            paint = gradePaint;
+        } else {
+            paint = policyPaint;
+        }
+        return paint;
     }
 
     @NonNull
     private ValueAnimator getValueAnimator(boolean show, int time, Paint paint, int currAlpha) {
         ValueAnimator animator = ValueAnimator.ofFloat(1)
                 .setDuration(time);
-        int finalCurrAlpha = currAlpha;
-        Paint finalPaint = paint;
         animator.addUpdateListener(animation -> {
-            if (!show && finalCurrAlpha == 0) {       //需要逐渐透明，并且当前已经透明
+            if (!show && currAlpha == 0) {       //需要逐渐透明，并且当前已经透明
                 return;
-            } else if (show && finalCurrAlpha == 255) {//需要逐渐显示，并且当前已经完全显示
+            } else if (show && currAlpha == 255) {//需要逐渐显示，并且当前已经完全显示
                 return;
             }
 
             float rate = (animation.getAnimatedFraction());
-            switch (finalCurrAlpha) {
+            switch (currAlpha) {
                 case 0:
-                    finalPaint.setAlpha((int) (255 * rate));
+                    paint.setAlpha((int) (255 * rate));
                     break;
                 case 255:
-                    finalPaint.setAlpha((int) (255 - 255 * rate));
+                    paint.setAlpha((int) (255 - 255 * rate));
                     break;
                 default:
                     if (!show) {
                         //finalCurr -> 0
-                        float v1 = (finalCurrAlpha) * (1.0f - rate);
-                        finalPaint.setAlpha((int) v1);
+                        float v1 = (currAlpha) * (1.0f - rate);
+                        paint.setAlpha((int) v1);
                     } else {
                         // finalCurr -> 255
-                        float v1 = (255 - finalCurrAlpha) * rate + finalCurrAlpha;
-                        finalPaint.setAlpha((int) v1);
+                        float v1 = (255 - currAlpha) * rate + currAlpha;
+                        paint.setAlpha((int) v1);
                     }
                     break;
             }
@@ -289,7 +303,7 @@ public class SmartChart extends View {
         super.onDetachedFromWindow();
     }
 
-    public void exposeChart() {
+    private void exposeChart() {
         ValueAnimator exposeAnimation = ValueAnimator.ofFloat(1.0f);
         exposeAnimation.setDuration(2000);
         exposeAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -307,7 +321,6 @@ public class SmartChart extends View {
 
         animatorMap.put(ANIM_EXPOSE, exposeAnimation);
         exposeAnimation.start();
-
     }
 
     //slideblock 弹动
@@ -336,9 +349,9 @@ public class SmartChart extends View {
             return;
         }
 
-        chartPaths.add(helper.buildPath(helper.getLists(0), cellWidth, chartRegionHeight));       //抵押资产
-        chartPaths.add(helper.buildPath(helper.getLists(1), cellWidth, chartRegionHeight));       //债权
-        chartPaths.add(helper.buildPath(helper.getLists(2), cellWidth, chartRegionHeight));       //资金成本
+        chartPaths.add(adapter.buildPath(adapter.getLists(0), cellWidth, chartRegionHeight));       //抵押资产
+        chartPaths.add(adapter.buildPath(adapter.getLists(1), cellWidth, chartRegionHeight));       //债权
+        chartPaths.add(adapter.buildPath(adapter.getLists(2), cellWidth, chartRegionHeight));       //资金成本
     }
 
     private void initPoint() {
@@ -368,7 +381,7 @@ public class SmartChart extends View {
 
     private void updateRoundRect(float x) {
         //顶部的 圆角矩形内容会发生改变
-        String dateAtIndex = helper.getDateAtIndex(x, cellWidth);
+        String dateAtIndex = adapter.getDateAtIndex(x, cellWidth);
         float textWidth = textPaint.measureText(dateAtIndex) + dp2px(10);
         float offset = 0;
 
@@ -442,19 +455,19 @@ public class SmartChart extends View {
         canvas.translate(leftGap, getHeight() - bottomGap);
         drawCoordinateSystem(canvas);
 
-        if (helper == null) {
+        if (adapter == null) {
             return;
         }
         canvas.clipRect(animateClipRect);
         drawDashPaths(canvas);
         drawSolidPaths(canvas);
 
-        if (currentPage == PAGE_RISK_GRADE) {
-            drawRiskGradeRange(canvas, helper.getRiskGradeMap(), gradePaint);
-        }
-
-        if (currentPage == PAGE_POLICY) {
-            drawPolicyRange(canvas, helper.getPolicyMap(), policyPaint);
+        // Notice: 不可以对绘制添加PAGE对限制，如果添加了，那么 透明度从255 —> 0 的动画效果将没有效果
+        drawRiskGradeRange(canvas, adapter.getRiskGradeMap(), gradePaint);
+        drawPolicyRange(canvas, adapter.getPolicyMap(), policyPaint);
+        //PAGE 4 当前处于突破页
+        if (currentPage == PAGE_BREAK) {
+            drawBreakArrow(canvas);
         }
 
         canvas.restoreToCount(save);
@@ -463,23 +476,30 @@ public class SmartChart extends View {
         drawSlide(canvas);
     }
 
-    private void drawRiskGradeRange(Canvas canvas, List<ChartDataHelper.Range> ranges, Paint paint) {
+    private void drawBreakArrow(Canvas canvas) {
+        for (ChartDataAdapter.Arrow arrow : adapter.getBreakArrow()) {
+            canvas.drawPoint(arrow.x, arrow.y, slideBlockPaint);
+        }
+
+    }
+
+    private void drawRiskGradeRange(Canvas canvas, List<ChartDataAdapter.Range> ranges, Paint paint) {
         drawRange(canvas, ranges, paint);
     }
 
-    private void drawPolicyRange(Canvas canvas, List<ChartDataHelper.Range> policyMap, Paint paint) {
+    private void drawPolicyRange(Canvas canvas, List<ChartDataAdapter.Range> policyMap, Paint paint) {
         drawRange(canvas, policyMap, paint);
     }
 
-    private void drawRange(Canvas canvas, List<ChartDataHelper.Range> ranges, Paint paint) {
+    private void drawRange(Canvas canvas, List<ChartDataAdapter.Range> ranges, Paint paint) {
         int height = getHeight();
 
-        for (ChartDataHelper.Range range : ranges) {
+        for (ChartDataAdapter.Range range : ranges) {
             int endIndex = range.endIndex;
             canvas.drawLine(endIndex * cellWidth, 0, endIndex * cellWidth, -height, paint);
         }
 
-        for (ChartDataHelper.Range range : ranges) {
+        for (ChartDataAdapter.Range range : ranges) {
             int endIndex = range.endIndex;
             int startIndex = range.startIndex;
             float centerX = (endIndex * cellWidth - startIndex * cellWidth) / 2 + startIndex * cellWidth;
@@ -538,6 +558,7 @@ public class SmartChart extends View {
             drawValueOnLine(canvas);
         }
 
+
         canvas.restore();
     }
 
@@ -547,7 +568,7 @@ public class SmartChart extends View {
 
         for (int i = 0; i < 3; i++) {
             textPaint.setColor(colors[i]);
-            String value = String.valueOf(helper.getLists(i)[index]);
+            String value = String.valueOf(adapter.getLists(i)[index]);
             float length = textPaint.measureText(value);
 
             if (touchX < length) {
@@ -555,7 +576,7 @@ public class SmartChart extends View {
             } else {
                 textPaint.setTextAlign(Paint.Align.RIGHT);
             }
-            float acrossY = helper.getHeightOnPath(touchX, cellWidth, i, chartRegionHeight);
+            float acrossY = adapter.getHeightOnPath(touchX, cellWidth, i, chartRegionHeight);
             canvas.drawText(value, touchX, acrossY, textPaint);
         }
     }
@@ -570,7 +591,7 @@ public class SmartChart extends View {
         paint.setColor(mainBlue);
         float abs = Math.abs(topRect.right) - Math.abs(topRect.left);
         int centerX = (int) (abs / 2);
-        canvas.drawText(helper.getDateAtIndex(touchPointOfChart.x, cellWidth), centerX, topRect.bottom - topRect.height() / 4, paint);
+        canvas.drawText(adapter.getDateAtIndex(touchPointOfChart.x, cellWidth), centerX, topRect.bottom - topRect.height() / 4, paint);
     }
 
 
@@ -619,10 +640,10 @@ public class SmartChart extends View {
         canvas.translate(leftGap, getHeight() - dp2px(15));
         textPaint.setColor(textColor);
         textPaint.setTextAlign(Paint.Align.LEFT);
-        canvas.drawText(helper.getStartDate(), 0, 0, textPaint);
+        canvas.drawText(adapter.getStartDate(), 0, 0, textPaint);
         textPaint.setTextAlign(Paint.Align.RIGHT);
         canvas.translate(chartRegionWidth, 0);
-        canvas.drawText(helper.getEndDate(), 0, 0, textPaint);
+        canvas.drawText(adapter.getEndDate(), 0, 0, textPaint);
         canvas.restore();
     }
 

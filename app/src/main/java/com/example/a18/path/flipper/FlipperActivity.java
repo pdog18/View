@@ -22,7 +22,7 @@ public class FlipperActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flipper);
 
-        mFlipper = (Flipper) findViewById(R.id.flipper);
+        mFlipper = findViewById(R.id.flipper);
 
 
         mFlipper.setDuration(300)

@@ -9,7 +9,7 @@
 
     <com.example.a18.path.flipper.Flipper android:id="@+id/flipper"
              android:layout_width="match_parent"
-             android:layout_height="50dp"
+             android:layout_height="300px"
     />
 
 

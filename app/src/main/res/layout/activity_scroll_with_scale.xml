@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/restart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <com.example.a18.path.smoothscroll.SmoothScrollWithScaleLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/smooth_scale"
+        android:gravity="center_horizontal"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="11111221"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <TextView
+            android:text="222222222"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+        <TextView
+            android:text="33333"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+        <TextView
+            android:text="444444444"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+        
+    </com.example.a18.path.smoothscroll.SmoothScrollWithScaleLayout>
+
+
+</LinearLayout>

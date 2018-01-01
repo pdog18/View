@@ -12,7 +12,7 @@ import timber.log.Timber;
 /**
  * Chart数据的帮助类，帮助解析服务器返回的数据。
  */
-public class ChartDataHelper {
+public class ChartDataAdapter {
 
     private int size;
 
@@ -29,10 +29,10 @@ public class ChartDataHelper {
     private double topMost;
     private double bottomEnd;
 
-    private int chartLeftGap;
+    private List<Arrow> arrows;
 
-    public ChartDataHelper(MockSmartAnalysis mockdata, SmartChart chart) {
-        chartLeftGap = chart.getLeftGap();
+
+    public ChartDataAdapter(MockSmartAnalysis mockdata) {
 
         size = checkDataSize(mockdata);
 
@@ -42,6 +42,12 @@ public class ChartDataHelper {
         lists.add(getValueByRate(mockdata.getAssetCost(), mockdata.getAssetValueIndexList()));
         lists.add(getValueByRate(mockdata.getDebetGrowth(), mockdata.getDebetIndexList()));
         lists.add(getValueByRate(mockdata.getAssetValue(), mockdata.getAssetValueIndexList()));
+
+
+        //模拟 曲线有交叉点
+        for (int i = 0; i < 10; i++) {
+            lists.get(2)[10 + i] *= 4;
+        }
 
         //初始化评级分区和策略分区
         riskGradeMap = makeRange(mockdata.getRiskGradeList());
@@ -66,7 +72,7 @@ public class ChartDataHelper {
     }
 
     /**
-     * 这个方法会创建一个 Range的集合 ，集合中顺序存储评级有改变的时候的索引
+     * 这个方法会创建一个 Range的集合 ，集合中顺序存储评级/策略有改变的时候的索引
      *
      * @param list
      */
@@ -179,6 +185,7 @@ public class ChartDataHelper {
 
     /**
      * 和#valueMap ,不同的是，这里使用的在图表中的像素高度
+     *
      * @return
      */
     private int valueMapAtChart(double before, float chartRegionHeight) {
@@ -194,14 +201,14 @@ public class ChartDataHelper {
      * @param type   对应的path
      * @return
      */
-    public float getHeightOnPath( float touchX,float cellWidth,int type, float chartRegionHeight) {
+    public float getHeightOnPath(float touchX, float cellWidth, int type, float chartRegionHeight) {
         PointF[] points = getPointFList(type);
 
         // 如果处在最右边，那么返回最后一个坐标的高度
-        if (getCellIndex(touchX,cellWidth) == size - 1) {
+        if (getCellIndex(touchX, cellWidth) == size - 1) {
             return points[size - 1].y;
         } else {
-            int index = getCellIndex(touchX,cellWidth);
+            int index = getCellIndex(touchX, cellWidth);
             PointF leftPoint = points[index];
             PointF rightPoint = points[index + 1];
 
@@ -247,11 +254,78 @@ public class ChartDataHelper {
     /**
      * 6. 根据当前的触摸点，获得触摸点处的[突破]
      *
-     * @param touchX
      * @return
      */
-    public float getBreakByTouch(float touchX) {
-        return 0;
+    public List<Arrow> getBreakArrow() {
+        if (this.arrows != null) {
+            return this.arrows;
+        }
+
+        PointF[] pointTop = pointFList.get(0);
+        PointF[] pointMid = pointFList.get(1);
+        PointF[] pointBtm = pointFList.get(2);
+
+        this.arrows = new ArrayList<>();
+        List<Arrow> arrows = this.arrows;
+
+        findArrows(pointTop, pointMid, arrows);// 1 和 2 的交叉点
+        findArrows(pointTop, pointBtm, arrows);// 1 和 3 的交叉点
+        findArrows(pointMid, pointBtm, arrows);// 2 和 3 的交叉点
+
+        return arrows;
+    }
+
+    private void findArrows(PointF[] pointTop, PointF[] pointMid, List<Arrow> arrows) {
+        for (int i = 0; i < size - 1; i++) {
+            PointF firstLeft = pointTop[i];
+            PointF firstRight = pointTop[i + 1];
+            PointF secondLeft = pointMid[i];
+            PointF secondRight = pointMid[i + 1];
+
+            if (isAcrossed(firstLeft, firstRight, secondLeft, secondRight)) {
+                Arrow arrow = createArrow(firstLeft, firstRight, secondLeft, secondRight);
+                arrows.add(arrow);
+            }
+        }
+    }
+
+    private Arrow createArrow(PointF firstLeft, PointF firstRight, PointF secondLeft, PointF secondRight) {
+        //两点确定一条直线，已知四个点确定的两条直线，求这两条直线的交点
+        //http://blog.csdn.net/risemypassion/article/details/4646664
+        float x0 = firstLeft.x;
+        float y0 = firstLeft.y;
+        float x1 = firstRight.x;
+        float y1 = firstRight.y;
+
+        float x3 = secondLeft.x;
+        float y3 = secondLeft.y;
+        float x2 = secondRight.x;
+        float y2 = secondRight.y;
+
+        float y = ((y0 - y1) * (y3 - y2) * x0 + (y3 - y2) * (x1 - x0) * y0 + (y1 - y0) * (y3 - y2)
+                * x2 + (x2 - x3) * (y1 - y0) * y2) / ((x1 - x0) * (y3 - y2) + (y0 - y1) * (x3 - x2));
+
+        float x = x2 + (x3 - x2) * (y - y2) / (y3 - y2);
+
+//        float y = ((firstLeft.y - firstRight.y) * (secondLeft.y - secondRight.y) * firstLeft.x
+//                + (secondLeft.y - secondRight.y) * (firstRight.x - firstLeft.x) * firstLeft.y
+//                + (firstRight.y - firstLeft.y) * (secondLeft.y - secondRight.y) * secondRight.x
+//                + (secondRight.x - secondLeft.x) * (firstRight.y - firstLeft.y) * secondRight.y)
+//                / ((firstRight.x - firstLeft.x) * (secondLeft.y - secondRight.y)
+//                + (firstLeft.y - firstRight.y) * (secondLeft.x - secondRight.x));
+//
+//        float x = secondRight.x + (secondLeft.x-secondRight.x)*(y-secondRight.y) / (secondLeft.y-secondRight.y);
+        // FIXME: 2017/12/24  这个degree需要根据业务进行判断，需要对传入的point数组顺序有要求
+        int degree = firstLeft.x > secondLeft.x ? 90 : 270;
+        return new Arrow(x, y, degree);
+    }
+
+    private boolean isAcrossed(PointF firstLeft, PointF firstRight,
+                               PointF secondLeft, PointF secondRight) {
+        //因为这里的y都是负数，所以是相反的
+        return (firstLeft.y < secondLeft.y && firstRight.y > secondRight.y)
+                || (firstLeft.y > secondLeft.y && firstRight.y < secondRight.y);
+
     }
 
 
@@ -293,6 +367,7 @@ public class ChartDataHelper {
     public double getTopmost() {
         return topMost;
     }
+
     public double getTopmostAfterMapping() {
         return topmostAfterMapping;
     }
@@ -330,6 +405,21 @@ public class ChartDataHelper {
 
         public void setGrade(int grade) {
             this.grade = grade;
+        }
+    }
+
+    /**
+     * 突破使用的箭头，记录了坐标和角度
+     */
+    static class Arrow {
+        float x;
+        float y;
+        int degree;
+
+        public Arrow(float x, float y, int degree) {
+            this.x = x;
+            this.y = y;
+            this.degree = degree;
         }
     }
 }
