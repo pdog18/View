@@ -1,23 +1,15 @@
 package com.example.a18.path.piechart;
 
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.a18.path.R;
-import com.example.a18.path.SpanUtils;
-import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.*;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.MPPointF;
 
 import java.util.ArrayList;
 
@@ -48,13 +40,12 @@ public class PieChartActivity extends AppCompatActivity {
 
         mChart.setUsePercentValues(true);
         mChart.getDescription().setEnabled(false);
-        mChart.setExtraOffsets(5, 10, 5, 5);
 
         mChart.setDragDecelerationFrictionCoef(0.95f);
 
         mChart.setCenterText(generateCenterSpannableText());
 
-        mChart.setExtraOffsets(20.f, 0.f, 20.f, 0.f);
+        mChart.setExtraOffsets(40.f, 0.f, 20.f, 0.f);
 
         mChart.setHoleRadius(58f);
         mChart.setTransparentCircleRadius(61f);

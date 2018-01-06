@@ -223,7 +223,7 @@ public class SmartChart extends View {
             Timber.d("startRiskGradeRange: ");
         }
 
-        int time = 2000;
+        int time = 1000;
         ValueAnimator animator = animatorMap.get(type);
         Paint paint = getPaint(type);
         int currAlpha = paint.getAlpha();
@@ -232,7 +232,7 @@ public class SmartChart extends View {
         if (animator != null && animator.isRunning()) {
             animator.cancel();
             //修正接下来的动画时长
-            time = (int) (animator.getAnimatedFraction() * 2000);
+            time = (int) (animator.getAnimatedFraction() * 1000);
             currAlpha = paint.getAlpha();
             animatorMap.remove(type);
         }
@@ -329,7 +329,7 @@ public class SmartChart extends View {
         touchPointOfChart = new PointF(chartRegionWidth, 0);
 
         ValueAnimator bounceAnimation = ValueAnimator.ofFloat(1.0f);
-        bounceAnimation.setDuration(2000);
+        bounceAnimation.setDuration(1000);
         bounceAnimation.setInterpolator(new OvershootInterpolator(3));
         bounceAnimation.addUpdateListener(animation -> {
             float v = animation.getAnimatedFraction();
@@ -409,7 +409,7 @@ public class SmartChart extends View {
         slideBlockPaint.setColor(Color.WHITE);
         slideBlockPaint.setStrokeWidth(blockRadius);
         slideBlockPaint.setStrokeCap(Paint.Cap.ROUND);
-        slideBlockPaint.setShadowLayer(dp2px(2), dp2px(2), dp2px(2), Color.BLACK);
+        slideBlockPaint.setShadowLayer(dp2px(3), 0, dp2px(3), Color.parseColor("#3e7de7"));
 
         linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         linePaint.setStrokeWidth(dp2px(2));
