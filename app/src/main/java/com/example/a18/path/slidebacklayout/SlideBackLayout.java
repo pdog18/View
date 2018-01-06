@@ -57,7 +57,7 @@ public class SlideBackLayout extends FrameLayout {
                         releasedChild.setAlpha(1);
                     })
                     .start();
-            }else {
+            } else {
                 Toast.makeText(releasedChild.getContext(), "return", Toast.LENGTH_SHORT).show();
                 viewDragHelper.settleCapturedViewAt(-releasedChild.getWidth(), releasedChild.getTop());
                 invalidate();
@@ -74,9 +74,6 @@ public class SlideBackLayout extends FrameLayout {
             return false;
         }
     };
-    private int autoBackViewOriginLeft;
-    private int autoBackViewOriginTop;
-    private AppCompatImageView leftChild;
 
     public SlideBackLayout(Context context) {
         this(context, null);
@@ -93,11 +90,15 @@ public class SlideBackLayout extends FrameLayout {
         viewDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT);
     }
 
+    private AppCompatImageView leftChild;
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         leftChild = new AppCompatImageView(getContext());
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.MATCH_PARENT);
         leftChild.setLayoutParams(params);
         leftChild.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         leftChild.setImageResource(R.mipmap.slideback);
@@ -123,8 +124,6 @@ public class SlideBackLayout extends FrameLayout {
         if (getChildCount() > 2) {
             throw new IndexOutOfBoundsException("getChildCount() > 2");
         }
-
-
 
 
         if (leftChild != null) {

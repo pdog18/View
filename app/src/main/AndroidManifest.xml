@@ -83,7 +83,8 @@
         <activity android:name=".constraintlayout.ConstraintLayoutActivity" />
         <activity android:name=".smoothscroll.ScorllActivity" />
         <activity android:name=".slidebacklayout.SlideBackActivity" />
-        <activity android:name=".card.CardHeightActivity"></activity>
+        <activity android:name=".card.CardHeightActivity" />
+        <activity android:name=".fluidslider.FluidSliderActivity"></activity>
     </application>
 
 </manifest>
