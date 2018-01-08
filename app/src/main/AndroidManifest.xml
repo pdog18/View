@@ -81,7 +81,6 @@
         <activity android:name=".smartanalysis.SmartAnalysisActivity" />
         <activity android:name=".text.SmoothScrollActivity" />
         <activity android:name=".constraintlayout.ConstraintLayoutActivity" />
-        <activity android:name=".smoothscroll.ScorllActivity" />
         <activity android:name=".slidebacklayout.SlideBackActivity" />
         <activity android:name=".card.CardHeightActivity" />
         <activity android:name=".fluidslider.FluidSliderActivity"></activity>
