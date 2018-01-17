@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -26,7 +25,6 @@ public class NumberAnim2 extends View {
         numbers = new int[11];
         for (int i = 0; i < numbers.length; i++) {
             numbers[i] = (number + i) % 10;
-            Log.e(TAG, "setNumber:  " + numbers[i] );
         }
     }
 }

@@ -21,10 +21,8 @@ import timber.log.Timber;
 
 public class ViewPagerFragmentActivity extends AppCompatActivity {
 
-
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

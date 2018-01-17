@@ -11,14 +11,15 @@ public class NumberActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number);
-        final NumberAnim numberAnim = (NumberAnim) findViewById(R.id.na);
-         NumberAnim2 view = (NumberAnim2) findViewById(R.id.num2);
 
 
+        try {
+            Encryption.main1();
+        } catch (Exception e) {
+            e.printStackTrace();
 
+        }
 
-        ScrollNumber scroll3 = (ScrollNumber) findViewById(R.id.scroll3);
-        scroll3.post(scroll3 :: startScroll);
     }
 
 }

@@ -9,9 +9,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-/**
- * Created by machao on 2017/11/20.
- */
 
 public class ScrollNumber extends View {
 
