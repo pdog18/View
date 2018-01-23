@@ -6,4 +6,4 @@
 
 
 
-![image](https://github.com/pdog18/View/blob/master/device-2017-11-07-094259.png)
+![image](https://github.com/pdog18/View/blob/master/seekbar.gif)
