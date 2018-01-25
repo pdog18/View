@@ -84,7 +84,8 @@
         <activity android:name=".slidebacklayout.SlideBackActivity" />
         <activity android:name=".card.CardHeightActivity" />
         <activity android:name=".fluidslider.FluidSliderActivity" />
-        <activity android:name=".viewpagertest.ViewPagerFragmentActivity"></activity>
+        <activity android:name=".viewpagertest.ViewPagerFragmentActivity" />
+        <activity android:name=".looplogger.LoopLoggerActivity"></activity>
     </application>
 
 </manifest>
