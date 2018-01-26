@@ -2,6 +2,7 @@ package com.example.a18.path.transition;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.transition.Slide;
 import android.support.transition.TransitionManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +24,7 @@ public class LifelineFragment extends BaseFragment {
     ViewGroup transitions_container;
     @BindView(R.id.linearlayout)
     View linearlayout;
-    private boolean visible;
+    private boolean visible = true;
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
@@ -43,7 +44,7 @@ public class LifelineFragment extends BaseFragment {
     @OnClick(R.id.button)
     void button() {
         Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
-        TransitionManager.beginDelayedTransition(transitions_container);
+        TransitionManager.beginDelayedTransition(transitions_container,new Slide().setDuration(300));
         linearlayout.setVisibility((visible ^= true) ? View.VISIBLE : View.GONE);
     }
 }

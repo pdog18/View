@@ -19,7 +19,7 @@ public class SimpleRecyclerViewAdapter extends BaseQuickAdapter<Integer, BaseVie
     }
 
     public SimpleRecyclerViewAdapter() {
-        super(R.layout.text, data);
+        super(R.layout.item, data);
         Timber.d("data.size() = %s", data.size());
     }
 

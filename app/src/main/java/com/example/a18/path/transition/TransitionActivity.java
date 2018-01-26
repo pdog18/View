@@ -13,6 +13,8 @@ import com.example.a18.path.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
+
 public class TransitionActivity extends AppCompatActivity {
 
     @BindView(R.id.tab_layout)
@@ -43,6 +45,7 @@ public class TransitionActivity extends AppCompatActivity {
 
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(MODE_SCROLLABLE);
     }
 
      class MyAdapter extends FragmentPagerAdapter {

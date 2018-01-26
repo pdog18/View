@@ -29,6 +29,6 @@ public class AutoFragment extends BaseFragment {
     @OnClick(R.id.button)
     void button() {
         TransitionManager.beginDelayedTransition(transitions_container);
-        textView.setVisibility((visible ^= true) ? View.VISIBLE : View.GONE);
+        textView.setVisibility((visible = !visible) ? View.VISIBLE : View.GONE);
     }
 }
