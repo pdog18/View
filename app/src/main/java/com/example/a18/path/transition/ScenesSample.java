@@ -95,6 +95,7 @@ public class ScenesSample extends BaseFragment implements RadioGroup.OnCheckedCh
                 break;
             }
             case R.id.select_scene_3: {
+                TransitionManager.go(mScene2);
                 // You can also start a transition with a custom TransitionManager.
 //                mTransitionManagerForScene3.transitionTo(mScene3);
                 break;
