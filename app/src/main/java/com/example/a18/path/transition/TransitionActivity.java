@@ -27,8 +27,10 @@ public class TransitionActivity extends AppCompatActivity {
         new ChangeBoundsFragment(),
         new PathFragment(),
         new SlideSample(),
-        new ScaleSample()
+        new ScaleSample(),
+        new ScenesSample()
     };
+
     
 
 
