@@ -24,6 +24,7 @@ public class TransitionActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     Fragment[] fragments = {
+        new ConstrainSetFragment(),
         new LifelineFragment(),
         new AutoFragment(),
         new ChangeBoundsFragment(),
