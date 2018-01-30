@@ -1,29 +1,56 @@
 package com.example.a18.path.transition;
 
+import android.graphics.Rect;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.transition.TransitionManager;
+import android.support.v4.view.ViewCompat;
+import android.view.View;
 
 import com.example.a18.path.BaseFragment;
 import com.example.a18.path.R;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 
 public class ConstrainSetFragment extends BaseFragment {
 
     @BindView(R.id.transitions_container)
     ConstraintLayout transitions_container;
-//    @BindView(R.id.text)
+    //    @BindView(R.id.text)
 //    TextView textView;
-    private boolean visible;
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_constrain_set;
     }
 
+    @BindView(R.id.view)
+    View view;
+    @BindView(R.id.frameLayout)
+    View frameLayout;
+
+    @RequiresApi(23)
+    @OnClick(R.id.view)
+    void setClipBounds() {
+        Rect sourceRect = new Rect();
+        view.getClipBounds(sourceRect);
+        Timber.d("sourceRect = %s", sourceRect);
+
+        Rect rect = new Rect(-500, -500, 1200, 1200);
+        ViewCompat.setClipBounds(frameLayout,rect);
+        ViewCompat.setClipBounds(view, rect);
+
+        Timber.d("rect = %s", rect);
+
+        view.getClipBounds(sourceRect);
+        Timber.d("sourceRect = %s", sourceRect);
+
+
+    }
 
     @OnClick(R.id.button3)
     void button() {
