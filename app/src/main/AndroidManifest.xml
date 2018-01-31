@@ -86,7 +86,8 @@
         <activity android:name=".fluidslider.FluidSliderActivity" />
         <activity android:name=".viewpagertest.ViewPagerFragmentActivity" />
         <activity android:name=".looplogger.LoopLoggerActivity" />
-        <activity android:name=".transition.TransitionActivity"></activity>
+        <activity android:name=".transition.TransitionActivity" />
+        <activity android:name=".notifycationtest.NotifyActivity"></activity>
     </application>
 
 </manifest>
