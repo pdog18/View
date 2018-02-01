@@ -63,7 +63,6 @@
         <activity android:name=".scrollchart.ScrollChartActivity" />
         <activity android:name=".motionevent.MotionEventActivity" />
         <activity android:name=".cardviewpager.CardViewPagerActivity" />
-        <activity android:name=".flexbox.FlexboxActivity" />
         <activity android:name=".cardrecyclerview.CardRecyclerviewActivity" />
         <activity android:name=".piechart.PieChartActivity" />
         <activity android:name=".map.MapActivity" />
@@ -80,9 +79,7 @@
         <activity android:name=".text.SmoothScrollActivity" />
         <activity android:name=".constraintlayout.ConstraintLayoutActivity" />
         <activity android:name=".slidebacklayout.SlideBackActivity" />
-        <activity android:name=".card.CardHeightActivity" />
         <activity android:name=".fluidslider.FluidSliderActivity" />
-        <activity android:name=".viewpagertest.ViewPagerFragmentActivity" />
         <activity android:name=".looplogger.LoopLoggerActivity" />
         <activity android:name=".transition.TransitionActivity" />
         <activity android:name=".notifycationtest.NotifyActivity" />

@@ -7,8 +7,6 @@ import android.util.Log;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import timber.log.Timber;
-
 public class LogMonitor {
     private final static String TAG = LogMonitor.class.getSimpleName();
     private static HandlerThread mLogThread = new HandlerThread("log");
@@ -21,17 +19,14 @@ public class LogMonitor {
         mIoHandler = new Handler(mLogThread.getLooper());
     }
 
-    private static Runnable mLogRunnable = new Runnable() {
-        @Override
-        public void run() {
-            StringBuilder sb = new StringBuilder();
-            StackTraceElement[] stackTrace = mLogThread.getStackTrace();
+    private static Runnable mLogRunnable = () -> {
+        StringBuilder sb = new StringBuilder();
+        StackTraceElement[] stackTrace = mLogThread.getStackTrace();
 
-            for (StackTraceElement s : stackTrace) {
-                sb.append(s.toString()).append("\n");
-            }
-            Log.e(TAG, sb.toString());
+        for (StackTraceElement s : stackTrace) {
+            sb.append(s.toString()).append("\n");
         }
+        Log.e(TAG, sb.toString());
     };
 
     public static LogMonitor getInstance() {
