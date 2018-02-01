@@ -87,7 +87,8 @@
         <activity android:name=".viewpagertest.ViewPagerFragmentActivity" />
         <activity android:name=".looplogger.LoopLoggerActivity" />
         <activity android:name=".transition.TransitionActivity" />
-        <activity android:name=".notifycationtest.NotifyActivity"></activity>
+        <activity android:name=".notifycationtest.NotifyActivity" />
+        <activity android:name=".rxjavaoperator.RxJavaOperatorActivity"></activity>
     </application>
 
 </manifest>
