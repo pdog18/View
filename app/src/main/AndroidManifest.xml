@@ -57,7 +57,6 @@
         <activity android:name=".patcheffect.PathEffectActivity" />
         <activity android:name=".number.NumberActivity" />
         <activity android:name=".scratchview.ScratchActivity" />
-        <activity android:name=".jxyview.JxyActivity" />
         <activity android:name=".retrofitrequest.RetrofitActivity" />
         <activity android:name=".proterduff.ProterDuffActivity" />
         <activity android:name=".arcseekbar.ArcSeekbarActivity" />
@@ -87,7 +86,7 @@
         <activity android:name=".looplogger.LoopLoggerActivity" />
         <activity android:name=".transition.TransitionActivity" />
         <activity android:name=".notifycationtest.NotifyActivity" />
-        <activity android:name=".rxjavaoperator.RxJavaOperatorActivity"></activity>
+        <activity android:name=".rxjavaoperator.RxJavaOperatorActivity"/>
     </application>
 
 </manifest>

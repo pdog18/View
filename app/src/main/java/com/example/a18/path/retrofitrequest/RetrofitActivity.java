@@ -9,6 +9,7 @@ import com.example.a18.path.R;
 import java.util.HashMap;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,9 +24,8 @@ public class RetrofitActivity extends AppCompatActivity implements Callback<Stri
 
     {
         OkHttpClient client = new OkHttpClient.Builder()
-//                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .followRedirects(false)
-
                 .build();
 
         retrofit = new Retrofit.Builder()
