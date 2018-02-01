@@ -14,20 +14,12 @@ public class ArcSeekbarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_arc_seekbar);
 
 
-        ArcSeekbar seekbar = (ArcSeekbar) findViewById(R.id.dv);
-        seekbar.setOnProgressChangeListener(new ArcSeekbar.ProgressChangeListener() {
-            @Override
-            public void onProgressChanged(float percent) {
-                Toast.makeText(ArcSeekbarActivity.this, "percent = " + percent, Toast.LENGTH_SHORT).show();
-            }
-        });
+        ArcSeekbar seekbar = findViewById(R.id.dv);
+        seekbar.setOnProgressChangeListener(percent -> Toast.makeText(ArcSeekbarActivity.this, "percent = " + percent, Toast.LENGTH_SHORT).show());
 
-        findViewById(R.id.dv).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                seekbar.setCellCount(5);
-            }
-        },3000);
+        findViewById(R.id.dv).postDelayed(() -> seekbar.setCellCount(5),3000);
 
+
+        ArcView arcView = findViewById(R.id.arcseekbar2);
     }
 }
