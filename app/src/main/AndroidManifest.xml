@@ -83,7 +83,8 @@
         <activity android:name=".looplogger.LoopLoggerActivity" />
         <activity android:name=".transition.TransitionActivity" />
         <activity android:name=".notifycationtest.NotifyActivity" />
-        <activity android:name=".rxjavaoperator.RxJavaOperatorActivity"/>
+        <activity android:name=".rxjavaoperator.RxJavaOperatorActivity" />
+        <activity android:name=".overscroll.OverScrollActivity" />
     </application>
 
 </manifest>

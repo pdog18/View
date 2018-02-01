@@ -2,9 +2,6 @@ package com.example.a18.path.looplogger;
 
 import android.view.Choreographer;
 
-/**
- * Created by pdog on 2018/1/25.
- */
 
 public class BlockDetectByChoreographer {
     public static void start() {
