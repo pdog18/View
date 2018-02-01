@@ -114,20 +114,20 @@ public class ArcView extends View {
     }
 
     private void drawBitmap(Canvas canvas) {
-        int degrees = 90;
+        int degrees = 0;
         canvas.save();
         canvas.rotate(degrees);
-        canvas.drawBitmap(drawable, halfWidth, 0, null);
+        canvas.drawBitmap(drawable, 0, halfWidth, paint);
         canvas.restore();
 
         canvas.save();
         canvas.rotate(degrees - 30);
-        canvas.drawBitmap(drawable, halfWidth, 0, null);
+        canvas.drawBitmap(drawable, 0, halfWidth, null);
         canvas.restore();
 
         canvas.save();
         canvas.rotate(degrees - 60);
-        canvas.drawBitmap(drawable, halfWidth, 0, null);
+        canvas.drawBitmap(drawable, 0, halfWidth, null);
         canvas.restore();
     }
 }
