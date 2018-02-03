@@ -3,9 +3,8 @@ package com.example.a18.path.adbconnect;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.example.a18.path.R;
@@ -17,7 +16,6 @@ public class AdbConnectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adb_connect);
         TextView textView = (TextView) findViewById(R.id.tv);
-
 
         //获取wifi服务
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
