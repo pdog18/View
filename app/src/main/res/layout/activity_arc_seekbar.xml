@@ -12,6 +12,10 @@
         android:background="@color/colorPrimary"
         android:layout_height="200dp" />
 
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
     <com.example.a18.path.arcseekbar.ArcView

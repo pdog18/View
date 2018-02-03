@@ -1,7 +1,7 @@
 package com.example.a18.path.arcseekbar;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.example.a18.path.R;
@@ -21,5 +21,7 @@ public class ArcSeekbarActivity extends AppCompatActivity {
 
 
         ArcView arcView = findViewById(R.id.arcseekbar2);
+
+
     }
 }
