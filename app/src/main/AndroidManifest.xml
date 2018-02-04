@@ -35,7 +35,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".spider.SpiderActivity" />
-        <activity android:name=".Main2Activity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -82,9 +82,9 @@
         <activity android:name=".fluidslider.FluidSliderActivity" />
         <activity android:name=".looplogger.LoopLoggerActivity" />
         <activity android:name=".transition.TransitionActivity" />
-        <activity android:name=".notifycationtest.NotifyActivity" />
         <activity android:name=".rxjavaoperator.RxJavaOperatorActivity" />
         <activity android:name=".overscroll.OverScrollActivity" />
+        <activity android:name=".coordinator.CoordinatorActivity"/>
     </application>
 
 </manifest>

@@ -13,10 +13,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class Main2Activity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     ArrayList<Class> mList = new ArrayList<>();
 
@@ -29,8 +30,6 @@ public class Main2Activity extends AppCompatActivity {
         initActivities();
 
         initListView();
-
-
     }
 
     private void initListView() {
@@ -66,7 +65,7 @@ public class Main2Activity extends AppCompatActivity {
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(Main2Activity.this, clazz);
+                        Intent intent = new Intent(MainActivity.this, clazz);
                         startActivity(intent);
                     }
                 });
@@ -85,13 +84,14 @@ public class Main2Activity extends AppCompatActivity {
             System.out.println(packageInfo.activities.length);
             for (ActivityInfo activity : packageInfo.activities) {
                 Class<?> aClass = Class.forName(activity.name);
-                if (aClass.equals(Main2Activity.class)) {
+                if (aClass.equals(MainActivity.class)) {
                     continue;
                 }
                 mList.add(0,aClass);
             }
         } catch (PackageManager.NameNotFoundException | ClassNotFoundException e) {
             e.printStackTrace();
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 }

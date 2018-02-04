@@ -47,14 +47,14 @@ public class ConstraintLayoutActivity extends AppCompatActivity {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float fraction = animation.getAnimatedFraction();
-                layoutParams.circleAngle = fraction * 360 + start;
+                layoutParams.circleAngle = fraction * 360 + start +45;
                 view.requestLayout();
                 Timber.d("layoutParams.circleAngle = %s", layoutParams.circleAngle);
             }
         });
         animator.setInterpolator(new SpringInterpolator(0.4f));
         animator.setRepeatMode(ValueAnimator.RESTART);
-        animator.setRepeatCount(ValueAnimator.INFINITE);
+//        animator.setRepeatCount(ValueAnimator.INFINITE);
         animator.setDuration(3000);
         animator.start();
     }
