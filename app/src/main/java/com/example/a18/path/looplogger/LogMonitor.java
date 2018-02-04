@@ -4,9 +4,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 public class LogMonitor {
     private final static String TAG = LogMonitor.class.getSimpleName();
     private static HandlerThread mLogThread = new HandlerThread("log");
@@ -34,21 +31,21 @@ public class LogMonitor {
     }
 
     public boolean isMonitor() {
-        Class handlerClass = null;
-        try {
-            handlerClass = Class.forName("android.os.Handler");
-            Method method = handlerClass.getDeclaredMethod("hasCallbacks", Runnable.class);
-            method.setAccessible(true);
-            return (boolean) method.invoke(mIoHandler,mLogRunnable);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+//        Class handlerClass = null;
+//        try {
+//            handlerClass = Class.forName("android.os.Handler");
+//            Method method = handlerClass.getDeclaredMethod("hasCallbacks", Runnable.class);
+//            method.setAccessible(true);
+//            return (boolean) method.invoke(mIoHandler,mLogRunnable);
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
         return false;
     }
 
