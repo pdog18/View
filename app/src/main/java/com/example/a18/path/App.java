@@ -6,6 +6,8 @@ import android.support.multidex.MultiDexApplication;
 
 import com.facebook.stetho.Stetho;
 
+import org.litepal.LitePal;
+
 import timber.log.Timber;
 
 public class App extends MultiDexApplication {
@@ -20,6 +22,7 @@ public class App extends MultiDexApplication {
         super.onCreate();
         app =this;
         Stetho.initializeWithDefaults(this);
+        LitePal.initialize(this);
 
 
         Timber.plant(new Timber.DebugTree() {
