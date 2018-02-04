@@ -84,7 +84,7 @@
         <activity android:name=".transition.TransitionActivity" />
         <activity android:name=".rxjavaoperator.RxJavaOperatorActivity" />
         <activity android:name=".overscroll.OverScrollActivity" />
-        <activity android:name=".coordinator.CoordinatorActivity"/>
+        <activity android:name=".layoutmanager.CoordinatorActivity"/>
     </application>
 
 </manifest>
