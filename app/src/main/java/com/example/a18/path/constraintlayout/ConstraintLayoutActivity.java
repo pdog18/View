@@ -5,41 +5,49 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.a18.path.R;
 
+import java.util.List;
+
+import butterknife.BindViews;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import timber.log.Timber;
 
 public class ConstraintLayoutActivity extends AppCompatActivity {
+
+    @BindViews({
+        R.id.button5,
+        R.id.button6,
+        R.id.button7,
+        R.id.button8,
+        R.id.button9,
+    })
+    List<Button> buttons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_constraint_layout);
-
-//        new Handler().postDelayed(() -> {
-//            ConstraintLayout myView = findViewById(R.id.constrain);
-//            ConstraintSet constraintSet = new ConstraintSet();
-//            constraintSet.clone(ConstraintLayoutActivity.this, R.layout.constraint_detail);
-//
-//            TransitionManager.beginDelayedTransition(myView);  // myView: 当前视图 ConstratintLayout 的 id
-//
-//            constraintSet.applyTo(myView);
-//        }, 1000);
-
-//
-
-        View button6 = findViewById(R.id.button6);
-        View button7 = findViewById(R.id.button7);
-        View button8 = findViewById(R.id.button8);
-        View button9 = findViewById(R.id.button9);
-        anmite(button6,0);
-        anmite(button7,90);
-        anmite(button8,180);
-        anmite(button9,270);
+        ButterKnife.bind(this);
     }
 
-    private void anmite(View view,int start) {
+    int start = 0;
+
+    @OnClick(R.id.button5)
+    void animate() {
+        for (Button button : buttons) {
+            if (start > 360) {
+                start = 0;
+            }
+            start += 30;
+            animate(button,start);
+        }
+    }
+
+    private void animate(View view, int start) {
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
 
         ValueAnimator animator = ValueAnimator.ofFloat(1);
@@ -47,7 +55,7 @@ public class ConstraintLayoutActivity extends AppCompatActivity {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float fraction = animation.getAnimatedFraction();
-                layoutParams.circleAngle = fraction * 360 + start +45;
+                layoutParams.circleAngle = fraction * 360 + start + 45;
                 view.requestLayout();
                 Timber.d("layoutParams.circleAngle = %s", layoutParams.circleAngle);
             }
