@@ -45,12 +45,12 @@ public class DBActivity extends AppCompatActivity {
     @OnClick(R.id.query)
     void query() {
         Event event = DataSupport.find(Event.class, 1);
-        DataSupport.
-        if (event != null) {
-            Timber.d("event.name = %s", event.name);
-            for (Message message : event.messages) {
-                Timber.d("message.name = %s", message.name);
-            }
-        }
+        // FIXME: 04/02/2018  messages is null
+//        if (event != null) {
+//            Timber.d("event.name = %s", event.name);
+//            for (Message message : event.messages) {
+//                Timber.d("message.name = %s", message.name);
+//            }
+//        }
     }
 }
