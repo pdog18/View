@@ -4,11 +4,19 @@ import org.litepal.crud.DataSupport;
 
 
 public class Message extends DataSupport {
-    public String name;
+    private String name;
 
-    public Event event;
+    private Event event;
 
     public Message(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Event getEvent() {
+        return event;
     }
 }

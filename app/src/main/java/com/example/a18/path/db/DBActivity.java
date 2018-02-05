@@ -27,34 +27,41 @@ public class DBActivity extends AppCompatActivity {
     }
 
 
+    long id;
     @OnClick(R.id.save)
     void save() {
         Event event = new Event();
-        event.name = "event name";
+        event.setName("event set name");
         Message[] messages = new Message[]{new Message("message1"), new Message("message2")};
 
         List<Message> messageList = Arrays.asList(messages);
 
         for (Message message : messageList) {
-            Timber.d("message.name = %s", message.name);
+            Timber.d("message.name = %s", message.getName());
         }
 
-        event.messages.addAll(messageList);
+        event.setMessages(messageList);
         Message.saveAll(messageList);
+        Timber.d("id = %s", id);
         boolean save = event.save();
         Timber.d("save = %s", save);
+        id = event.getId();
+        Timber.d("id = %s", id);
 
         Toast.makeText(this, String.format("save = %s",save), Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.query)
     void query() {
-        Event event = DataSupport.find(Event.class, 1);
-        // FIXME: 04/02/2018  messages is null
+        Event event = DataSupport.find(Event.class, id,true);
         if (event != null) {
-            Timber.d("event.name = %s", event.name);
-            for (Message message : event.messages) {
-                Timber.d("message.name = %s", message.name);
+            Timber.d("event.name = %s", event.getName());
+            Timber.d("event.getId() = %s", event.getId());
+            if (event.getMessages() == null) {
+                return;
+            }
+            for (Message message : event.getMessages()) {
+                Timber.d("message.name = %s", message.getName());
             }
         }
     }
