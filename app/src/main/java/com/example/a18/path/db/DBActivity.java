@@ -35,7 +35,12 @@ public class DBActivity extends AppCompatActivity {
 
         List<Message> messageList = Arrays.asList(messages);
 
-        event.messages = messageList;
+        for (Message message : messageList) {
+            Timber.d("message.name = %s", message.name);
+        }
+
+        event.messages.addAll(messageList);
+        Message.saveAll(messageList);
         boolean save = event.save();
         Timber.d("save = %s", save);
 
@@ -46,11 +51,11 @@ public class DBActivity extends AppCompatActivity {
     void query() {
         Event event = DataSupport.find(Event.class, 1);
         // FIXME: 04/02/2018  messages is null
-//        if (event != null) {
-//            Timber.d("event.name = %s", event.name);
-//            for (Message message : event.messages) {
-//                Timber.d("message.name = %s", message.name);
-//            }
-//        }
+        if (event != null) {
+            Timber.d("event.name = %s", event.name);
+            for (Message message : event.messages) {
+                Timber.d("message.name = %s", message.name);
+            }
+        }
     }
 }
