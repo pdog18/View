@@ -30,6 +30,21 @@ public class DBActivity extends AppCompatActivity {
     long id;
     @OnClick(R.id.save)
     void save() {
+        /*  【save】
+        ```
+            Event {
+                long id;
+                String name;
+                List<Message> messages;
+            }
+            Message {
+                Event event;        //需要注明关联
+                String name;
+            }
+        ```
+        1. DataSupport.saveAll(messageList);    //先要将
+        2. event.save();
+        */
         Event event = new Event();
         event.setName("event set name");
         Message[] messages = new Message[]{new Message("message1"), new Message("message2")};
