@@ -10,7 +10,7 @@ public class MaterialDesignActivity extends TabViewPagerActivity {
     public Fragment[] getFragments() {
 
         return new Fragment[]{
-            new GifFragment()
+            new RippleFragment()
         };
 
     }

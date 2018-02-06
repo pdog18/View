@@ -1,31 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_gravity="center"
-        android:id="@+id/img"
-        android:layout_width="285dp"
-        android:layout_height="285dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/start"
-        android:text="start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/ripple_red"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="RIPPLE WITH NO MASK"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/ripple_red_with_white_mask"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="RIPPLE WITH WHITE"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/ripple_red_with_shape_mask"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="RIPPLE_RED_WITH_SHAPE_MASK"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/ripple_red_with_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="RIPPLE_RED_WITH_SELECTOR"/>
 
 
-    <Button
-        android:id="@+id/stop"
-        android:text="stop"
-        android:layout_gravity="right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:layout_gravity="center"
-        android:id="@+id/tv_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</FrameLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
