@@ -83,7 +83,7 @@ public abstract class CharacterEncoder {
 
     public void encode(byte[] var1, OutputStream var2) throws IOException {
         ByteArrayInputStream var3 = new ByteArrayInputStream(var1);
-        this.encode((InputStream)var3, var2);
+        this.encode(var3, var2);
     }
 
     public String encode(byte[] var1) {
@@ -92,7 +92,7 @@ public abstract class CharacterEncoder {
         String var4 = null;
 
         try {
-            this.encode((InputStream)var3, var2);
+            this.encode(var3, var2);
             var4 = var2.toString("8859_1");
             return var4;
         } catch (Exception var6) {
@@ -157,7 +157,7 @@ public abstract class CharacterEncoder {
 
     public void encodeBuffer(byte[] var1, OutputStream var2) throws IOException {
         ByteArrayInputStream var3 = new ByteArrayInputStream(var1);
-        this.encodeBuffer((InputStream)var3, var2);
+        this.encodeBuffer(var3, var2);
     }
 
     public String encodeBuffer(byte[] var1) {
@@ -165,7 +165,7 @@ public abstract class CharacterEncoder {
         ByteArrayInputStream var3 = new ByteArrayInputStream(var1);
 
         try {
-            this.encodeBuffer((InputStream)var3, var2);
+            this.encodeBuffer(var3, var2);
         } catch (Exception var5) {
             throw new Error("CharacterEncoder.encodeBuffer internal error");
         }

@@ -17,7 +17,7 @@ public class ProterDuffActivity extends AppCompatActivity implements RadioGroup.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proter_duff);
-        proterDuffView = (ProterDuffView) findViewById(R.id.pdv);
+        proterDuffView = findViewById(R.id.pdv);
 
 
         ((RadioGroup) findViewById(R.id.rg)).setOnCheckedChangeListener(this);

@@ -34,11 +34,11 @@ public class OSRecyclerView extends RecyclerView implements OverScrollDelegate.O
     }
 
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return this.mOverScrollDelegate.onInterceptTouchEvent(ev)?true:super.onInterceptTouchEvent(ev);
+        return this.mOverScrollDelegate.onInterceptTouchEvent(ev) || super.onInterceptTouchEvent(ev);
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        return this.mOverScrollDelegate.onTouchEvent(event)?true:super.onTouchEvent(event);
+        return this.mOverScrollDelegate.onTouchEvent(event) || super.onTouchEvent(event);
     }
 
     public void draw(Canvas canvas) {

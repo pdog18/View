@@ -53,7 +53,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                 .inflate(R.layout.adapter, container, false);
         container.addView(view);
         bind(mData.get(position), view);
-        CardView cardView = (CardView) view.findViewById(R.id.cardView);
+        CardView cardView = view.findViewById(R.id.cardView);
 
         if (mBaseElevation == 0) {
             mBaseElevation = cardView.getCardElevation();
@@ -71,8 +71,8 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
     }
 
     private void bind(CardItem item, View view) {
-        TextView titleTextView = (TextView) view.findViewById(R.id.titleTextView);
-        TextView contentTextView = (TextView) view.findViewById(R.id.contentTextView);
+        TextView titleTextView = view.findViewById(R.id.titleTextView);
+        TextView contentTextView = view.findViewById(R.id.contentTextView);
         titleTextView.setText(item.getTitle());
         contentTextView.setText(item.getText());
     }

@@ -15,7 +15,7 @@ public class AdbConnectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adb_connect);
-        TextView textView = (TextView) findViewById(R.id.tv);
+        TextView textView = findViewById(R.id.tv);
 
         //获取wifi服务
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);

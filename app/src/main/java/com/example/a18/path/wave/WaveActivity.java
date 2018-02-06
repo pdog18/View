@@ -11,7 +11,7 @@ public class WaveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bezier);
-        final WaveView viewById = (WaveView) findViewById(R.id.bezier);
+        final WaveView viewById = findViewById(R.id.bezier);
         viewById.post(new Runnable() {
             @Override
             public void run() {

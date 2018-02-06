@@ -12,7 +12,7 @@ public class ScaleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scale2);
-        final ScaleFrame viewById = (ScaleFrame) findViewById(R.id.fr);
+        final ScaleFrame viewById = findViewById(R.id.fr);
         viewById.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -23,7 +23,7 @@ public class ScaleActivity extends AppCompatActivity {
         });
 
 
-        final ScaleView viewById1 = (ScaleView) findViewById(R.id.sv);
+        final ScaleView viewById1 = findViewById(R.id.sv);
         viewById1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

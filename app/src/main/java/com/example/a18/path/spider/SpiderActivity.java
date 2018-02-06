@@ -11,9 +11,9 @@ public class SpiderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(1<<10, 1<<10);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_spider);
 
-        SpiderWebView viewById = (SpiderWebView) findViewById(R.id.swb);
+        SpiderWebView viewById = findViewById(R.id.swb);
         viewById.setProgress(0.2f, 0.4f, 0.6f, 0.8f, 1.0f, 0.2f);
 
     }

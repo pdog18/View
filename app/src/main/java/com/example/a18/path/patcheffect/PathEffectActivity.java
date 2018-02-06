@@ -14,7 +14,7 @@ public class PathEffectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_path_effect);
 
-        pathEffectView = (PathEffectView) findViewById(R.id.pev);
+        pathEffectView = findViewById(R.id.pev);
         pathEffectView.post(new Runnable() {
             @Override
             public void run() {

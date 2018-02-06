@@ -8,4 +8,24 @@
         android:id="@+id/img"
         android:layout_width="285dp"
         android:layout_height="285dp" />
+
+    <Button
+        android:id="@+id/start"
+        android:text="start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <Button
+        android:id="@+id/stop"
+        android:text="stop"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:layout_gravity="center"
+        android:id="@+id/tv_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </FrameLayout>

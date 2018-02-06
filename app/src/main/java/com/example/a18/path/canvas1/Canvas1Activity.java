@@ -14,7 +14,7 @@ public class Canvas1Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canvas1);
-        final ImageView imageView = (ImageView) findViewById(R.id.img);
+        final ImageView imageView = findViewById(R.id.img);
         imageView.post(new Runnable() {
             @Override
             public void run() {

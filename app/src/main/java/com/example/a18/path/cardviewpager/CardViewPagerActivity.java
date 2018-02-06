@@ -27,7 +27,7 @@ public class CardViewPagerActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_view_pager);
-        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        mViewPager = findViewById(R.id.viewPager);
 
         mCardAdapter = new CardPagerAdapter();
 

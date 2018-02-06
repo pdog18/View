@@ -12,7 +12,7 @@ public class ScratchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scratch);
 
-        ScratchView viewById = (ScratchView) findViewById(R.id.sv);
+        ScratchView viewById = findViewById(R.id.sv);
         viewById.setImageResource(R.drawable.k);
     }
 

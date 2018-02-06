@@ -48,7 +48,7 @@ public class MatrixMapActivity extends AppCompatActivity {
             ((TextView) view).setGravity(Gravity.CENTER);
         }
 
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.rg);
+        RadioGroup radioGroup = findViewById(R.id.rg);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

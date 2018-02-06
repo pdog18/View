@@ -8,8 +8,10 @@ public class MaterialDesignActivity extends TabViewPagerActivity {
 
     @Override
     public Fragment[] getFragments() {
+
         return new Fragment[]{
             new GifFragment()
         };
+
     }
 }

@@ -17,7 +17,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
+
+    @BindView(R.id.lv)
+    ListView listView;
 
     ArrayList<Class> mList = new ArrayList<>();
 
@@ -26,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        ButterKnife.bind(this);
 
         initActivities();
 
@@ -33,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        ListView listview = (ListView) findViewById(R.id.lv);
-        listview.setAdapter(new BaseAdapter() {
+        listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
                 return mList.size();
