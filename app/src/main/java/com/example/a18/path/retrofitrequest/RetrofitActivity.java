@@ -12,8 +12,6 @@ import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 
-import javax.annotation.Nullable;
-
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -69,18 +67,16 @@ public class RetrofitActivity extends AppCompatActivity implements Callback<Stri
         return chain.proceed(request.newBuilder().post(RequestBody.create(your_mediatype, result)).build());
     }
 
-    class NullOnEmptyConverterFactory<T> extends Converter.Factory {
+    public class NullOnEmptyConverterFactory extends Converter.Factory {
 
-        @Nullable
         @Override
-        public Converter<ResponseBody, T> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
-            final Converter<ResponseBody, T> delegate = retrofit.nextResponseBodyConverter(this, type, annotations);
-            return new Converter<ResponseBody, T>() {
+        public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+            final Converter<ResponseBody, ?> delegate = retrofit.nextResponseBodyConverter(this, type, annotations);
+            return new Converter<ResponseBody, Object>() {
                 @Override
-                public T convert(ResponseBody body) throws IOException {
+                public Object convert(ResponseBody body) throws IOException {
                     if (body.contentLength() == 0) return null;
-                    return delegate.convert(body);
-                }
+                    return delegate.convert(body);                }
             };
         }
     }
