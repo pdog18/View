@@ -6,10 +6,17 @@ import android.view.View;
 
 import com.example.a18.path.R;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import okio.Buffer;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +43,24 @@ public class RetrofitActivity extends AppCompatActivity implements Callback<Stri
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+    }
+
+    /**
+     * 向一个请求体中添加内容的方法
+     * @param chain
+     * @return
+     * @throws IOException
+     */
+    private okhttp3.Response intercept(Interceptor.Chain chain) throws IOException {
+        Request request = chain.request();
+        RequestBody body = request.body();
+        Buffer buffer = new Buffer();
+
+        body.writeTo(buffer);
+        String source = buffer.readString(Charset.defaultCharset());
+        String result = String.format("<string xxxx>%s</string>", source);
+        MediaType your_mediatype = MediaType.parse("your_mediatype");
+        return chain.proceed(request.newBuilder().post(RequestBody.create(your_mediatype, result)).build());
     }
 
     @Override
