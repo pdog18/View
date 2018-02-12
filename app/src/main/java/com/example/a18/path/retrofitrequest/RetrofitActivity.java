@@ -7,18 +7,24 @@ import android.view.View;
 import com.example.a18.path.R;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+
+import javax.annotation.Nullable;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okio.Buffer;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -62,6 +68,23 @@ public class RetrofitActivity extends AppCompatActivity implements Callback<Stri
         MediaType your_mediatype = MediaType.parse("your_mediatype");
         return chain.proceed(request.newBuilder().post(RequestBody.create(your_mediatype, result)).build());
     }
+
+    class NullOnEmptyConverterFactory<T> extends Converter.Factory {
+
+        @Nullable
+        @Override
+        public Converter<ResponseBody, T> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+            final Converter<ResponseBody, T> delegate = retrofit.nextResponseBodyConverter(this, type, annotations);
+            return new Converter<ResponseBody, T>() {
+                @Override
+                public T convert(ResponseBody body) throws IOException {
+                    if (body.contentLength() == 0) return null;
+                    return delegate.convert(body);
+                }
+            };
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
