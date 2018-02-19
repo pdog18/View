@@ -111,7 +111,8 @@
         <activity android:name=".layoutmanager.CoordinatorActivity" />
         <activity android:name=".db.DBActivity" />
         <activity android:name=".materialdesign.MaterialDesignActivity" />
-        <activity android:name=".dex.DexActivity"></activity>
+        <activity android:name=".dex.DexActivity" />
+        <activity android:name=".span.SpanActivity"></activity>
     </application>
 
 </manifest>
