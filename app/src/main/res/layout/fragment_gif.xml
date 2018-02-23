@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@drawable/ripple_red_with_white_mask"
+            android:foreground="@drawable/ripple_red_with_white_mask"
             android:clickable="true"
             android:gravity="center"
             android:text="RIPPLE WITH WHITE"/>
@@ -27,18 +27,30 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@drawable/ripple_red_with_shape_mask"
+            android:foreground="@drawable/ripple_red_with_shape_mask"
             android:clickable="true"
             android:gravity="center"
             android:text="RIPPLE_RED_WITH_SHAPE_MASK"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@drawable/ripple_red_with_selector"
+            android:foreground="@drawable/ripple_red_with_selector"
             android:clickable="true"
             android:gravity="center"
             android:text="RIPPLE_RED_WITH_SELECTOR"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:foreground="@drawable/ripple_red_with_selector_2"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="RIPPLE_RED_WITH_SELECTOR"/>
+
+        <TextView
+            android:id="@+id/foreground"
+            style="@style/style_tv_user_center"
+            android:text="RIPPLE_RED_WITH_SELECTOR"/>
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

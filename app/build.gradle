@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.example.a18.path"
-        minSdkVersion 16
-        targetSdkVersion 22
+        minSdkVersion 19
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         ndk {
@@ -68,11 +68,11 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     // 3D地图so及jar
-    compile 'com.amap.api:3dmap:latest.integration'
+//    compile 'com.amap.api:3dmap:latest.integration'
     // 定位功能
-    compile 'com.amap.api:location:latest.integration'
+//    compile 'com.amap.api:location:latest.integration'
     // 搜索功能
-    compile 'com.amap.api:search:latest.integration'
+//    compile 'com.amap.api:search:latest.integration'
     api 'com.facebook.stetho:stetho:1.5.0'
     compile 'com.squareup.okhttp3:okhttp:3.9.1'
     api 'io.reactivex.rxjava2:rxjava:2.1.7'

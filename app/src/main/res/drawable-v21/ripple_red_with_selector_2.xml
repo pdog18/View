@@ -9,7 +9,7 @@
             </item>
             <item
                 android:drawable="@drawable/destination"
-                android:state_focused="true">
+                android:state_pressed="false">
             </item>
         </selector>
     </item>

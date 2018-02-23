@@ -89,15 +89,6 @@
         <activity android:name=".cardviewpager.CardViewPagerActivity" />
         <activity android:name=".cardrecyclerview.CardRecyclerviewActivity" />
         <activity android:name=".piechart.PieChartActivity" />
-        <activity android:name=".map.MapActivity" />
-
-        <service android:name="com.amap.api.location.APSService" />
-
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="f8fb6c26b0c1b0874d6885137ab0f2ef" />
-
-        <activity android:name=".map.MapEventActivity" />
         <activity android:name=".invest.InvestActivity" />
         <activity android:name=".smartanalysis.SmartAnalysisActivity" />
         <activity android:name=".text.SmoothScrollActivity" />
@@ -112,7 +103,7 @@
         <activity android:name=".db.DBActivity" />
         <activity android:name=".materialdesign.MaterialDesignActivity" />
         <activity android:name=".dex.DexActivity" />
-        <activity android:name=".span.SpanActivity"></activity>
+        <activity android:name=".span.SpanActivity"/>
     </application>
 
 </manifest>
