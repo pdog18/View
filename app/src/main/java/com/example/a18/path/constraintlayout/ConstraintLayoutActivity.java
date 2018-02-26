@@ -9,6 +9,7 @@ public class ConstraintLayoutActivity extends TabViewPagerActivity {
     @Override
     public Fragment[] getFragments() {
         return new Fragment[]{
+            new ConstrainSet2Fragment(),
             new ConstrainSetFragment(),
             new ChainStyleFragment(),
         };
