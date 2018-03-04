@@ -6,7 +6,7 @@ android {
     buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.example.a18.path"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -90,5 +90,8 @@ dependencies {
         transitive = false
     }
     implementation 'org.litepal.android:core:1.6.1'
+
+
+    implementation 'com.sdsmdg.harjot:materialshadows:1.2.5'
 }
 
