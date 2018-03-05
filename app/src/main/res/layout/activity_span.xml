@@ -35,6 +35,11 @@
             android:text="stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn3"
+            android:text="premissions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <ImageView
             android:elevation="5dp"
@@ -45,6 +50,7 @@
 
         <ImageView
             android:background="#FFFFFF"
+            android:id="@+id/img_2"
             android:layout_marginTop="10dp"
             android:translationZ="5dp"
             android:src="@mipmap/google_play"

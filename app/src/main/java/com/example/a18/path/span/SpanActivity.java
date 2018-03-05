@@ -1,5 +1,6 @@
 package com.example.a18.path.span;
 
+import android.Manifest;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,12 +11,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a18.path.R;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 import timber.log.Timber;
 
 public class SpanActivity extends AppCompatActivity {
@@ -39,7 +42,13 @@ public class SpanActivity extends AppCompatActivity {
             .create();
 
         tv.setText(spannableStringBuilder);
+
+//        RxView.clicks(img_2)
+//            .compose(RxPermissions.)
     }
+
+    @BindView(R.id.img_2)
+    ImageView img_2;
 
     @OnClick(R.id.btn1)
     void start() {
@@ -128,5 +137,17 @@ public class SpanActivity extends AppCompatActivity {
             .translationZ(0)
             .setDuration(3000)
             .start();
+    }
+
+    @OnClick(R.id.btn3)
+    void premissions() {
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.CAMERA)
+            .subscribe(new Consumer<Boolean>() {
+                @Override
+                public void accept(Boolean aBoolean) throws Exception {
+                    Toast.makeText(SpanActivity.this, String.format("aBoolean = %s", aBoolean), Toast.LENGTH_SHORT).show();
+                }
+            });
     }
 }
