@@ -4,8 +4,8 @@
         android:duration="@android:integer/config_mediumAnimTime"
         android:interpolator="@android:interpolator/decelerate_quint"
         android:propertyName="translationX"
-        android:valueFrom="100dp"
-        android:valueTo="0dp"
+        android:valueFrom="360"
+        android:valueTo="0"
         android:valueType="floatType" />
     <objectAnimator
         android:duration="@android:integer/config_mediumAnimTime"
