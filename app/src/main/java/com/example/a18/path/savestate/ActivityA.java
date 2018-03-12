@@ -1,7 +1,7 @@
 package com.example.a18.path.savestate;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -16,9 +16,19 @@ public class ActivityA extends AppCompatActivity {
     }
 
    public void onClick(View view) {
-        Intent intent = new Intent();
-        intent.putExtra("key", "value");
-        intent.setClass(this, ActivityB_NO_SAVE.class);
-        startActivity(intent);
-    }
+
+       FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+
+       transaction.setCustomAnimations(
+           R.animator.base_slide_right_in, R.animator.base_slide_right_in,
+           R.animator.base_slide_right_in, R.animator.base_slide_right_in
+       );
+
+       transaction.replace(R.id.fl_content, new AnimFragment());
+
+//       transaction.addToBackStack(null);
+
+       transaction.commit();
+   }
 }
