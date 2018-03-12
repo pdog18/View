@@ -93,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
                 if (aClass.equals(MainActivity.class)) {
                     continue;
                 }
+
+                if (aClass.getSimpleName().contains("NO_SAVE")) {
+                    continue;
+                }
                 mList.add(0,aClass);
             }
         } catch (PackageManager.NameNotFoundException | ClassNotFoundException e) {
