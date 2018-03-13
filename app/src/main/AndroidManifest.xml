@@ -107,7 +107,8 @@
         <activity android:name=".span.SpanActivity" />
         <activity android:name=".savestate.ActivityA" />
         <activity android:name=".savestate.ActivityB_NO_SAVE" />
-        <activity android:name=".savestate.ActivityC_NO_SAVE"></activity>
+        <activity android:name=".savestate.ActivityC_NO_SAVE" />
+        <activity android:name=".annotation.AnnotationActivity"></activity>
     </application>
 
 </manifest>

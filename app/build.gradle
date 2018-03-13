@@ -15,6 +15,13 @@ android {
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "arm64-v8a", "x86_64"
         }
         multiDexEnabled true
+
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
     }
 
     signingConfigs {
@@ -49,11 +56,13 @@ android {
         }
     }
 
+
 }
 
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':processor_lib')
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.javaparser:javaparser-core:3.5.5'
     compile 'com.android.support:appcompat-v7:26.1.0'
