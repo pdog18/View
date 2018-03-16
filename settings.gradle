@@ -1,1 +1,1 @@
-include ':app', ':processor_lib'
+include ':app'
