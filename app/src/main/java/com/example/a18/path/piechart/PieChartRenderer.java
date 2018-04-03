@@ -285,7 +285,7 @@ public class PieChartRenderer extends DataRenderer {
                         );
                     }
 
-                    // API < 21 does not receive floats in addArc, but MainActivity RectF
+                    // API < 21 does not receive floats in addArc, but EvaluatorActivity RectF
                     mInnerRectBuffer.set(
                             center.x - innerRadius,
                             center.y - innerRadius,
@@ -728,7 +728,7 @@ public class PieChartRenderer extends DataRenderer {
 
                 float width = mCenterTextLastBounds.width();
 
-                // If width is 0, it will crash. Always have MainActivity minimum of 1
+                // If width is 0, it will crash. Always have EvaluatorActivity minimum of 1
                 mCenterTextLayout = new StaticLayout(centerText, 0, centerText.length(),
                         mCenterTextPaint,
                         (int) Math.max(Math.ceil(width), 1.f),
@@ -871,7 +871,7 @@ public class PieChartRenderer extends DataRenderer {
                                 sweepAngleOuter);
             }
 
-            // API < 21 does not receive floats in addArc, but MainActivity RectF
+            // API < 21 does not receive floats in addArc, but EvaluatorActivity RectF
             mInnerRectBuffer.set(
                     center.x - innerRadius,
                     center.y - innerRadius,
@@ -951,7 +951,7 @@ public class PieChartRenderer extends DataRenderer {
     }
 
     /**
-     * This gives all pie-slices MainActivity rounded edge.
+     * This gives all pie-slices EvaluatorActivity rounded edge.
      *
      * @param c
      */

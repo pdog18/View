@@ -71,7 +71,7 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
 
         CardView currentCard = mAdapter.getCardViewAt(realCurrentPosition);
 
-        // This might be null if MainActivity fragment is being used
+        // This might be null if EvaluatorActivity fragment is being used
         // and the views weren't created yet
         if (currentCard != null) {
             if (mScalingEnabled) {
@@ -85,7 +85,7 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
         CardView nextCard = mAdapter.getCardViewAt(nextPosition);
 
         // We might be scrolling fast enough so that the next (or previous) card
-        // was already destroyed or MainActivity fragment might not have been created yet
+        // was already destroyed or EvaluatorActivity fragment might not have been created yet
         if (nextCard != null) {
             if (mScalingEnabled) {
                 nextCard.setScaleX((float) (1 + 0.1 * (realOffset)));
