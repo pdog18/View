@@ -109,7 +109,8 @@
         <activity android:name=".savestate.ActivityB_NO_SAVE" />
         <activity android:name=".savestate.ActivityC_NO_SAVE" />
         <activity android:name=".annotation.AnnotationActivity" />
-        <activity android:name=".bluetooth.BlueToothActivity"></activity>
+        <activity android:name=".bluetooth.BlueToothActivity" />
+        <activity android:name=".evaluator.EvaluatorActivity"></activity>
     </application>
 
 </manifest>

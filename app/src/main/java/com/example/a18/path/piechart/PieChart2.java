@@ -19,7 +19,7 @@ import com.github.mikephil.charting.utils.Utils;
 import java.util.List;
 
 /**
- * View that represents MainActivity pie chart. Draws cake like slices.
+ * View that represents EvaluatorActivity pie chart. Draws cake like slices.
  *
  * @author Philipp Jahoda
  */
@@ -274,7 +274,7 @@ public class PieChart2 extends PieRadarChartBase<PieData> {
     }
 
     /**
-     * calculates the needed angle for MainActivity given value
+     * calculates the needed angle for EvaluatorActivity given value
      *
      * @param value
      * @return
@@ -284,7 +284,7 @@ public class PieChart2 extends PieRadarChartBase<PieData> {
     }
 
     /**
-     * calculates the needed angle for MainActivity given value
+     * calculates the needed angle for EvaluatorActivity given value
      *
      * @param value
      * @param yValueSum
@@ -635,7 +635,7 @@ public class PieChart2 extends PieRadarChartBase<PieData> {
     }
 
     /**
-     * Sets MainActivity custom Typeface for the drawing of the entry labels.
+     * Sets EvaluatorActivity custom Typeface for the drawing of the entry labels.
      *
      * @param tf
      */
@@ -653,7 +653,7 @@ public class PieChart2 extends PieRadarChartBase<PieData> {
     }
 
     /**
-     * Returns true if the chart is set to draw each end of MainActivity pie-slice
+     * Returns true if the chart is set to draw each end of EvaluatorActivity pie-slice
      * "rounded".
      *
      * @return
@@ -683,7 +683,7 @@ public class PieChart2 extends PieRadarChartBase<PieData> {
     }
 
     /**
-     * the rectangular radius of the bounding box for the center text, as MainActivity percentage of the pie
+     * the rectangular radius of the bounding box for the center text, as EvaluatorActivity percentage of the pie
      * hole
      * default 1.f (100%)
      */
@@ -692,7 +692,7 @@ public class PieChart2 extends PieRadarChartBase<PieData> {
     }
 
     /**
-     * the rectangular radius of the bounding box for the center text, as MainActivity percentage of the pie
+     * the rectangular radius of the bounding box for the center text, as EvaluatorActivity percentage of the pie
      * hole
      * default 1.f (100%)
      */
@@ -706,7 +706,7 @@ public class PieChart2 extends PieRadarChartBase<PieData> {
 
     /**
      * Sets the max angle that is used for calculating the pie-circle. 360f means
-     * it's MainActivity full PieChart, 180f results in MainActivity half-pie-chart. Default: 360f
+     * it's EvaluatorActivity full PieChart, 180f results in EvaluatorActivity half-pie-chart. Default: 360f
      *
      * @param maxangle min 90, max 360
      */
