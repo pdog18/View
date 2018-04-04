@@ -10,7 +10,7 @@ import com.example.a18.path.R
 class EvaluatorActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
 
-        IncreaseNumber.begin(textView, 999.55566)
+        IncreaseNumber.begin(textView, 9.55566)
             .apply {
                 leftSize = 64
                 rightSize = 32
@@ -20,7 +20,7 @@ class EvaluatorActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             .createAnimator()
-            .setDuration(2000)
+            .setDuration(200000)
             .apply {
                 interpolator = DecelerateInterpolator(3.0f)
             }

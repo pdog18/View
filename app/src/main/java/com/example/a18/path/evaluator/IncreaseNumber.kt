@@ -47,15 +47,13 @@ class IncreaseNumber(private val textView: TextView, private val endValue: Doubl
             .setSpan(AbsoluteSizeSpan(leftSize, true), 0, leftText.length, flag)
         // 如果 保留小数点后位数为0，则手动四舍五入，然后直接返回
         if (index != 0) {
-            val rightText: String
 
-            if (right == 0) {
-                rightText = addLastZero(rightContent, index)
+            if (right == 0 ) {
+                addLastZero(rightContent, index)
             } else {
-                rightText = ".${Integer.toString(right)}"
+                rightContent.append(".${Integer.toString(right)}")
             }
-            rightContent.append(rightText)
-                .setSpan(AbsoluteSizeSpan(rightSize, true), 0, rightText.length, flag)
+            rightContent.setSpan(AbsoluteSizeSpan(rightSize, true), 0, rightContent.length, flag)
         }
 
         joints(content, leftContent, rightContent)
@@ -84,12 +82,13 @@ class IncreaseNumber(private val textView: TextView, private val endValue: Doubl
         return animator
     }
 
-    private fun addLastZero(content: SpannableStringBuilder, index: Int): String {
+    private fun addLastZero(content: SpannableStringBuilder, index: Int) {
+        //todo 例如保留4位小数时，只有2位数时需要补充0
+
         content.append(".")
         for (i in 0 until index) {
             content.append("0")
         }
-        return content.toString()
     }
 
 

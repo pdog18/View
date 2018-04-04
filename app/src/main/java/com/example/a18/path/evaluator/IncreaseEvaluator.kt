@@ -18,7 +18,7 @@ class IncreaseEvaluator(index: Int) : TypeEvaluator<IncreaseEvaluator.IncreaseBo
         var left: Int = 0       //小数点前
         var right: Int = 0      //小数点以后
         internal var total: Double = 0.toDouble()
-        private var factor: Int = 0
+        var factor: Int = 0
         private var index = 2
 
         init {
