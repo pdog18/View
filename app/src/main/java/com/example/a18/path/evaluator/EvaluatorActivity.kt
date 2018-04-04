@@ -10,12 +10,14 @@ import com.example.a18.path.R
 class EvaluatorActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
 
-
         IncreaseNumber.begin(textView, 999.55566)
             .apply {
                 leftSize = 64
                 rightSize = 32
                 index = 2
+                joints = { content, left, right ->
+                    content.append("$").append(left).append("👌").append(right).append("%")
+                }
             }
             .createAnimator()
             .setDuration(2000)

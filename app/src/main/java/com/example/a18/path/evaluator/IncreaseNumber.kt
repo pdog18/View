@@ -4,35 +4,96 @@ package com.example.a18.path.evaluator
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.text.SpannableStringBuilder
+import android.text.Spanned.SPAN_INTERMEDIATE
+import android.text.style.AbsoluteSizeSpan
 import android.widget.TextView
 
 
 class IncreaseNumber(private val textView: TextView, private val endValue: Double) {
+    /**
+     * 实例: 999.545
+     * [index] 保留两位小数时 999.55
+     * [leftSize] 999 字体大小
+     * [rightSize]  .545 字体大小
+     *
+     * content 都包含了字体大小
+     * [content] 999.545的字符
+     * [leftContent] 999
+     * [rightContent] .545
+     *
+     * [convert] 传入两个值分别为 999 和 545,根据这两个值进行生成对应的SpannableStringBuilder
+     * [joints] 传入由 convert 传入的三个SpannableStringBuilder对象，可以通过重写它来插入对应的元素
+     */
     var index = 2
     var leftSize = 16
     var rightSize = 16
-    var convert: Convert? = null
+    val content = SpannableStringBuilder()
+    val leftContent = SpannableStringBuilder()
+    val rightContent = SpannableStringBuilder()
+
+    var flag = SPAN_INTERMEDIATE
+    var convert: (body: IncreaseEvaluator.IncreaseBody) -> SpannableStringBuilder
+        = { body ->
+
+        leftContent.clear()
+        rightContent.clear()
+        content.clear()
+
+        val left = body.left
+        val right = body.right
+
+        val leftText = Integer.toString(left)
+        leftContent.append(leftText)
+            .setSpan(AbsoluteSizeSpan(leftSize, true), 0, leftText.length, flag)
+        // 如果 保留小数点后位数为0，则手动四舍五入，然后直接返回
+        if (index != 0) {
+            val rightText: String
+
+            if (right == 0) {
+                rightText = addLastZero(rightContent, index)
+            } else {
+                rightText = ".${Integer.toString(right)}"
+            }
+            rightContent.append(rightText)
+                .setSpan(AbsoluteSizeSpan(rightSize, true), 0, rightText.length, flag)
+        }
+
+        joints(content, leftContent, rightContent)
+    }
+
+    /**
+     * [content] 此时为空
+     */
+    var joints: (content: SpannableStringBuilder,
+                 left: SpannableStringBuilder,
+                 right: SpannableStringBuilder) -> SpannableStringBuilder
+        = { content, left, right ->
+
+        content.append(left).append(right)
+    }
+
 
     fun createAnimator(): ValueAnimator {
-        val animator = ObjectAnimator.ofObject(IncreaseEvaluator(index), IncreaseEvaluator.IncreaseText(endValue))
-        animator.addUpdateListener { animation ->
-            val money = animation.animatedValue as IncreaseEvaluator.IncreaseText
-            var content = money.getContent(leftSize, rightSize)
-            if (convert != null) {
-                content = convert!!.convert(content)
-            }
-            textView.text = content
+        val endBody = IncreaseEvaluator.IncreaseBody(endValue)
+        val increaseEvaluator = IncreaseEvaluator(index)
+        val animator = ObjectAnimator.ofObject(increaseEvaluator, endBody)
+
+        animator.addUpdateListener { _ ->
+            textView.text = convert(increaseEvaluator.increasingBody)
         }
         return animator
     }
 
-    interface Convert {
-        fun convert(raw: SpannableStringBuilder): SpannableStringBuilder
+    private fun addLastZero(content: SpannableStringBuilder, index: Int): String {
+        content.append(".")
+        for (i in 0 until index) {
+            content.append("0")
+        }
+        return content.toString()
     }
 
 
     companion object {
-
         fun begin(textView: TextView?, endValue: Double): IncreaseNumber {
             if (textView == null) {
                 throw NullPointerException()
@@ -40,5 +101,4 @@ class IncreaseNumber(private val textView: TextView, private val endValue: Doubl
             return IncreaseNumber(textView, endValue)
         }
     }
-
 }
