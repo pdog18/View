@@ -5,7 +5,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
 public class Utils {
-    private static final DisplayMetrics metrics = App.getApp().getResources().getDisplayMetrics();
+    private static final DisplayMetrics metrics = App.app.getResources().getDisplayMetrics();
 
 //    private static final float density = App.getApp().getResources().getDisplayMetrics().density;
 //    public static float dp(float px) {
@@ -18,6 +18,6 @@ public class Utils {
     }
 
     public static Context getApp() {
-        return App.getApp();
+        return App.app;
     }
 }

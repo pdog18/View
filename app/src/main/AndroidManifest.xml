@@ -111,6 +111,8 @@
         <activity android:name=".annotation.AnnotationActivity" />
         <activity android:name=".bluetooth.BlueToothActivity" />
         <activity android:name=".evaluator.EvaluatorActivity" />
+        <activity android:name=".websocket.WebsocketActivity" />
+        <activity android:name=".game.GameActivity"></activity>
     </application>
 
 </manifest>
