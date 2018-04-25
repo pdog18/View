@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardView"
     android:layout_width="230dp"
-    android:paddingLeft="14dp"
-    android:paddingRight="14dp"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="14dp"
+    android:paddingRight="14dp">
 
 
     <android.support.v7.widget.CardView
@@ -21,28 +21,28 @@
         <!--日期-->
         <TextView
             android:id="@+id/tv_date"
-            android:text="asdgsdgojo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="19dp"
             android:layout_marginTop="222dp"
+            android:text="asdgsdgojo"
             android:textSize="15dp" />
 
         <TextView
-            android:text="杭州十多个山东过拍摄"
             android:id="@+id/tv_name"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="19dp"
             android:layout_marginTop="242dp"
-            android:textSize="18dp" />
+            android:text="杭州十多个山东过拍摄"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_marginTop="278dp"
             android:layout_width="match_parent"
-            android:layout_height="13dp">
+            android:layout_height="13dp"
+            android:layout_marginTop="278dp"
+            android:orientation="horizontal">
 
             <ProgressBar
                 android:id="@+id/pb_progressbar"
@@ -50,19 +50,19 @@
                 android:layout_width="154dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:maxHeight="3dp"
-                android:minHeight="3dp"
                 android:layout_marginLeft="19dp"
                 android:max="100"
+                android:maxHeight="3dp"
+                android:minHeight="3dp"
                 android:progress="80" />
 
             <TextView
-                android:text="80%"
                 android:id="@+id/tv_progress"
                 android:layout_width="34dp"
-                android:layout_gravity="center_vertical"
                 android:layout_height="13dp"
+                android:layout_gravity="center_vertical"
                 android:gravity="right"
+                android:text="80%"
                 android:textSize="10dp" />
         </LinearLayout>
 

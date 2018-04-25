@@ -17,12 +17,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.lv)
     ListView listView;
 
     ArrayList<Class> mList = new ArrayList<>();
@@ -40,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initListView() {
+        listView = findViewById(R.id.lv);
+        Timber.d("listView = %s", listView);
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {

@@ -1,22 +1,27 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.1.51'
+    ext {
+        config = "${rootDir}/config.gradle"
+        versions = "${rootDir}/versions.gradle"
+
+        independent = false      //组件化每个模块是否可以独立编译
+    }
+    apply from: versions
 
     repositories {
         google()
-        mavenCentral()
         jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath "com.android.tools.build:gradle:$gradle_build_tools_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
     }
 }
+
 
 allprojects {
     repositories {

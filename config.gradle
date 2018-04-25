@@ -1,0 +1,82 @@
+apply from: versions
+if (isIndependent()) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+kapt {
+    arguments {
+        arg("moduleName", project.getName())
+    }
+}
+android {
+    compileSdkVersion compile_sdk_version
+    buildToolsVersion build_tools_version
+
+    defaultConfig {
+
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+
+        versionCode version_code
+        versionName version_name
+
+        if (isIndependent()) {
+            applicationId "com.example.pdog18.view.${this.name}"
+            println("this == ${this.name} , applicationId")
+        }
+
+        multiDexEnabled true
+    }
+
+
+
+
+    sourceSets {
+        main {
+            if (isIndependent() && this.name.startsWith("module_")) {
+                manifest.srcFile 'src/library/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                java {
+                    //release 时 debug 目录下文件不需要合并到主工程
+                    exclude 'debug/**'
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 通过修改 project - build.gradle的 independent 值来控制module 是否可以独立编译
+ * @return true ：module 是 app ，independent = true 并且 module 命名为 `module_` 开头
+ */
+def isIndependent() {
+    //是app module ，独立编译
+    if (this.name.startsWith("app")) {
+        println("this module's name is not startsWith [module_] , this.name = ${this.name}")
+        return true
+    }
+
+    //没有开启独立编译选项，所以为library
+    if (!independent) {
+        println("not independent!")
+        return false
+    }
+
+    //开启了独立编译选项，但是模块名称不是module_ 开头，所以为 library
+    if (!this.name.startsWith("module_")) {
+        println("this module's name is not startsWith [module_] , this.name = ${this.name}")
+        return false
+    }
+    println("this module is independent!")
+    return true
+}
+
+
+
