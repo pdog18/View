@@ -1,4 +1,4 @@
-package com.example.a18.path.bezier;
+package kt.pdog18.com.module_bezier;
 
 import android.content.Context;
 import android.graphics.Canvas;

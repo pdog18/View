@@ -5,7 +5,7 @@ buildscript {
         config = "${rootDir}/config.gradle"
         versions = "${rootDir}/versions.gradle"
 
-        independent = true    //组件化每个模块是否可以独立编译
+        independent = false    //组件化每个模块是否可以独立编译
     }
     apply from: versions
 
@@ -17,8 +17,6 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$gradle_build_tools_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
     }
 }
 

@@ -40,7 +40,7 @@ public class ArcView extends View {
         rotateProgress = 0;
 
 //        drawable = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.copy);
 //        drawable = getResources().getDrawable(R.mipmap.ic_launcher);
 
         Timber.d("drawable = %s", drawable);

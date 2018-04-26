@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             PackageManager packageManager = getPackageManager();
+            Timber.d("getPackageName() = %s", getPackageName());
             PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
             System.out.println(packageInfo.activities.length);
             for (ActivityInfo activity : packageInfo.activities) {
@@ -92,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
                 if (aClass.getSimpleName().contains("NO_SAVE")) {
                     continue;
                 }
+
+                Timber.d("aClass.getSimpleName() = %s", aClass.getSimpleName());
                 mList.add(0,aClass);
             }
         } catch (PackageManager.NameNotFoundException | ClassNotFoundException e) {

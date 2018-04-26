@@ -10,16 +10,11 @@ import com.example.a18.path.R;
 
 import java.util.Arrays;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class SmoothScrollActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.smooth)
     SmoothScrollLayout scrollLayout;
-    @BindView(R.id.et)
     EditText editText;
 
     @Override
@@ -27,7 +22,18 @@ public class SmoothScrollActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_text);
-        ButterKnife.bind(this);
+
+        editText = findViewById(R.id.et);
+        scrollLayout = findViewById(R.id.smooth);
+
+        findViewById(R.id.btn).setOnClickListener(v -> {
+            String s = editText.getText().toString();
+            if (TextUtils.isEmpty(s)) {
+                Toast.makeText(this, "empty", Toast.LENGTH_SHORT).show();
+            }
+
+            scrollLayout.smoothTo(Integer.valueOf(s));
+        });
 
         String[] strings = {"333",
             "222",
@@ -44,24 +50,5 @@ public class SmoothScrollActivity extends AppCompatActivity {
 //        scrollLayout.setData(Arrays.asList(strings));
 
     }
-
-    @OnClick(R.id.btn)
-    void smooth() {
-        String s = editText.getText().toString();
-        if (TextUtils.isEmpty(s)) {
-            Toast.makeText(this, "empty", Toast.LENGTH_SHORT).show();
-        }
-
-        scrollLayout.smoothTo(Integer.valueOf(s));
-
-
-    }
-
-
-    @OnClick(R.id.print)
-    void print() {
-
-    }
-
 }
 

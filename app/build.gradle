@@ -1,4 +1,3 @@
-apply plugin: 'com.android.application'
 apply from: config
 
 android {
@@ -53,7 +52,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile project(':processor_lib')
 
-    api project(":core")
+    implementation project(":core")
     // 3D地图so及jar
 //    compile 'com.amap.api:3dmap:latest.integration'
     // 定位功能
@@ -63,4 +62,14 @@ dependencies {
     implementation files('libs/overscroll-release-v1.1-20160904.jar')
 
 
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
+
+    if (!independent) {
+        implementation project(":module_adbconnect")
+        implementation project(":module_arcseekbar")
+        implementation project(":module_bezier")
+    }
 }

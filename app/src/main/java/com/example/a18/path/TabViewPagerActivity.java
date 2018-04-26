@@ -8,17 +8,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 import static android.support.design.widget.TabLayout.MODE_SCROLLABLE;
 
 public abstract class TabViewPagerActivity extends AppCompatActivity {
 
-    @BindView(R.id.tab_layout)
     TabLayout tabLayout;
 
-    @BindView(R.id.viewPager)
     ViewPager viewPager;
 
 
@@ -26,7 +21,10 @@ public abstract class TabViewPagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_viewpager);
-        ButterKnife.bind(this);
+
+        viewPager = findViewById(R.id.viewPager);
+        tabLayout = findViewById(R.id.tab_layout);
+
 
         viewPager.setAdapter(new MyAdapter(getSupportFragmentManager(),getFragments()));
         tabLayout.setupWithViewPager(viewPager);
