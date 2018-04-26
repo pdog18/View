@@ -39,16 +39,22 @@ android {
 
     sourceSets {
         main {
-            if (isIndependent() && this.name.startsWith("module_")) {
-                manifest.srcFile 'src/library/AndroidManifest.xml'
+            //未开启独立编译 并且是独立的module，才会使用总是使用 library/AndroidManifest.xml
+            if (!independent && this.name.startsWith("module_")) {
+                manifest.srcFile 'src/main/library/AndroidManifest.xml'
             } else {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
                 java {
                     //release 时 debug 目录下文件不需要合并到主工程
-                    exclude 'debug/**'
+                    exclude 'library/**'
                 }
             }
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

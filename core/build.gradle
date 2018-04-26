@@ -44,4 +44,19 @@ dependencies {
     api "com.alibaba:arouter-api:$arouter_api_version"
     api "com.alibaba:arouter-annotation:$arouter_annotation_version"
     kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
+
+
+    api 'com.android.support:multidex:1.0.3'
+    api 'com.github.javaparser:javaparser-core:3.5.5'
+    api 'com.google.android:flexbox:0.3.1'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
+    api 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    api('com.github.bumptech.glide:recyclerview-integration:4.3.1') {
+        transitive = false
+    }
+    api 'org.litepal.android:core:1.6.1'
+
+    api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+
+    api 'com.sdsmdg.harjot:materialshadows:1.2.5'
 }

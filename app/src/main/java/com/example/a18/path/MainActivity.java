@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-
-        ButterKnife.bind(this);
 
         initActivities();
 
@@ -69,12 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
                 textView.setGravity(Gravity.CENTER);
 
-                textView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(MainActivity.this, clazz);
-                        startActivity(intent);
-                    }
+                textView.setOnClickListener(view1 -> {
+                    Intent intent = new Intent(MainActivity.this, clazz);
+                    startActivity(intent);
                 });
                 return textView;
             }

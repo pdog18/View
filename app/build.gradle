@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply from: config
-apply plugin: 'com.jakewharton.butterknife'
 
 android {
     defaultConfig {
@@ -53,11 +52,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile project(':processor_lib')
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.github.javaparser:javaparser-core:3.5.5'
-    compile 'com.google.android:flexbox:0.3.1'
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+
     api project(":core")
     // 3D地图so及jar
 //    compile 'com.amap.api:3dmap:latest.integration'
@@ -66,15 +61,6 @@ dependencies {
     // 搜索功能
 //    compile 'com.amap.api:search:latest.integration'
     implementation files('libs/overscroll-release-v1.1-20160904.jar')
-    implementation('com.github.bumptech.glide:recyclerview-integration:4.3.1') {
-        transitive = false
-    }
-    implementation 'org.litepal.android:core:1.6.1'
 
-    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
-    implementation 'com.sdsmdg.harjot:materialshadows:1.2.5'
-
-    api 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }
