@@ -1,4 +1,4 @@
-package com.example.a18.path.arcseekbar;
+package kt.pdog18.com.module_arcseekbar;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,11 +8,10 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.example.a18.path.R;
 
 import timber.log.Timber;
 
@@ -23,7 +22,8 @@ public class ArcView extends View {
     private RectF rectF;
     private float rotateProgress;
     private int halfWidth;
-    private Bitmap drawable;
+    private Bitmap bitmap;
+    private Drawable drawable;
 
     public ArcView(Context context) {
         this(context, null);
@@ -39,7 +39,11 @@ public class ArcView extends View {
         initPaint();
         rotateProgress = 0;
 
-        drawable = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+//        drawable = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+//        drawable = getResources().getDrawable(R.mipmap.ic_launcher);
+
+        Timber.d("drawable = %s", drawable);
     }
 
     private void initPaint() {
@@ -117,17 +121,22 @@ public class ArcView extends View {
         int degrees = 0;
         canvas.save();
         canvas.rotate(degrees);
-        canvas.drawBitmap(drawable, 0, halfWidth, paint);
+        canvas.drawBitmap(bitmap, 0, halfWidth, paint);
+//        drawable.draw(canvas);
+
         canvas.restore();
 
         canvas.save();
         canvas.rotate(degrees - 30);
-        canvas.drawBitmap(drawable, 0, halfWidth, null);
+//        drawable.draw(canvas);
+
+        canvas.drawBitmap(bitmap, 0, halfWidth, null);
         canvas.restore();
 
         canvas.save();
         canvas.rotate(degrees - 60);
-        canvas.drawBitmap(drawable, 0, halfWidth, null);
+        canvas.drawBitmap(bitmap, 0, halfWidth, null);
+//        drawable.draw(canvas);
         canvas.restore();
     }
 }

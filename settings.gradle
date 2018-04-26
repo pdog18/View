@@ -1,1 +1,1 @@
-include ':app',':core', ':module_adbconnect'
+include ':app',':core', ':module_adbconnect', ':module_arcseekbar'

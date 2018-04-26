@@ -35,7 +35,6 @@
         <activity android:name=".scratchview.ScratchActivity" />
         <activity android:name=".retrofitrequest.RetrofitActivity" />
         <activity android:name=".proterduff.ProterDuffActivity" />
-        <activity android:name=".arcseekbar.ArcSeekbarActivity" />
         <activity android:name=".scrollchart.ScrollChartActivity" />
         <activity android:name=".motionevent.MotionEventActivity" />
         <activity android:name=".cardviewpager.CardViewPagerActivity" />
@@ -59,7 +58,6 @@
         <activity android:name=".savestate.ActivityA" />
         <activity android:name=".savestate.ActivityB_NO_SAVE" />
         <activity android:name=".savestate.ActivityC_NO_SAVE" />
-        <activity android:name=".annotation.AnnotationActivity" />
         <activity android:name=".bluetooth.BlueToothActivity" />
         <activity android:name=".evaluator.EvaluatorActivity" />
         <activity android:name=".websocket.WebsocketActivity" />

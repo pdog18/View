@@ -1,4 +1,4 @@
-package com.example.a18.path.arcseekbar;
+package kt.pdog18.com.module_arcseekbar;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,12 +16,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 
-/**
- * Created by pdog on 2017/12/1.
- */
 
 public class ArcSeekbar extends View {
-    private static final String TAG = "DragView";
     private Path dashArcPath;
     private PathEffect dashArcPathEffect;
     private Paint arcPathPaint;
