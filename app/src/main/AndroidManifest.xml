@@ -19,7 +19,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".parabola.ParabolaActivity" />
-        <activity android:name=".flipper.FlipperActivity" />
         <activity android:name=".scale.ScaleActivity" />
         <activity android:name=".matrix.MatrixMapActivity" />
         <activity android:name=".patcheffect.PathEffectActivity" />

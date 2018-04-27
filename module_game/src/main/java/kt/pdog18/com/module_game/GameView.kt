@@ -1,12 +1,11 @@
-package com.example.a18.path.game
+package kt.pdog18.com.module_game
 
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import com.example.a18.path.R
-import com.example.a18.path.ext.dp
+import kt.pdog18.com.core.ext.dp
 import timber.log.Timber
 
 class GameView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {

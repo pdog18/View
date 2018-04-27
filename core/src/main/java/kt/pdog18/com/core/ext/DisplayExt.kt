@@ -32,14 +32,14 @@ inline val scaledDensity: Float
  * 而[px]只是返回自身，目的是表明自己是px值
  */
 
-val Number.dp: Int      // [xxhdpi](360 -> 1080)
-    get() = (this.toFloat() * displayMetrics.density + 0.5f).toInt()
+val Number.dp: Float      // [xxhdpi](360 -> 1080)
+    get() = this.toFloat() * displayMetrics.density + 0.5f
 
-val Number.sp: Int      // [xxhdpi](360 -> 1080)
-    get() = (this.toFloat() * displayMetrics.scaledDensity + 0.5f).toInt()
+val Number.sp: Float      // [xxhdpi](360 -> 1080)
+    get() = this.toFloat() * displayMetrics.scaledDensity + 0.5f
 
-val Number.px: Int      // [xxhdpi](360 -> 360)
-    get() = this.toInt()
+val Number.px: Float      // [xxhdpi](360 -> 360)
+    get() = this.toFloat()
 
 /**
  * 在(可能存在的?)某些特殊情况会需要将px值转换为对应的dp/sp

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.a18.path.game.GameActivity">
 
-    <com.example.a18.path.game.GameView
+    <kt.pdog18.com.module_game.GameView
         android:id="@+id/game_view"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
