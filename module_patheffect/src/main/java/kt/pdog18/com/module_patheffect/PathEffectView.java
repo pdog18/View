@@ -1,4 +1,4 @@
-package com.example.a18.path.patcheffect;
+package kt.pdog18.com.module_patheffect;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;

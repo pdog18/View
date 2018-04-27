@@ -1,4 +1,4 @@
-package com.example.a18.path.proterduff;
+package kt.pdog18.com.module_proterduff;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,8 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.Log;
-
-import com.example.a18.path.R;
 
 /**
  * Created by machao on 2017/11/27.

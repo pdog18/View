@@ -18,7 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".patcheffect.PathEffectActivity" />
         <activity android:name=".proterduff.ProterDuffActivity" />
         <activity android:name=".constraintlayout.ConstraintLayoutActivity" />
         <activity android:name=".transition.TransitionActivity" />
