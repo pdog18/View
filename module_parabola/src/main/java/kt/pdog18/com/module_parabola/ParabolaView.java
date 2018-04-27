@@ -1,4 +1,4 @@
-package com.example.a18.path.parabola;
+package kt.pdog18.com.module_parabola;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
