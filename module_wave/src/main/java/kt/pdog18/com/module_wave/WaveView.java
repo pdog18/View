@@ -1,4 +1,4 @@
-package com.example.a18.path.wave;
+package kt.pdog18.com.module_wave;
 
 import android.animation.ValueAnimator;
 import android.content.Context;

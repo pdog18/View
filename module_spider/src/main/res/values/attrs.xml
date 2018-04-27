@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--投资详情界面的环形进度条-->
+    <declare-styleable name="SpiderWebView">
+        <attr name="point_color" format="color" />
+        <attr name="range_color" format="color" />
+    </declare-styleable>
+
+
+    <declare-styleable name="PickerView">
+        <attr name="lineColor" format="color|reference" />
+        <attr name="selectedTextColor" format="color|reference" />
+        <attr name="textSize" format="dimension" />
+    </declare-styleable>
+</resources>

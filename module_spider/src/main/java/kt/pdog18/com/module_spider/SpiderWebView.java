@@ -1,4 +1,4 @@
-package com.example.a18.path.spider;
+package kt.pdog18.com.module_spider;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.a18.path.R;
 
 /**
  * desc: spider web

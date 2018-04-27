@@ -20,7 +20,6 @@
         </activity>
         <activity android:name=".spider.SpiderActivity" />
         <activity android:name=".path.PathActivity" />
-        <activity android:name=".wave.WaveActivity" />
         <activity android:name=".parabola.ParabolaActivity" />
         <activity android:name=".gift.GiftActivity" />
         <activity android:name=".chart.ChartActivity" />
