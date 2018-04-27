@@ -1,4 +1,4 @@
-package com.example.a18.path.evaluator
+package kt.pdog18.com.module_evaluator
 
 
 import android.animation.ObjectAnimator
