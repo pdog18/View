@@ -19,17 +19,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".parabola.ParabolaActivity" />
-        <activity android:name=".chart.ChartActivity" />
-        <activity android:name=".canvas1.Canvas1Activity" />
         <activity android:name=".flipper.FlipperActivity" />
         <activity android:name=".scale.ScaleActivity" />
         <activity android:name=".matrix.MatrixMapActivity" />
         <activity android:name=".patcheffect.PathEffectActivity" />
         <activity android:name=".proterduff.ProterDuffActivity" />
-        <activity android:name=".cardviewpager.CardViewPagerActivity" />
-        <activity android:name=".cardrecyclerview.CardRecyclerviewActivity" />
         <activity android:name=".constraintlayout.ConstraintLayoutActivity" />
-        <activity android:name=".fluidslider.FluidSliderActivity" />
         <activity android:name=".transition.TransitionActivity" />
         <activity android:name=".db.DBActivity" />
         <activity android:name=".materialdesign.MaterialDesignActivity" />

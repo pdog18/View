@@ -3,5 +3,5 @@ apply from: config
 dependencies {
     kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
 
-    implementation project(":core")
+    implementation project(":base")
 }

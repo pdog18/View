@@ -1,0 +1,6 @@
+apply from: config
+
+dependencies {
+    api project(":core")
+    api project(":resource")
+}

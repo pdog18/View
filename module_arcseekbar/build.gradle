@@ -1,5 +1,7 @@
-apply from:config
+apply from: config
 
 dependencies {
-    implementation project(":core")
+    kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
+
+    implementation project(":base")
 }
