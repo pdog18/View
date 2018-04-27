@@ -1,4 +1,4 @@
-package com.example.a18.path.materialdesign.widget;
+package kt.pdog18.com.module_materialdesign.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
