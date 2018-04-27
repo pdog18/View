@@ -52,7 +52,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile project(':processor_lib')
 
-    implementation project(":core")
+    implementation project(":base")
 
 
     implementation 'com.jakewharton:butterknife:8.8.1'

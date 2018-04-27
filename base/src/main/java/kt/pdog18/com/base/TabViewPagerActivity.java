@@ -1,4 +1,4 @@
-package com.example.a18.path;
+package kt.pdog18.com.base;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
