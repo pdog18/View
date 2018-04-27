@@ -1,4 +1,4 @@
-include ':app', ':base', ':resource',
+include ':app', ':base', ':resource', ':module_transition', ':module_parabola', ':module_materialdesign', ':module_matrix',
     ':core',
     ':module_adbconnect',
     ':module_arcseekbar',
