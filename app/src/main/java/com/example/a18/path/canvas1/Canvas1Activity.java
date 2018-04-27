@@ -6,7 +6,6 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
-import com.example.a18.path.R;
 
 public class Canvas1Activity extends AppCompatActivity {
 
@@ -30,8 +29,5 @@ public class Canvas1Activity extends AppCompatActivity {
                 imageView.startAnimation($3D);
             }
         });
-
-
-
     }
 }

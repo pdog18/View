@@ -1,1 +1,1 @@
-include ':app',':core', ':module_adbconnect', ':module_arcseekbar', ':module_bezier', ':module_wave', ':module_spider', ':module_scratch'
+include ':app',':core', ':module_adbconnect', ':module_arcseekbar', ':module_bezier', ':module_wave', ':module_spider', ':module_scratch', ':module_canvas'
