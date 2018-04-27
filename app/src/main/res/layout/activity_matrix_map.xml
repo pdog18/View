@@ -116,7 +116,7 @@
             android:layout_height="wrap_content" />
     </RadioGroup>
 
-    <com.example.a18.path.matrix.MatrixMapView
+    <kt.pdog18.com.module_matrix.MatrixMapView
 
         android:layout_width="match_parent"
         android:layout_height="100dp"/>

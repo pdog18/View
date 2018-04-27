@@ -1,4 +1,4 @@
-package com.example.a18.path.matrix;
+package kt.pdog18.com.module_matrix;
 
 import android.content.Context;
 import android.graphics.Canvas;
