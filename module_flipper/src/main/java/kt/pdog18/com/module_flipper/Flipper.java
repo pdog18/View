@@ -1,4 +1,4 @@
-package com.example.a18.path.flipper;
+package kt.pdog18.com.module_flipper;
 
 import android.content.Context;
 import android.graphics.Color;

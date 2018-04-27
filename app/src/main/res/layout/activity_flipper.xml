@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     tools:context="com.example.a18.path.flipper.FlipperActivity">
 
-    <com.example.a18.path.flipper.Flipper android:id="@+id/flipper"
+    <kt.pdog18.com.module_flipper.Flipper
+        android:id="@+id/flipper"
              android:layout_width="match_parent"
              android:layout_height="300px"
     />
