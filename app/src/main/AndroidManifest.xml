@@ -26,7 +26,6 @@
         <activity android:name=".proterduff.ProterDuffActivity" />
         <activity android:name=".constraintlayout.ConstraintLayoutActivity" />
         <activity android:name=".transition.TransitionActivity" />
-        <activity android:name=".db.DBActivity" />
         <activity android:name=".materialdesign.MaterialDesignActivity" />
         <activity android:name=".dex.DexActivity" />
         <activity android:name=".savestate.ActivityB_NO_SAVE" />

@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public abstract  class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
     private Unbinder bind;
 

@@ -1,7 +1,7 @@
-package com.example.a18.path.constraintlayout;
+package kt.pdog18.com.module_constraint;
 
-import com.example.a18.path.BaseFragment;
-import com.example.a18.path.R;
+
+import kt.pdog18.com.base.BaseFragment;
 
 public class ChainStyleFragment extends BaseFragment {
     @Override

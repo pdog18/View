@@ -1,17 +1,15 @@
-package com.example.a18.path.constraintlayout;
+package kt.pdog18.com.module_constraint;
 
 import android.animation.ValueAnimator;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.a18.path.BaseFragment;
-import com.example.a18.path.R;
-
 import java.util.List;
 
 import butterknife.BindViews;
 import butterknife.OnClick;
+import kt.pdog18.com.base.BaseFragment;
 import timber.log.Timber;
 
 
