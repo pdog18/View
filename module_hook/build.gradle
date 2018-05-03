@@ -1,0 +1,8 @@
+apply from: config
+
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
+
+    implementation project(":base")
+}
