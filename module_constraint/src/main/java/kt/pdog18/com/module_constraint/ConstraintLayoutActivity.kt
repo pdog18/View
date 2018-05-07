@@ -5,6 +5,6 @@ import kt.pdog18.com.base.TabViewPagerActivity
 
 class ConstraintLayoutActivity : TabViewPagerActivity() {
     override fun getFragments(): Array<BaseFragment> {
-        return arrayOf(ConstrainSet2Fragment(), ConstrainSetFragment(), ChainStyleFragment())
+        return arrayOf(ConstrainSet2Fragment(), ConstrainSetFragment(), ChainStyleFragment(), ChainStyle2Fragment())
     }
 }
