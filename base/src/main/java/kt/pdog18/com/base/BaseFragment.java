@@ -13,14 +13,9 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(), container, false);
-        return view;
+        return inflater.inflate(getLayoutId(), container, false);
     }
 
-    @Override
-    public final void onDestroyView() {
-        super.onDestroyView();
-    }
 
     protected abstract int getLayoutId();
 }
