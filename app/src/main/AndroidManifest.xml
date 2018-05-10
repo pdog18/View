@@ -18,15 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".constraintlayout.ConstraintLayoutActivity" />
-        <activity android:name=".transition.TransitionActivity" />
-        <activity android:name=".materialdesign.MaterialDesignActivity" />
         <activity android:name=".dex.DexActivity" />
-        <activity android:name=".savestate.ActivityB_NO_SAVE" />
-        <activity android:name=".savestate.ActivityC_NO_SAVE" />
-        <activity android:name=".evaluator.EvaluatorActivity" />
-        <activity android:name=".websocket.WebsocketActivity" />
-        <activity android:name=".game.GameActivity"/>
     </application>
 
 </manifest>

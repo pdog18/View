@@ -10,20 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import kt.pdog18.com.base.BaseFragment;
 
 
 public class LifelineFragment extends BaseFragment {
 
-    @BindView(R.id.transitions_container)
     ViewGroup transitions_container;
-    @BindView(R.id.linearlayout)
     View linearlayout;
     private boolean visible = true;
 
-    @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
 
     @Override
@@ -34,14 +29,17 @@ public class LifelineFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        transitions_container = view.findViewById(R.id.transitions_container);
+        linearlayout = view.findViewById(R.id.linearlayout);
+        recyclerView = view.findViewById(R.id.recyclerview);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new SimpleRecyclerViewAdapter());
+        view.findViewById(R.id.button).setOnClickListener(v -> {
+            Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
+            TransitionManager.beginDelayedTransition(transitions_container,new Slide().setDuration(300));
+            linearlayout.setVisibility((visible ^= true) ? View.VISIBLE : View.GONE);
+        });
     }
 
-    @OnClick(R.id.button)
-    void button() {
-        Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
-        TransitionManager.beginDelayedTransition(transitions_container,new Slide().setDuration(300));
-        linearlayout.setVisibility((visible ^= true) ? View.VISIBLE : View.GONE);
-    }
 }

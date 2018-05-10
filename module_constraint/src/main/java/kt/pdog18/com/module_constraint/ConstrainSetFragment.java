@@ -1,46 +1,51 @@
 package kt.pdog18.com.module_constraint;
 
 import android.animation.ValueAnimator;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import butterknife.BindViews;
-import butterknife.OnClick;
 import kt.pdog18.com.base.BaseFragment;
 import timber.log.Timber;
 
 
 public class ConstrainSetFragment extends BaseFragment {
 
-    @BindViews({
-        R.id.button5,
-        R.id.button6,
-        R.id.button7,
-        R.id.button8,
-        R.id.button9,
-    })
-    List<Button> buttons;
+    Button button5;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_constraint_layout;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        button5 = view.findViewById(R.id.button5);
+
+        final ArrayList<Button> buttons = new ArrayList<>();
+        buttons.add(view.findViewById(R.id.button6));
+        buttons.add(view.findViewById(R.id.button7));
+        buttons.add(view.findViewById(R.id.button8));
+        buttons.add(view.findViewById(R.id.button9));
+        button5.setOnClickListener(v -> {
+            for (Button button : buttons) {
+                if (start > 360) {
+                    start = 0;
+                }
+                start += 30;
+                animate(button, start);
+            }
+        });
+    }
+
     int start = 0;
 
-    @OnClick(R.id.button5)
-    void animate() {
-        for (Button button : buttons) {
-            if (start > 360) {
-                start = 0;
-            }
-            start += 30;
-            animate(button,start);
-        }
-    }
 
     private void animate(View view, int start) {
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();

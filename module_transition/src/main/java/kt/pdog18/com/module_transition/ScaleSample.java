@@ -16,6 +16,9 @@
 package kt.pdog18.com.module_transition;
 
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.transition.Fade;
 import android.support.transition.TransitionManager;
 import android.support.transition.TransitionSet;
@@ -25,37 +28,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import kt.pdog18.com.base.BaseFragment;
 
 public class ScaleSample extends BaseFragment {
 
 
-    @BindView(R.id.transitions_container)
-    ViewGroup transitionsContainer;
-    @BindView(R.id.text1)
+    ViewGroup transitions_container;
     TextView text1;
-    @BindView(R.id.text2)
     TextView text2;
     private boolean visible;
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-    @OnClick(R.id.button1)
-    void button1() {
-        TransitionManager.beginDelayedTransition(transitionsContainer, new Scale());
-        text1.setVisibility((visible = !visible) ? View.VISIBLE : View.INVISIBLE);
+        transitions_container = view.findViewById(R.id.transitions_container);
+        text1 = view.findViewById(R.id.text1);
+        text2 = view.findViewById(R.id.text2);
+        view.findViewById(R.id.button1).setOnClickListener(v -> {
+            TransitionManager.beginDelayedTransition(transitions_container, new Scale());
+            text1.setVisibility((visible = !visible) ? View.VISIBLE : View.INVISIBLE);
+        });
+        view.findViewById(R.id.button2).setOnClickListener(v -> {
+            visible = !visible;
+            TransitionSet set = new TransitionSet()
+                .addTransition(new Scale())
+                .addTransition(new Fade())
+                .setInterpolator((visible) ? new LinearOutSlowInInterpolator() : new FastOutLinearInInterpolator());
+            TransitionManager.beginDelayedTransition(transitions_container, set);
+            text2.setVisibility((visible) ? View.VISIBLE : View.INVISIBLE);
+        });
     }
-    @OnClick(R.id.button2)
-    void button2() {
-        visible = !visible;
-        TransitionSet set = new TransitionSet()
-            .addTransition(new Scale())
-            .addTransition(new Fade())
-            .setInterpolator((visible) ? new LinearOutSlowInInterpolator() : new FastOutLinearInInterpolator());
-        TransitionManager.beginDelayedTransition(transitionsContainer, set);
-        text2.setVisibility((visible) ? View.VISIBLE : View.INVISIBLE);
-    }
+
 
     @Override
     protected int getLayoutId() {

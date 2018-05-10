@@ -5,23 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
-import butterknife.BindView;
 import kt.pdog18.com.base.BaseFragment;
 import kt.pdog18.com.module_materialdesign.widget.NumberTextView;
 
 
 public class NumberTextFragment extends BaseFragment {
-    @BindView(R.id.tv_1)
-    TextView tv_1;
-    @BindView(R.id.tv_2)
-    TextView tv_2;
-    @BindView(R.id.tv_3)
-    NumberTextView tv_3;
-
-    @BindView(R.id.tv_4)
-    TextView tv_4;
-    @BindView(R.id.tv_5)
-    TextView tv_5;
 
     @Override
     protected int getLayoutId() {
@@ -31,6 +19,9 @@ public class NumberTextFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        TextView tv_1 = view.findViewById(R.id.tv_1);
+        TextView tv_2 = view.findViewById(R.id.tv_2);
+        NumberTextView tv_3 = view.findViewById(R.id.tv_3);
         tv_1.setText("111111");
         tv_2.setText("222222");
         tv_3.setNumber(3333.22f);

@@ -9,7 +9,6 @@ import android.support.multidex.MultiDexApplication
 
 import com.facebook.stetho.Stetho
 
-import org.litepal.LitePal
 
 import timber.log.Timber
 
@@ -19,8 +18,6 @@ class App : MultiDexApplication() {
         super.onCreate()
         app = this
         Stetho.initializeWithDefaults(this)
-        LitePal.initialize(this)
-
 
         Timber.plant(object : Timber.DebugTree() {
             override fun createStackElementTag(element: StackTraceElement): String? {

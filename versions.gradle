@@ -1,6 +1,6 @@
 ext {
     gradle_build_tools_version = '3.0.1'
-    kotlin_version = '1.1.51'
+    kotlin_version = '1.2.41'
 
     compile_sdk_version = 27
     build_tools_version = "27.0.3"
@@ -11,7 +11,7 @@ ext {
     version_name = "1.0"
 
     support_library_version = "27.1.0"
-    ktx_version = '0.2'
+    ktx_version = '0.3'
 
     butterknife_version = '8.8.1'
 

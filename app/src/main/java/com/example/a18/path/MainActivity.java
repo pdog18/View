@@ -85,7 +85,12 @@ public class MainActivity extends AppCompatActivity {
             PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
             System.out.println(packageInfo.activities.length);
             for (ActivityInfo activity : packageInfo.activities) {
-                Class<?> aClass = Class.forName(activity.name);
+                Class<?> aClass;
+                try {
+                    aClass = Class.forName(activity.name);
+                } catch (ClassNotFoundException e) {
+                    continue;
+                }
                 if (aClass.equals(MainActivity.class)) {
                     continue;
                 }
@@ -95,9 +100,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 Timber.d("aClass.getSimpleName() = %s", aClass.getSimpleName());
-                mList.add(0,aClass);
+                mList.add(0, aClass);
             }
-        } catch (PackageManager.NameNotFoundException | ClassNotFoundException e) {
+        } catch (PackageManager.NameNotFoundException  e) {
             e.printStackTrace();
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }

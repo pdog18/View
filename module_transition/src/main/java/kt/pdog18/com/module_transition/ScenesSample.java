@@ -28,7 +28,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
-import butterknife.BindView;
 import kt.pdog18.com.base.BaseFragment;
 
 
@@ -43,25 +42,26 @@ public class ScenesSample extends BaseFragment implements RadioGroup.OnCheckedCh
     private Scene mScene3;
 
 
-    @BindView(R.id.scene_root)
-    ViewGroup mSceneRoot;
-    @BindView(R.id.select_scene)
-    RadioGroup radioGroup;
+    ViewGroup scene_root;
+    RadioGroup select_scene;
 
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        radioGroup.setOnCheckedChangeListener(this);
+
+        scene_root = view.findViewById(R.id.scene_root);
+        select_scene = view.findViewById(R.id.select_scene);
+        select_scene.setOnCheckedChangeListener(this);
 
         // A Scene can be instantiated from a live view hierarchy.
-        mScene1 = new Scene(mSceneRoot, mSceneRoot.findViewById(R.id.container));
+        mScene1 = new Scene(scene_root, scene_root.findViewById(R.id.container));
 
         // You can also inflate a generate a Scene from a layout resource file.
-        mScene2 = Scene.getSceneForLayout(mSceneRoot, R.layout.scene2, getContext());
+        mScene2 = Scene.getSceneForLayout(scene_root, R.layout.scene2, getContext());
 
         // Another scene from a layout resource file.
-        mScene3 = Scene.getSceneForLayout(mSceneRoot, R.layout.scene3, getContext());
+        mScene3 = Scene.getSceneForLayout(scene_root, R.layout.scene3, getContext());
 
         // We create a custom TransitionManager for Scene 3, in which ChangeBounds, Fade and
         // ChangeImageTransform take place at the same time.
@@ -77,29 +77,19 @@ public class ScenesSample extends BaseFragment implements RadioGroup.OnCheckedCh
 
     @Override
     public void onCheckedChanged(final RadioGroup group, int checkedId) {
-        switch (checkedId) {
-            case R.id.select_scene_1: {
-                // You can start an automatic transition with TransitionManager.go().
-                TransitionManager.go(mScene1);
-                break;
-            }
-            case R.id.select_scene_2: {
-                TransitionSet set = new TransitionSet();
-                Slide slide = new Slide(Gravity.LEFT);
-                slide.addTarget(R.id.transition_title);
-                set.addTransition(slide);
-                set.addTransition(new ChangeBounds());
-                set.setOrdering(TransitionSet.ORDERING_TOGETHER);
-                set.setDuration(350);
-                TransitionManager.go(mScene2, set);
-                break;
-            }
-            case R.id.select_scene_3: {
-                TransitionManager.go(mScene2);
-                // You can also start a transition with a custom TransitionManager.
-//                mTransitionManagerForScene3.transitionTo(mScene3);
-                break;
-            }
+        if (checkedId == R.id.select_scene_1) {
+            TransitionManager.go(mScene1);
+        } else if (checkedId == R.id.select_scene_2) {
+            TransitionSet set = new TransitionSet();
+            Slide slide = new Slide(Gravity.LEFT);
+            slide.addTarget(R.id.transition_title);
+            set.addTransition(slide);
+            set.addTransition(new ChangeBounds());
+            set.setOrdering(TransitionSet.ORDERING_TOGETHER);
+            set.setDuration(350);
+            TransitionManager.go(mScene2, set);
+        } else if (checkedId == R.id.select_scene_3) {
+            TransitionManager.go(mScene2);
         }
     }
 }

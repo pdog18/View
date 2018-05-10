@@ -1,4 +1,4 @@
-include ':app', ':module_hook', ':module_homecard', ':module_timeline',
+include ':app',  ':module_timeline',
     ':base',
     ':resource',
     ':module_transition',

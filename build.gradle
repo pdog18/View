@@ -5,7 +5,7 @@ buildscript {
         config = "${rootDir}/config.gradle"
         versions = "${rootDir}/versions.gradle"
 
-        independent = isIndependent.toString()    //组件化每个模块是否可以独立编译
+        independent = isIndependent.toBoolean()    //组件化每个模块是否可以独立编译
     }
     apply from: versions
 

@@ -16,6 +16,9 @@
 package kt.pdog18.com.module_transition;
 
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.transition.Slide;
 import android.support.transition.TransitionManager;
 import android.view.Gravity;
@@ -23,25 +26,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import kt.pdog18.com.base.BaseFragment;
 
 
 public class SlideSample extends BaseFragment {
 
-
-    @BindView(R.id.transitions_container)
     ViewGroup transitions_container;
-    @BindView(R.id.text)
     TextView text;
     private boolean visible;
 
-    @OnClick(R.id.button)
-    void button() {
-        TransitionManager.beginDelayedTransition(transitions_container, new Slide(Gravity.RIGHT));
-        text.setVisibility((visible =!visible) ? View.VISIBLE : View.GONE);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        transitions_container = view.findViewById(R.id.transitions_container);
+        text = view.findViewById(R.id.text);
+        view.findViewById(R.id.button).setOnClickListener(v -> {
+            TransitionManager.beginDelayedTransition(transitions_container, new Slide(Gravity.RIGHT));
+            text.setVisibility((visible =!visible) ? View.VISIBLE : View.GONE);
+        });
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_slide;
