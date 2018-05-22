@@ -54,10 +54,6 @@ dependencies {
 
     implementation project(":base")
 
-
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    kapt  'com.jakewharton:butterknife-compiler:8.8.1'
-
     kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
 
     if (!independent) {
