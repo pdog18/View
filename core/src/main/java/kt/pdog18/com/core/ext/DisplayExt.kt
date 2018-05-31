@@ -32,24 +32,25 @@ inline val scaledDensity: Float
  * 而[px]只是返回自身，目的是表明自己是px值
  */
 
-val Number.dp: Float      // [xxhdpi](360 -> 1080)
-    get() = this.toFloat() * displayMetrics.density + 0.5f
 
-val Number.sp: Float      // [xxhdpi](360 -> 1080)
-    get() = this.toFloat() * displayMetrics.scaledDensity + 0.5f
+val <T : Number>T.dp: T      // [xxhdpi](360 -> 1080)
+    get() = (this.toFloat() * displayMetrics.density) as T
 
-val Number.px: Float      // [xxhdpi](360 -> 360)
-    get() = this.toFloat()
+val <T : Number>T.sp: T      // [xxhdpi](360 -> 1080)
+    get() = (this.toFloat() * displayMetrics.scaledDensity) as T
+
+val <T : Number>T.px: T      // [xxhdpi](360 -> 360)
+    get() = this
 
 /**
  * 在(可能存在的?)某些特殊情况会需要将px值转换为对应的dp/sp
  * 对应方法[Number.px2dp]/[Number.px2sp]
  */
-val Number.px2dp: Int       // [xxhdpi](360 -> 120)
-    get() = (this.toFloat() / displayMetrics.density + 0.5f).toInt()
+val <T : Number>T.px2dp: T       // [xxhdpi](360 -> 120)
+    get() = (this.toFloat() / displayMetrics.density + 0.5f) as T
 
-val Number.px2sp: Int       // [xxhdpi](360 -> 120)
-    get() = (this.toFloat() / displayMetrics.scaledDensity + 0.5f).toInt()
+val <T : Number>T.px2sp: T       // [xxhdpi](360 -> 120)
+    get() = (this.toFloat() / displayMetrics.scaledDensity + 0.5f) as T
 
 
 fun getStatusBarHeight(): Int {
