@@ -18,7 +18,7 @@ public class CardSnapHelper extends LinearSnapHelper {
 
     private RecyclerView recyclerView;
 
-    /**
+    /**≤
      * Attaches the {@link CardSnapHelper} to the provided RecyclerView, by calling
      * {@link RecyclerView#setOnFlingListener(RecyclerView.OnFlingListener)}.
      * You can call this method with {@code null} to detach it from the current RecyclerView.

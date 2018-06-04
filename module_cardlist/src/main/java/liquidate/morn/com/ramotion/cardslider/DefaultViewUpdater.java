@@ -113,11 +113,11 @@ public class DefaultViewUpdater implements CardSliderLayoutManager.ViewUpdater {
             }
         }
 
-        ViewCompat.setScaleX(view, scale);
-        ViewCompat.setScaleY(view, scale);
-        ViewCompat.setZ(view, z);
-        ViewCompat.setTranslationX(view, x);
-        ViewCompat.setAlpha(view, alpha);
+//        view.setScaleX(scale);
+//        view.setScaleY(scale);
+        view.setZ(z);
+        view.setTranslationX(x);
+        view.setAlpha(alpha);
 
         previewView = view;
     }
