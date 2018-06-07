@@ -1,4 +1,4 @@
-include ':app',  ':buildsrc', ':module_cardlist',
+include ':app',  ':buildsrc', ':module_cardlist', ':module_nest',
     ':base',
     ':resource',
     ':module_transition',

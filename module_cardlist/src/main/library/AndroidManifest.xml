@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="liquidate.morn.com.module_cardlist">
+    package="nest.pdog.com.module_cardlist">
 
     <application>
         <activity android:name=".CardSliderActivity" />
