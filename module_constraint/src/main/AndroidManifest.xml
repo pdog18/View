@@ -3,6 +3,7 @@
     package="kt.pdog18.com.module_constraint">
 
     <application
+        android:name="kt.pdog18.com.core.CoreApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

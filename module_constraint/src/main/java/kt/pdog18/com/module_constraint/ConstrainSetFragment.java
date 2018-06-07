@@ -11,17 +11,14 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 import kt.pdog18.com.base.BaseFragment;
+import kt.pdog18.com.base.Layout;
 import timber.log.Timber;
 
 
+@Layout(layoutId = R.layout.activity_constraint_layout)
 public class ConstrainSetFragment extends BaseFragment {
 
     Button button5;
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_constraint_layout;
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -51,14 +48,11 @@ public class ConstrainSetFragment extends BaseFragment {
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
 
         ValueAnimator animator = ValueAnimator.ofFloat(1);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float fraction = animation.getAnimatedFraction();
-                layoutParams.circleAngle = fraction * 360 + start + 45;
-                view.requestLayout();
-                Timber.d("layoutParams.circleAngle = %s", layoutParams.circleAngle);
-            }
+        animator.addUpdateListener(animation -> {
+            float fraction = animation.getAnimatedFraction();
+            layoutParams.circleAngle = fraction * 360 + start + 45;
+            view.requestLayout();
+            Timber.d("layoutParams.circleAngle = %s", layoutParams.circleAngle);
         });
         animator.setInterpolator(new SpringInterpolator(0.4f));
         animator.setRepeatMode(ValueAnimator.RESTART);
