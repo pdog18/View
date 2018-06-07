@@ -3,7 +3,7 @@ package nest.pdog.com.module_cardlist
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_card_slider.*
-import nest.pdog.com.ramotion.echelon.EchelonLayoutManager
+import nest.pdog.com.ramotion.cardslider.CardSliderLayoutManager
 import nest.pdog.com.ramotion.examples.simple.cards.SliderAdapter
 
 class CardSliderActivity : AppCompatActivity() {
@@ -19,7 +19,7 @@ class CardSliderActivity : AppCompatActivity() {
         }
 
         rv.adapter = sliderAdapter
-        rv.layoutManager = EchelonLayoutManager(this)
+        rv.layoutManager = CardSliderLayoutManager(this)
 
     }
 }

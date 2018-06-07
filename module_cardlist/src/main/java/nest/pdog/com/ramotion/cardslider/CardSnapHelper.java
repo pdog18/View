@@ -18,7 +18,7 @@ public class CardSnapHelper extends LinearSnapHelper {
 
     private RecyclerView recyclerView;
 
-    /**≤
+    /**
      * Attaches the {@link CardSnapHelper} to the provided RecyclerView, by calling
      * {@link RecyclerView#setOnFlingListener(RecyclerView.OnFlingListener)}.
      * You can call this method with {@code null} to detach it from the current RecyclerView.
@@ -66,9 +66,9 @@ public class CardSnapHelper extends LinearSnapHelper {
         int deltaJump;
 
         if (distance > 0) {
-            deltaJump = (int) Math.floor(distance / lm.getCardHeight());
+            deltaJump = (int) Math.floor(distance / lm.getCardWidth());
         } else {
-            deltaJump = (int) Math.ceil(distance / lm.getCardHeight());
+            deltaJump = (int) Math.ceil(distance / lm.getCardWidth());
         }
 
         final int deltaSign = Integer.signum(deltaJump);
@@ -106,16 +106,16 @@ public class CardSnapHelper extends LinearSnapHelper {
     {
         final CardSliderLayoutManager lm = (CardSliderLayoutManager)layoutManager;
         final int viewLeft = lm.getDecoratedLeft(targetView);
-        final int activeCardLeft = lm.getActiveCardTop();
-        final int activeCardCenter = lm.getActiveCardTop() + lm.getCardHeight() / 2;
-        final int activeCardRight = lm.getActiveCardTop() + lm.getCardHeight();
+        final int activeCardLeft = lm.getActiveCardLeft();
+        final int activeCardCenter = lm.getActiveCardLeft() + lm.getCardWidth() / 2;
+        final int activeCardRight = lm.getActiveCardLeft() + lm.getCardWidth();
 
         int[] out = new int[] {0, 0};
         if (viewLeft < activeCardCenter) {
             final int targetPos = lm.getPosition(targetView);
             final int activeCardPos = lm.getActiveCardPosition();
             if (targetPos != activeCardPos) {
-                out[0] = -(activeCardPos - targetPos) * lm.getCardHeight();
+                out[0] = -(activeCardPos - targetPos) * lm.getCardWidth();
             } else {
                 out[0] = viewLeft - activeCardLeft;
             }

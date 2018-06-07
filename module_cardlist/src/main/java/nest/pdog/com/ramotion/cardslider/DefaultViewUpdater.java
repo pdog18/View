@@ -37,9 +37,9 @@ public class DefaultViewUpdater implements CardSliderLayoutManager.ViewUpdater {
     public void onLayoutManagerInitialized(@NonNull CardSliderLayoutManager lm) {
         this.lm = lm;
 
-        this.cardWidth = lm.getCardHeight();
-        this.activeCardLeft = lm.getActiveCardTop();
-        this.activeCardRight = lm.getActiveCardBottom();
+        this.cardWidth = lm.getCardWidth();
+        this.activeCardLeft = lm.getActiveCardLeft();
+        this.activeCardRight = lm.getActiveCardRight();
         this.activeCardCenter = lm.getActiveCardCenter();
         this.cardsGap = lm.getCardsGap();
 
@@ -113,11 +113,11 @@ public class DefaultViewUpdater implements CardSliderLayoutManager.ViewUpdater {
             }
         }
 
-//        view.setScaleX(scale);
-//        view.setScaleY(scale);
-        view.setZ(z);
-//        view.setTranslationX(x);
-//        view.setAlpha(alpha);
+        ViewCompat.setScaleX(view, scale);
+        ViewCompat.setScaleY(view, scale);
+        ViewCompat.setZ(view, z);
+        ViewCompat.setTranslationX(view, x);
+        ViewCompat.setAlpha(view, alpha);
 
         previewView = view;
     }
