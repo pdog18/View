@@ -11,13 +11,14 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 import kt.pdog18.com.base.BaseFragment;
-import kt.pdog18.com.base.Layout;
 import timber.log.Timber;
 
 
-@Layout(layoutId = R.layout.activity_constraint_layout)
 public class ConstrainSetFragment extends BaseFragment {
-
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_constraint_layout;
+    }
     Button button5;
 
     @Override

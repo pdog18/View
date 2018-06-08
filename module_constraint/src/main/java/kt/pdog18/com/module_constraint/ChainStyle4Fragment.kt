@@ -8,10 +8,12 @@ import android.view.View
 import androidx.core.animation.doOnEnd
 import kotlinx.android.synthetic.main.fragment_match_constraint4.*
 import kt.pdog18.com.base.BaseFragment
-import kt.pdog18.com.base.Layout
 
-@Layout(R.layout.fragment_match_constraint4)
 class ChainStyle4Fragment : BaseFragment() {
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_match_constraint4
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fab.setOnClickListener {
             val fab1_params = fab1.layoutParams as ConstraintLayout.LayoutParams

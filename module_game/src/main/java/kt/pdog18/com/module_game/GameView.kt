@@ -15,7 +15,7 @@ class GameView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     init {
         paint.color = Color.RED
-        paint.strokeWidth = 20.dp
+        paint.strokeWidth = 20f.dp
         bitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round)
     }
 

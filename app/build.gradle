@@ -50,29 +50,37 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-//    compile project(':processor_lib')
-
     implementation project(":base")
 
     kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
 
+
+
     if (!independent) {
-        implementation project(":module_adbconnect")
-        implementation project(":module_arcseekbar")
-        implementation project(":module_bezier")
-        implementation project(":module_canvas")
-        implementation project(":module_constraint")
-        implementation project(":module_evaluator")
-        implementation project(":module_flipper")
-        implementation project(":module_game")
-        implementation project(":module_materialdesign")
-        implementation project(":module_matrix")
-        implementation project(":module_parabola")
-        implementation project(":module_patheffect")
-        implementation project(":module_proterduff")
-        implementation project(":module_scratch")
-        implementation project(":module_spider")
-        implementation project(":module_transition")
-        implementation project(":module_wave")
+        getModuleNames().each {
+            println("it  ===> ${it}")
+            implementation project(it)
+        }
     }
+}
+
+def getModuleNames() {
+    def settings = new File("${rootDir}/settings.gradle")
+    def names = []
+    settings.withReader("UTF-8") { reader ->
+        reader.eachLine {
+            def array = it.split(",")
+            array.each {
+                def colon = it.indexOf(":")
+                def module_name = it.substring(colon, it.length() - 1)
+                if (module_name.contains("module")) {
+                    println("implementation project ${module_name}")
+                    names.push(module_name)
+                } else {
+                    println("not module -> ${module_name}")
+                }
+            }
+        }
+    }
+    return names
 }
