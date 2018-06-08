@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Point
 import android.util.DisplayMetrics
 import android.view.WindowManager
+import kt.pdog18.com.core.R
 
 
 /**
