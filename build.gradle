@@ -32,7 +32,19 @@ allprojects {
         maven { url "https://jitpack.io" }
     }
 }
+subprojects { project ->
+    if (project.name.startsWith("module")) {
+        println(">>>>>>>>project.name ${project.name}")
+        apply from: config
 
+//        dependencies {
+//            kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
+//
+//            implementation project(":base")
+//        }
+    }
+
+}
 
 task clean(type: Delete) {
     delete rootProject.buildDir
