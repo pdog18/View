@@ -9,8 +9,8 @@ import android.view.ViewGroup
 
 abstract class BaseFragment : Fragment() {
 
-
     protected open fun getLayoutId(): Int = getClassAnnotation<Layout>().layoutId
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutId(), container, false)
@@ -21,4 +21,8 @@ abstract class BaseFragment : Fragment() {
         return this::class.java.getAnnotation(T::class.java)
     }
 
+//
+//    private operator fun <T : Annotation> get(type: KClass<T>): T {
+//        return this::class.java.getAnnotation(type.java)
+//    }
 }

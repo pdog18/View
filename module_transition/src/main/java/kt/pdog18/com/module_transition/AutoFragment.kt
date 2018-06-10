@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.support.transition.TransitionManager
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_auto.*
-
 import kt.pdog18.com.base.BaseFragment
+import kt.pdog18.com.base.Layout
 
-
+@Layout(R.layout.fragment_auto)
 class AutoFragment : BaseFragment() {
 
     private var visible: Boolean = false
