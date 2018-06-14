@@ -41,11 +41,9 @@ subprojects { project ->
         apply from: config
         apply plugin: 'com.jakewharton.butterknife'
 
-//        dependencies {
-//            kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
-//
-//            implementation project(":base")
-//        }
+        dependencies {
+            kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
+        }
     }
 
 }

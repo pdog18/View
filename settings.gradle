@@ -1,4 +1,4 @@
-include ':app',  ':buildsrc', ':module_cardlist', ':module_nest', ':module_math',
+include ':app',  ':buildsrc', ':module_cardlist', ':module_nest', ':module_math', ':module_seekbar',
     ':base',
     ':resource',
     ':module_transition',
