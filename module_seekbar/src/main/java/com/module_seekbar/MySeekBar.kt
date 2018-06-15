@@ -3,6 +3,7 @@ package com.module_seekbar
 import android.content.Context
 import android.support.design.widget.FloatingActionButton
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.doOnNextLayout
@@ -24,21 +25,24 @@ class MySeekBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, a
             Timber.d("fabParentWidth = ${range}")
             adapter?.bindView(this, 0)
 
-            fab.horizontal(range) { _, currentLeft ->
-                val cellWidth = (range) * 1.0f / (getCellCount() - 1)
+            fab.horizontal(range) { _, currentLeft, mask ->
+                if (mask == MotionEvent.ACTION_UP) {
 
-                val position = getPopPosition(currentLeft, cellWidth)
+                    val cellWidth = (range) * 1.0f / (getCellCount() - 1)
 
-                adapter?.bindView(this@MySeekBar, position)
+                    val position = getPopPosition(currentLeft, cellWidth)
 
-                val marginLayoutParams = fab.layoutParams as ViewGroup.MarginLayoutParams
-                marginLayoutParams.leftMargin = (cellWidth * position).toInt()
-                fab.layoutParams = marginLayoutParams
+                    adapter?.bindView(this@MySeekBar, position)
 
-                onReleased(position)
+                    val marginLayoutParams = fab.layoutParams as ViewGroup.MarginLayoutParams
+                    marginLayoutParams.leftMargin = (cellWidth * position).toInt()
+                    fab.layoutParams = marginLayoutParams
 
-                Timber.d("cellWidth = ${cellWidth}")
-                Timber.d("marginLayoutParams.leftMargin = ${marginLayoutParams.leftMargin}")
+                    onReleased(position)
+
+                    Timber.d("cellWidth = ${cellWidth}")
+                    Timber.d("marginLayoutParams.leftMargin = ${marginLayoutParams.leftMargin}")
+                }
             }
         }
     }

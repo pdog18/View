@@ -4,7 +4,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 
-fun View.horizontal(range: Int, action: (View, Int) -> Unit) {
+fun View.horizontal(range: Int, action: (View, Int, Int) -> Unit) {
 
     fun getViewLayoutParams(view: View): ViewGroup.MarginLayoutParams {
         return view.layoutParams as ViewGroup.MarginLayoutParams
@@ -20,6 +20,7 @@ fun View.horizontal(range: Int, action: (View, Int) -> Unit) {
             MotionEvent.ACTION_DOWN -> {
                 downX = event.rawX.toInt()
                 lastX = params.leftMargin
+                action(view, params.leftMargin, MotionEvent.ACTION_DOWN)
             }
             MotionEvent.ACTION_MOVE -> {
 
@@ -35,9 +36,10 @@ fun View.horizontal(range: Int, action: (View, Int) -> Unit) {
                     params.leftMargin = leftMargin.toInt()
                     view.layoutParams = params
                 }
+                action(view, params.leftMargin, MotionEvent.ACTION_MOVE)
             }
             else -> {
-                action(view, getViewLayoutParams(view).leftMargin)
+                action(view, params.leftMargin, MotionEvent.ACTION_UP)
             }
         }
         return@setOnTouchListener true
