@@ -17,6 +17,15 @@ class SeekbarActivity : AppCompatActivity() {
             listOf(
                 SeekBarData("0", "b", "c", "d"),
                 SeekBarData("1", "222b", "c444", "d333"),
+                SeekBarData("1", "222b", "c444", "d333"),
+                SeekBarData("1", "222b", "c444", "d333"),
+                SeekBarData("1", "222b", "c444", "d333"),
+                SeekBarData("1", "222b", "c444", "d333"),
+                SeekBarData("2", "ss22b", "344c", "asdgd"),
+                SeekBarData("2", "ss22b", "344c", "asdgd"),
+                SeekBarData("2", "ss22b", "344c", "asdgd"),
+                SeekBarData("2", "ss22b", "344c", "asdgd"),
+                SeekBarData("2", "ss22b", "344c", "asdgd"),
                 SeekBarData("2", "ss22b", "344c", "asdgd"),
                 SeekBarData("3", "b", "c", "d")
             )
