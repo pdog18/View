@@ -3,46 +3,41 @@ package com.module_seekbar
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import timber.log.Timber
 
-/**
- * Created by pdog on 15/06/2018.
- */
-fun View.horizontal(withLimit: Int, action: (View, Int) -> Unit) {
+fun View.horizontal(range: Int, action: (View, Int) -> Unit) {
+
+    fun getViewLayoutParams(view: View): ViewGroup.MarginLayoutParams {
+        return view.layoutParams as ViewGroup.MarginLayoutParams
+    }
+
+    var downX = -1
+    var lastX = -1
+
     this.setOnTouchListener { view, event ->
-        var lastX = 0f
-        val params = view.layoutParams as ViewGroup.MarginLayoutParams
+        var params = getViewLayoutParams(view)
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                lastX = event.rawX
+                downX = event.rawX.toInt()
+                lastX = params.leftMargin
             }
             MotionEvent.ACTION_MOVE -> {
-                var cX = event.rawX
 
-                var dx = cX - lastX
-                var leftX = lastX + dx
+                val currentX = event.rawX
 
+                val dx = currentX - downX
 
-                Timber.d("leftX = ${leftX}")
+                val leftMargin = lastX + dx
 
-                params.leftMargin = leftX.toInt() - view.width - view.width / 2
-
-                if (params.leftMargin + view.width > withLimit) {
-                    Timber.d("nnnnnnn")
-                    Timber.d("params.leftMargin = ${params.leftMargin}")
-                    Timber.d("view.width = ${view.width}")
-                    Timber.d("withLimit = ${withLimit}")
-                    kotlin.io.println()
-
+                if (leftMargin > range || leftMargin < 0) {
+                    return@setOnTouchListener true
                 } else {
-                    Timber.d("leftX = ${leftX}")
-
+                    params.leftMargin = leftMargin.toInt()
                     view.layoutParams = params
                 }
             }
             else -> {
-                action(view, params.leftMargin)
+                action(view, getViewLayoutParams(view).leftMargin)
             }
         }
         return@setOnTouchListener true
