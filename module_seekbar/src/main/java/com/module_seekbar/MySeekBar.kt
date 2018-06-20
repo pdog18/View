@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.design.widget.FloatingActionButton
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.doOnNextLayout
@@ -42,6 +43,10 @@ class MySeekBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, a
 
                     Timber.d("cellWidth = ${cellWidth}")
                     Timber.d("marginLayoutParams.leftMargin = ${marginLayoutParams.leftMargin}")
+                } else if (mask == MotionEvent.ACTION_DOWN) {
+                    //已经操作过，将边框变成蓝色
+
+                    (findViewById<View>(R.id.rect)).background = resources.getDrawable(R.drawable.seek_bar_background_blue)
                 }
             }
         }

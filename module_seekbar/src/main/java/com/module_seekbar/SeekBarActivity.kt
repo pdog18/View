@@ -7,26 +7,26 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_seekbar.*
 import timber.log.Timber
 
-class SeekbarActivity : AppCompatActivity() {
+class SeekBarActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seekbar)
-        var seekbar = myseekbar
+        val seekbar = myseekbar
         seekbar.adapter = object : SeekBarAdapter<SeekBarData>(
             listOf(
                 SeekBarData("0", "b", "c", "d"),
                 SeekBarData("1", "222b", "c444", "d333"),
-                SeekBarData("1", "222b", "c444", "d333"),
-                SeekBarData("1", "222b", "c444", "d333"),
-                SeekBarData("1", "222b", "c444", "d333"),
-                SeekBarData("1", "222b", "c444", "d333"),
-                SeekBarData("2", "ss22b", "344c", "asdgd"),
-                SeekBarData("2", "ss22b", "344c", "asdgd"),
-                SeekBarData("2", "ss22b", "344c", "asdgd"),
-                SeekBarData("2", "ss22b", "344c", "asdgd"),
-                SeekBarData("2", "ss22b", "344c", "asdgd"),
-                SeekBarData("2", "ss22b", "344c", "asdgd"),
+                SeekBarData("3", "222b", "c444", "d333"),
+                SeekBarData("4", "222b", "c444", "d333"),
+                SeekBarData("5", "222b", "c444", "d333"),
+                SeekBarData("6", "222b", "c444", "d333"),
+                SeekBarData("7", "ss22b", "344c", "asdgd"),
+                SeekBarData("8", "ss22b", "344c", "asdgd"),
+                SeekBarData("9", "ss22b", "344c", "asdgd"),
+                SeekBarData("0", "ss22b", "344c", "asdgd"),
+                SeekBarData("11", "ss22b", "344c", "asdgd"),
+                SeekBarData("12", "ss22b", "344c", "asdgd"),
                 SeekBarData("3", "b", "c", "d")
             )
         ) {

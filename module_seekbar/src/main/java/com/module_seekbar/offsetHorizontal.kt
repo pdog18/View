@@ -14,7 +14,7 @@ fun View.horizontal(range: Int, action: (View, Int, Int) -> Unit) {
     var lastX = -1
 
     this.setOnTouchListener { view, event ->
-        var params = getViewLayoutParams(view)
+        val params = getViewLayoutParams(view)
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
