@@ -54,33 +54,33 @@ dependencies {
 
     kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
 
-
-
     if (!independent) {
-        getModuleNames().each {
-            println("it  ===> ${it}")
-            implementation project(it)
-        }
+        fit(this) {
+            it.contains("module_")
+        }     //合体
     }
 }
-
-def getModuleNames() {
+/**
+ *
+ * @param host 主project
+ * @param function 返回true 代表是需要被添加的module
+ * @return
+ */
+def fit(host, function) {
     def settings = new File("${rootDir}/settings.gradle")
-    def names = []
     settings.withReader("UTF-8") { reader ->
         reader.eachLine {
             def array = it.split(",")
             array.each {
                 def colon = it.indexOf(":")
                 def module_name = it.substring(colon, it.length() - 1)
-                if (module_name.contains("module")) {
+                if (function(module_name)) {
                     println("implementation project ${module_name}")
-                    names.push(module_name)
+                    host.dependencies.implementation project(module_name)
                 } else {
                     println("not module -> ${module_name}")
                 }
             }
         }
     }
-    return names
 }
