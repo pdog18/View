@@ -12,7 +12,13 @@ class RangeSeekActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_range_seek)
         range.setOnRangeChangedListener { view, min, max ->
-            Timber.d("view.currentRange = ${view.currentRange}")
+            println()
+            println(view.currentRange[0])
+            println(view.currentRange[1])
+        }
+
+        seek.callback = { seek, left, right ->
+            Timber.d("left = ${Math.round(left)} right = ${Math.round(right)}")
         }
     }
 }

@@ -8,6 +8,7 @@
     tools:context="com.range.RangeSeekActivity">
 
     <com.range.RangeSeek
+        android:id="@+id/seek"
         android:layout_width="330dp"
         android:layout_height="100dp" />
 

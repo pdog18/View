@@ -12,18 +12,26 @@ import timber.log.Timber
 
 class RangeSeek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
+    private var STATE = NO_DOT
+
+    private companion object {
+        const val RIGHT_DOT = 1
+        const val LEFT_DOT = 0
+        const val NO_DOT = -1
+    }
 
     private val leftDot: Dot
     private val rightDot: Dot
     private val backPaint: Paint
     private val forePaint: Paint
 
-
     private val radius = 11f.dp
-    private var maxWidth: Float = 0f
 
-    private var active: Dot? = null
-    private var unactive: Dot? = null
+    private var start = 0f
+    private var maxWidth = 0f
+
+    private var min = 0
+    private var max = 999
 
     init {
         val paint = Paint().apply {
@@ -42,18 +50,16 @@ class RangeSeek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             color = Color.parseColor("#BECEFF")
         }
 
-        val leftPoint = PointF(0f, 0f)
-        val rightPoint = PointF(0f, 0f)
-
-        leftDot = Dot(paint, leftPoint, radius)
-        rightDot = Dot(paint, rightPoint, radius)
+        leftDot = Dot(0f, 0f, paint, radius)
+        rightDot = Dot(0f, 0f, paint, radius)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         //把右边的点，移到最右侧
         maxWidth = w.toFloat() - (2 * radius)
-        rightDot.translate(maxWidth)
+
+        rightDot.translate(maxWidth,maxWidth)
     }
 
     private var lastX = -1f
@@ -64,74 +70,66 @@ class RangeSeek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         when (actionMasked) {
             MotionEvent.ACTION_DOWN -> {
 
-                val x = (event.x - radius).toInt()
-                val y = (event.y - height / 2).toInt()
+                val x = (event.x - radius)
+                val y = (event.y - height / 2)
 
                 lastX = event.x
 
-                active = when {
-                    leftDot.contains(x, y) -> {
-                        Timber.d("leftDot ")
-                        unactive = rightDot
-                        leftDot
-                    }
-                    rightDot.contains(x, y) -> {
-                        Timber.d("rightDot ")
-                        unactive = leftDot
-                        rightDot
-                    }
+                STATE = when {
+                    leftDot.contains(x, y) -> LEFT_DOT
+                    rightDot.contains(x, y) -> RIGHT_DOT
                     else -> {
-                        Timber.d("null ")
-
+                        NO_DOT
                         return false
                     }
                 }
+                Timber.d("STATE = ${STATE}")
             }
 
             MotionEvent.ACTION_MOVE -> {
-                active?.let {
-                    val currX = event.x
-                    val dx = currX - lastX
+                val currX = event.x
+                val dx = currX - lastX
 
-                    if (active === leftDot) {//滑动left
-                        Timber.d("滑动left = ${active}")
-                        Timber.d("it.point.x + dx >= 0 = ${it.point.x + dx >= 0}")
-                        Timber.d(" it.point.x <= rightDot.point.x = ${it.point.x <= rightDot.point.x}")
-                        if (it.point.x + dx >= 0 && it.point.x + dx + radius * 2 <= rightDot.point.x) {
-                            it.translate(dx)
+                when (STATE) {
+                    LEFT_DOT -> {
+                        if (leftDot.x + dx + radius * 2 <= rightDot.x) {
+                            Timber.d("dx = ${dx}")
+                            leftDot.translate(dx,maxWidth)
                         }
-                    } else if (active === rightDot) {
-                        Timber.d("滑动right = ${active}")
-                        if (it.point.x + dx >= leftDot.point.x + radius * 2 && it.point.x + dx <= maxWidth) {
-                            it.translate(dx)
-                        }
-                    } else {
-                        Timber.d("滑动null = ${active}")
                     }
-
-                    invalidate()
-                    lastX = currX
+                    RIGHT_DOT -> {
+                        if (rightDot.x + dx >= leftDot.x + radius * 2) {
+                            Timber.d("dx = ${dx}")
+                            rightDot.translate(dx,maxWidth)
+                        }
+                    }
                 }
+
+                invalidate()
+                lastX = currX
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
 
             }
         }
 
+        val left = (leftDot.x / maxWidth) * (max - min) + min
+        val right = (rightDot.x / maxWidth) * (max - min) + min
+        callback(this, left, right)
         return true
     }
 
+    var callback: (RangeSeek, Float, Float) -> Unit = { seek: RangeSeek, left: Float, right: Float -> }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        canvas?.withTranslation(x = radius, y = height * 1.0f / 2) {
+        canvas?.withTranslation(x = leftDot.radius, y = height * 1.0f / 2) {
 
             //1. draw 灰色背景
-            drawLine(0f, 0f, maxWidth, 0f, backPaint)
-
+            drawLine(start, 0f, maxWidth, 0f, backPaint)
 
             //2. draw 蓝色选中区域
-            drawLine(leftDot.point.x, 0f, rightDot.point.x, 0f, forePaint)
+            drawLine(leftDot.x, 0f, rightDot.x, 0f, forePaint)
 
             //3. draw 蓝色点
             leftDot.draw(this)
@@ -140,30 +138,39 @@ class RangeSeek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         }
     }
 
-    class Dot(private val paint: Paint, val point: PointF, val radius: Float) {
+    private class Dot(x: Float, y: Float, private val paint: Paint, val radius: Float) : PointF(x, y) {
 
-        private val rect: Rect
+        private val rect: RectF
 
         init {
-
             //根据 Point radius 创建 rect
-            val x = point.x.toInt()
-            val y = point.y.toInt()
-            val r = (radius * 1.5f).toInt()
-            rect = Rect(x - r, y - r, x + r, y + r)
+            val r = (radius * 1.5f)
+            rect = RectF(x - r, y - r, x + r, y + r)
         }
+
 
         fun draw(canvas: Canvas) {
-            canvas.drawCircle(point.x, point.y, radius, paint)
+            canvas.drawCircle(x, y, radius, paint)
+//            canvas.drawRect(rect, paint)
         }
 
-        fun contains(x: Int, y: Int): Boolean {
+        fun contains(x: Float, y: Float): Boolean {
             return rect.contains(x, y)
         }
 
-        fun translate(x: Float) {
-            point.x += x.toInt()        //rect 和circle 移动不同步
-            rect.offset(x.toInt(), 0)
+        fun translate(dx: Float,maxWidth :Float) {
+            var offset = dx
+
+
+            if (dx + x < 0) {
+                offset = -x
+            } else if (dx + x > maxWidth) {
+                offset = maxWidth - x
+            }
+
+            x += offset
+
+            rect.offset(offset, 0f)
         }
     }
 }
