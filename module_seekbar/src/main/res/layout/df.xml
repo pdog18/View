@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_bg"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="26dp"
+            android:paddingStart="26dp"
+            android:paddingTop="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="佣金计算器"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="预计佣金/元"
+            android:textColor="#8F94A5"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="9,850,000"
+            android:textColor="#3160FF"
+            android:textSize="34sp" />
+
+        <com.module_seekbar.MySeekBar
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginStart="26dp" />
+
+
+        <com.module_seekbar.MySeekBar
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginStart="26dp" />
+
+        <com.module_seekbar.MySeekBar
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:layout_marginBottom="26dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginStart="26dp" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

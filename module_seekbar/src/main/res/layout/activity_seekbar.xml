@@ -6,9 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.module_seekbar.SeekBarActivity">
 
+    <Button
+        android:id="@+id/aaaa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="aaaa" />
+
     <com.module_seekbar.MySeekBar
-        android:layout_width="0dp"
         android:id="@+id/myseekbar"
+        android:layout_width="0dp"
         android:layout_height="120dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"

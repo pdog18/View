@@ -12,6 +12,10 @@ class SeekBarActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seekbar)
+
+        aaaa.setOnClickListener {
+            DF().show(supportFragmentManager,"A")
+        }
         val seekbar = myseekbar
         seekbar.adapter = object : SeekBarAdapter<SeekBarData>(
             listOf(

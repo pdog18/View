@@ -50,8 +50,8 @@ class RangeSeek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             color = Color.parseColor("#BECEFF")
         }
 
-        leftDot = Dot(0f, 0f, paint, radius)
-        rightDot = Dot(0f, 0f, paint, radius)
+        leftDot = Dot(paint, radius)
+        rightDot = Dot(paint, radius)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -59,15 +59,13 @@ class RangeSeek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         //把右边的点，移到最右侧
         maxWidth = w.toFloat() - (2 * radius)
 
-        rightDot.translate(maxWidth,maxWidth)
+        rightDot.translate(maxWidth, maxWidth)
     }
 
     private var lastX = -1f
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val actionMasked = event.actionMasked
-
-        when (actionMasked) {
+        when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
 
                 val x = (event.x - radius)
@@ -78,12 +76,12 @@ class RangeSeek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
                 STATE = when {
                     leftDot.contains(x, y) -> LEFT_DOT
                     rightDot.contains(x, y) -> RIGHT_DOT
-                    else -> {
-                        NO_DOT
-                        return false
-                    }
+                    else -> NO_DOT
                 }
-                Timber.d("STATE = ${STATE}")
+
+                if (STATE == NO_DOT) {
+                    return false
+                }
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -94,13 +92,13 @@ class RangeSeek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
                     LEFT_DOT -> {
                         if (leftDot.x + dx + radius * 2 <= rightDot.x) {
                             Timber.d("dx = ${dx}")
-                            leftDot.translate(dx,maxWidth)
+                            leftDot.translate(dx, maxWidth)
                         }
                     }
                     RIGHT_DOT -> {
                         if (rightDot.x + dx >= leftDot.x + radius * 2) {
                             Timber.d("dx = ${dx}")
-                            rightDot.translate(dx,maxWidth)
+                            rightDot.translate(dx, maxWidth)
                         }
                     }
                 }
@@ -119,7 +117,11 @@ class RangeSeek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         return true
     }
 
-    var callback: (RangeSeek, Float, Float) -> Unit = { seek: RangeSeek, left: Float, right: Float -> }
+    private var callback: ((RangeSeek, Float, Float) -> Unit) = { rangeSeek, left, right -> }
+
+    fun setOnRangeChangedListener(li: (RangeSeek, Float, Float) -> Unit) {
+        callback = li
+    }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
@@ -138,7 +140,7 @@ class RangeSeek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         }
     }
 
-    private class Dot(x: Float, y: Float, private val paint: Paint, val radius: Float) : PointF(x, y) {
+    private class Dot(private val paint: Paint, val radius: Float, x: Float = 0.0f, y: Float = 0.0f) : PointF(x, y) {
 
         private val rect: RectF
 
@@ -158,9 +160,8 @@ class RangeSeek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             return rect.contains(x, y)
         }
 
-        fun translate(dx: Float,maxWidth :Float) {
+        fun translate(dx: Float, maxWidth: Float) {
             var offset = dx
-
 
             if (dx + x < 0) {
                 offset = -x

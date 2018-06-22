@@ -45,7 +45,6 @@ class MySeekBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, a
                     Timber.d("marginLayoutParams.leftMargin = ${marginLayoutParams.leftMargin}")
                 } else if (mask == MotionEvent.ACTION_DOWN) {
                     //已经操作过，将边框变成蓝色
-
                     (findViewById<View>(R.id.rect)).background = resources.getDrawable(R.drawable.seek_bar_background_blue)
                 }
             }

@@ -6,11 +6,6 @@ import android.util.DisplayMetrics
 import android.view.WindowManager
 import kt.pdog18.com.core.R
 
-
-/**
- * Created by Victor on 2017/8/21. (ง •̀_•́)ง
- */
-
 val displayMetrics = app.resources.displayMetrics!!
 
 
