@@ -18,7 +18,12 @@ private fun vertical(a: Float): Double {
     }
 }
 
-fun computeAngle(p: PointF, center: PointF): Double = computeAngle(p.x, p.y, center.x, center.y)
+/**
+ * [touch] 触摸点
+ * [center] 圆心
+ * return [Double] 符合 android 坐标系的角度 ,
+ */
+fun computeAngle(touch: PointF, center: PointF): Double = computeAngle(touch.x, touch.y, center.x, center.y)
 
 fun computeAngle(touchX: Float, touchY: Float, centerX: Float, centerY: Float): Double {
     val a = touchX - centerX
