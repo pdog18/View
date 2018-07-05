@@ -8,6 +8,7 @@ class ConstraintLayoutActivity : TabViewPagerActivity() {
         return arrayOf(
             ConstrainSet2Fragment(),
             ConstrainSetFragment(),
+            ChainStyle5Fragment(),
             ChainStyleFragment(),
             ChainStyle2Fragment(),
             ChainStyle3Fragment(),

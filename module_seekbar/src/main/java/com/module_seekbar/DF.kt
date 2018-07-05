@@ -7,5 +7,4 @@ class DF : BaseDialogFragment() {
 
     override fun initView(root: View) {
     }
-
 }
