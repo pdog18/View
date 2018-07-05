@@ -1,7 +1,6 @@
 package kt.pdog18.com.module_constraint.util
 
 import android.graphics.PointF
-import kotlin.math.atan2
 
 private fun horizontal(b: Float): Double {
     return if (b > 0) {
@@ -34,26 +33,13 @@ fun computeAngle(touchX: Float, touchY: Float, centerX: Float, centerY: Float): 
         return vertical(a)
     }
 
-    return getAngle(a,b)
+    return getAngle(a, b)
 }
 
 private fun getAngle(a: Float, b: Float): Double {
     val d = getDirection(a, b)
 
-    return when (d) {
-        is Direction.BottomRight -> {
-            atan2(b, a) * 180 / Math.PI + 0
-        }
-        is Direction.BottomLeft -> {
-            90 - atan2(a, b) * 180 / Math.PI
-        }
-        is Direction.TopLeft -> {
-            atan2(b, a) * 180 / Math.PI + 360
-        }
-        is Direction.TopRight -> {
-            450 - atan2(a, b) * 180 / Math.PI
-        }
-    }
+    return d.getAngle(a, b)
 }
 /*
 private fun getAngle(a: Float, b: Float): Double {

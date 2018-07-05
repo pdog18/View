@@ -1,37 +1,37 @@
 package kt.pdog18.com.module_constraint.util
 
-import kt.pdog18.com.module_constraint.util.Direction.Companion.BOTTOM_LEFT
-import kt.pdog18.com.module_constraint.util.Direction.Companion.BOTTOM_RIGHT
-import kt.pdog18.com.module_constraint.util.Direction.Companion.TOP_LEFT
-import kt.pdog18.com.module_constraint.util.Direction.Companion.TOP_RIGHT
+import kotlin.math.atan2
 
 
-sealed class Direction {
-    class BottomRight : Direction()
-    class BottomLeft : Direction()
-    class TopRight : Direction()
-    class TopLeft : Direction()
+enum class Direction {
+    BottomRight {
+        override fun getAngle(x: Float, y: Float) = atan2(y, x) * 180 / Math.PI + 0
+    },
+    BottomLeft {
+        override fun getAngle(x: Float, y: Float) = atan2(y, x) * 180 / Math.PI + 0
+    },
+    TopRight {
+        override fun getAngle(x: Float, y: Float) = atan2(y, x) * 180 / Math.PI + 360
+    },
+    TopLeft {
+        override fun getAngle(x: Float, y: Float) = atan2(y, x) * 180 / Math.PI + 360
+    };
 
-    companion object {
-        val BOTTOM_RIGHT = Direction.BottomRight()
-        val BOTTOM_LEFT = Direction.BottomLeft()
-        val TOP_RIGHT = Direction.TopRight()
-        val TOP_LEFT = Direction.TopLeft()
-    }
+    abstract fun getAngle(x: Float, y: Float): Double
 }
 
 fun getDirection(x: Float, y: Float): Direction {
     return if (y > 0) {
         if (x > 0) {
-            BOTTOM_RIGHT
+            Direction.BottomRight
         } else {
-            BOTTOM_LEFT
+            Direction.BottomLeft
         }
     } else {
         if (x > 0) {
-            TOP_RIGHT
+            Direction.TopRight
         } else {
-            TOP_LEFT
+            Direction.TopLeft
         }
     }
 }
