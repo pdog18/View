@@ -24,7 +24,8 @@ fun computeAngle(touchX: Float, touchY: Float, centerX: Float, centerY: Float): 
     val a = touchX - centerX
     val b = touchY - centerY
 
-    if (a == 0f) {
+    if (a == 0f) { //为了提高精度
+        //a == 0f 269.99999734373984
         return horizontal(b)
     }
 
@@ -37,29 +38,7 @@ fun computeAngle(touchX: Float, touchY: Float, centerX: Float, centerY: Float): 
 }
 
 private fun getAngle(a: Float, b: Float): Double {
-    val d = getDirection(a, b)
+    val d = getDirection(b)
 
     return d.getAngle(a, b)
 }
-/*
-private fun getAngle(a: Float, b: Float): Double {
-
-    val x = abs(a)
-    val y = abs(b)
-
-
-    return when (d) {
-        is Direction.BottomRight -> {
-            atan2(y, x) * 180 / Math.PI + 0
-        }
-        is Direction.BottomLeft -> {
-            atan2(x, y) * 180 / Math.PI + 90
-        }
-        is Direction.TopLeft -> {
-            atan2(y, x) * 180 / Math.PI + 180
-        }
-        is Direction.TopRight -> {
-            atan2(x, y) * 180 / Math.PI + 270
-        }
-    }
-}*/

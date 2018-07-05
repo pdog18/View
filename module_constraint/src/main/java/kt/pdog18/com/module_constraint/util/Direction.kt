@@ -4,34 +4,20 @@ import kotlin.math.atan2
 
 
 enum class Direction {
-    BottomRight {
+    Bottom {
         override fun getAngle(x: Float, y: Float) = atan2(y, x) * 180 / Math.PI + 0
     },
-    BottomLeft {
-        override fun getAngle(x: Float, y: Float) = atan2(y, x) * 180 / Math.PI + 0
-    },
-    TopRight {
-        override fun getAngle(x: Float, y: Float) = atan2(y, x) * 180 / Math.PI + 360
-    },
-    TopLeft {
+    Top {
         override fun getAngle(x: Float, y: Float) = atan2(y, x) * 180 / Math.PI + 360
     };
 
     abstract fun getAngle(x: Float, y: Float): Double
 }
 
-fun getDirection(x: Float, y: Float): Direction {
+fun getDirection(y: Float): Direction {
     return if (y > 0) {
-        if (x > 0) {
-            Direction.BottomRight
-        } else {
-            Direction.BottomLeft
-        }
+        Direction.Bottom
     } else {
-        if (x > 0) {
-            Direction.TopRight
-        } else {
-            Direction.TopLeft
-        }
+        Direction.Top
     }
 }
