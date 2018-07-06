@@ -1,6 +1,8 @@
 package kt.pdog18.com.module_constraint.util
 
 import android.graphics.PointF
+import kotlin.math.cos
+import kotlin.math.sin
 
 operator fun PointF.minusAssign(p: PointF) {
     this.apply {
@@ -23,3 +25,29 @@ fun PointF.toRadian() = getRadian(x, y)
 fun PointF.toRadian(center: PointF) = this.apply {
     this -= center
 }.toRadian()
+
+/**
+ * 半径[radius] , 弧度[radian] 和 圆心 [centerX],[centerY] 确定一个点的坐标
+ */
+fun PointF.rectifyWithRadianAndRadius(
+    radius: Float,
+    radian: Float,
+    centerX: Float = 0f,
+    centerY: Float = 0f) {
+
+    val x1 = centerX + radius * cos(radian)
+    val y1 = centerY + radius * sin(radian)
+
+    this.set(x1, y1)
+}
+
+fun PointF.rectifyWithRadianAndRadius(
+    radius: Float,
+    radian: Float,
+    center: PointF) {
+
+    val x1 = center.x + radius * cos(radian)
+    val y1 = center.y + radius * sin(radian)
+
+    this.set(x1, y1)
+}

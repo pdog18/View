@@ -19,12 +19,12 @@ fun getRadian(touchPoint: PointF, center: PointF): Float = getRadian(touchPoint.
 fun getRadian(touchX: Float, touchY: Float, centerX: Float = 0f, centerY: Float = 0f): Float {
     val dx = touchX - centerX
     val dy = touchY - centerY
-//    val direction = getDirection(dx, dy)
-//    return direction.getRadian(dx, dy)
 
     val atan2 = atan2(dy, dx)
     return when {
-        atan2 < 0 -> atan2
+        atan2 > 0 -> atan2
         else -> atan2 + (Math.PI * 2).toFloat()
     }
 }
+
+

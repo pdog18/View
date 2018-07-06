@@ -11,9 +11,8 @@ import android.view.View
 import androidx.core.graphics.withTranslation
 import kt.pdog18.com.module_constraint.util.getRadian
 import kt.pdog18.com.module_constraint.util.radian2Angle
+import kt.pdog18.com.module_constraint.util.rectifyWithRadianAndRadius
 import timber.log.Timber
-import kotlin.math.cos
-import kotlin.math.sin
 
 
 class MyView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
@@ -38,10 +37,9 @@ class MyView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val radian = getRadian(event, center)
-
         Timber.d("radian = ${radian} ,angle = ${radian.radian2Angle()}")
-
-        rectifyPointF(touchPointF, width / 3, 0f, 0f, radian)
+        parent.requestDisallowInterceptTouchEvent(true)
+        touchPointF.rectifyWithRadianAndRadius(width / 3f, radian)
         touchPointF2.set(event.x, event.y)
         invalidate()
         return true
@@ -55,15 +53,5 @@ class MyView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         }
         canvas.drawPoint(touchPointF2.x, touchPointF2.y, paint2)
 
-    }
-
-    /**
-     * 圆心，半径 和弧度 确定一个点的坐标
-     */
-    private fun rectifyPointF(pointF: PointF, r: Int, cx: Float, cy: Float, radian: Float) {
-        val x1 = cx + r * cos(radian)
-        val y1 = cy + r * sin(radian)
-
-        pointF.set(x1, y1)
     }
 }
