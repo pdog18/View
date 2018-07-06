@@ -9,13 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
 import kt.pdog18.com.module_constraint.R
-import kt.pdog18.com.module_constraint.util.computeAngle
+import kt.pdog18.com.module_constraint.util.getRadian
 import timber.log.Timber
 
 
 class Bottom constructor(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
 
-    private val apf: AnglePointF = AnglePointF(0.0)
+    private val apf: AnglePointF = AnglePointF(0f)
     private val centerPointF: PointF by lazy {
         PointF(width * 1f / 2, height * 1f / 2)
     }
@@ -40,17 +40,17 @@ class Bottom constructor(context: Context, attrs: AttributeSet? = null) : Constr
             }
 
         }
-        apf.set(event.x, event.y, computeAngle(event.x, event.y, centerPointF.x, centerPointF.y))
-        Timber.d("apf.angle = ${apf.angle}")
+        apf.set(event.x, event.y, getRadian(event.x, event.y, centerPointF.x, centerPointF.y))
+        Timber.d("apf.angle = ${apf.radian}")
         return super.onTouchEvent(event)
     }
 }
 
-data class AnglePointF(var angle: Double) {
+data class AnglePointF(var radian: Float) {
     private val point = PointF()
 
-    fun set(x: Float, y: Float, angle: Double) {
-        point.set(x, y)
-        this.angle = angle
+    fun set(x: Float, y: Float, radian: Float) {
+        this.point.set(x, y)
+        this.radian = radian
     }
 }

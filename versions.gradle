@@ -10,7 +10,7 @@ ext {
     version_code = 1
     version_name = "1.0"
 
-    support_library_version = "27.1.0"
+    support_library_version = "27.1.1"
     ktx_version = '0.3'
 
     butterknife_version = '8.8.1'
