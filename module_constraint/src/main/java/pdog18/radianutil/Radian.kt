@@ -1,4 +1,4 @@
-package kt.pdog18.com.module_constraint.util
+package pdog18.radianutil
 
 import android.graphics.PointF
 import android.view.MotionEvent
@@ -26,5 +26,3 @@ fun getRadian(touchX: Float, touchY: Float, centerX: Float = 0f, centerY: Float 
         else -> atan2 + (Math.PI * 2).toFloat()
     }
 }
-
-

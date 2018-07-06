@@ -1,4 +1,4 @@
-package kt.pdog18.com.module_constraint.util
+package pdog18.radianutil
 
 import android.graphics.PointF
 import kotlin.math.cos
