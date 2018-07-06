@@ -57,8 +57,10 @@ class MyView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
     }
 
+    /**
+     * 圆心，半径 和弧度 确定一个点的坐标
+     */
     private fun rectifyPointF(pointF: PointF, r: Int, cx: Float, cy: Float, radian: Float) {
-
         val x1 = cx + r * cos(radian)
         val y1 = cy + r * sin(radian)
 
