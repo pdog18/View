@@ -16,7 +16,7 @@ import pdog18.radianutil.rectifyWithRadianAndRadius
 import timber.log.Timber
 
 
-class MyViewGroup(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
+class SkyWheels(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     private val center by lazy {
         PointF(width / 2f, height / 2f)
