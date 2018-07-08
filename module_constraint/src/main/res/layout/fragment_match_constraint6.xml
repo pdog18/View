@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
 
-    <kt.pdog18.com.module_constraint.widget.MyView
+    <kt.pdog18.com.module_constraint.widget.MyViewGroup
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>

@@ -28,6 +28,7 @@ fun PointF.toRadian(center: PointF) = this.apply {
 
 /**
  * 半径[radius] , 弧度[radian] 和 圆心 [centerX],[centerY] 确定一个点的坐标
+ * @return  [this] 这个对象的坐标就是圆上的一个点
  */
 fun PointF.rectifyWithRadianAndRadius(
     radius: Float,
