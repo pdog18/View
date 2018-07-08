@@ -54,17 +54,55 @@ class Bottom(context: Context, attrs: AttributeSet?) : FrameLayout(context, attr
                 parent.requestDisallowInterceptTouchEvent(true)
                 lastRadian = getRadian(event, center)
             }
-            else -> {
+
+            MotionEvent.ACTION_MOVE -> {
                 val currentRadian = getRadian(event, center)
-                val dr = currentRadian - lastRadian
-                rectifyRadian += dr
+                rectifyRadian += (currentRadian - lastRadian)
                 lastRadian = currentRadian
                 requestLayout()
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                val currentRadian = getRadian(event, center)
+
+                rectifyRadian += (currentRadian - lastRadian)
+
+                val cellRadian = (360f / childCount).angle2Radian()
+
+                val dr = Math.abs(rectifyRadian) % cellRadian
+
+                var position = (rectifyRadian / cellRadian).toInt()
+
+                val antiDr = cellRadian - dr
+
+                if (antiDr > dr) {
+                    if (rectifyRadian < 0) {
+                        rectifyRadian += dr.toFloat()
+                    } else {
+                        rectifyRadian -= dr.toFloat()
+                    }
+                } else {
+                    if (rectifyRadian < 0) {
+                        position--
+                        rectifyRadian -= antiDr.toFloat()
+                    } else {
+                        position++
+                        rectifyRadian += antiDr.toFloat()
+                    }
+                }
+
+                lastRadian = rectifyRadian
+                requestLayout()
+
+                callback(position)
+
+                Timber.d("position = ${position}")
             }
         }
 
         return true
     }
+
+    var callback: (Int) -> Unit = {}
 
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
@@ -77,20 +115,12 @@ class Bottom(context: Context, attrs: AttributeSet?) : FrameLayout(context, attr
             val child = getChildAt(it)
             val radius = height * 2 + child.height * 4
 
-            Timber.d("radius = ${radius}")
-            Timber.d("height = ${height}")
-
             layoutPointF.rectifyWithRadianAndRadius(radius.toFloat(), radian * it + rectifyRadian)
             val dx = (layoutPointF.x - child.width / 2 + center.x).toInt()
             val dy = (layoutPointF.y - child.height / 2 + center.y).toInt()
 
-            Timber.d("child = ${child}")
 
             child.layout(child.left + dx, child.top + dy, child.right + dx, child.bottom + dy)
-            with(child as TextView) {
-                this.text = "${child.left}  -  ${child.top}"
-            }
-            Timber.d("child.left = ${child}")
         }
     }
 
