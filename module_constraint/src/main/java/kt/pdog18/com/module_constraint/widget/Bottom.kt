@@ -1,7 +1,10 @@
 package kt.pdog18.com.module_constraint.widget
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.PointF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.FrameLayout
@@ -38,7 +41,6 @@ class Bottom(context: Context, attrs: AttributeSet?) : FrameLayout(context, attr
 
     private var rectifyRadian = 0f
 
-    private lateinit var inner: Region
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         initCenter()
@@ -108,12 +110,16 @@ class Bottom(context: Context, attrs: AttributeSet?) : FrameLayout(context, attr
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
 
+        layoutChildren(rectifyRadian)
+    }
 
-        val radian = 360f.angle2Radian().toFloat() / childCount
-
+    private fun layoutChildren(rectifyRadian: Float) {
         (0 until childCount).forEach {
             val child = getChildAt(it)
-            val radius = height * 2 + child.height * 4
+            val radius = (center.y - height /* height * 2 */) + child.height * 4
+
+            val radian = 360f.angle2Radian().toFloat() / childCount
+
 
             layoutPointF.rectifyWithRadianAndRadius(radius.toFloat(), radian * it + rectifyRadian)
             val dx = (layoutPointF.x - child.width / 2 + center.x).toInt()
@@ -127,7 +133,7 @@ class Bottom(context: Context, attrs: AttributeSet?) : FrameLayout(context, attr
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        val radius = height * 2 + 180
+        val radius = height * 2.6
 
         canvas.withTranslation(center.x, center.y) {
             canvas.drawCircle(0f, 0f, radius.toFloat(), paint)
