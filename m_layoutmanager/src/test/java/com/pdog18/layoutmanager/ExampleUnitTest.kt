@@ -1,4 +1,4 @@
-package com.pdog18.m_layoutmanager
+package com.pdog18.layoutmanager
 
 import org.junit.Test
 
