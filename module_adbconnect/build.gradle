@@ -1,5 +1,0 @@
-dependencies {
-    kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
-
-    implementation project(":base")
-}

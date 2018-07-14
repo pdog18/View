@@ -56,7 +56,7 @@ dependencies {
 
     if (!independent) {
         fit(this) {
-            it.contains("module_")
+            it.contains("m_")
         }     //合体
     }
 }

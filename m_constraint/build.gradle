@@ -1,0 +1,5 @@
+dependencies {
+    implementation project(":base")
+
+    implementation 'rouchuan.viewpagerlayoutmanager:viewpagerlayoutmanager:2.0.18'
+}

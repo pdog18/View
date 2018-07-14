@@ -34,7 +34,7 @@ allprojects {
     }
 }
 subprojects { project ->
-    if (project.name.startsWith("module")) {
+    if (project.name.startsWith("m_")) {
         println(">>>>>>>>project.name ${project.name}")
         apply from: config
 
