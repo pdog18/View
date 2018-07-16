@@ -1,59 +1,28 @@
 package kt.pdog18.com.core.ext
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Point
 import android.util.DisplayMetrics
 import android.view.WindowManager
-import kt.pdog18.com.core.R
 
-val displayMetrics = app.resources.displayMetrics!!
-
+val displayMetrics = Resources.getSystem().displayMetrics!!
 
 inline val screenWidth: Int
-    get() = app.resources.displayMetrics.widthPixels
+    get() = displayMetrics.widthPixels
 
 inline val screenHeight: Int
-    get() = app.resources.displayMetrics.heightPixels
-
-inline val screenDensity: Float
-    get() = app.resources.displayMetrics.density
+    get() = displayMetrics.heightPixels
 
 inline val scaledDensity: Float
-    get() = app.resources.displayMetrics.scaledDensity
-
-
-/**
- * 正常编码中一般只会用到 [dp]/[sp] 和 [px] ;
- * 其中[dp]/[sp] 会根据系统分辨率将输入的dp/sp值转换为对应的px
- * 而[px]只是返回自身，目的是表明自己是px值
- */
-
-
-val <T : Number>T.dp: T      // [xxhdpi](360 -> 1080)
-    get() = (this.toFloat() * displayMetrics.density) as T
-
-val <T : Number>T.sp: T      // [xxhdpi](360 -> 1080)
-    get() = (this.toFloat() * displayMetrics.scaledDensity) as T
-
-val <T : Number>T.px: T      // [xxhdpi](360 -> 360)
-    get() = this
-
-/**
- * 在(可能存在的?)某些特殊情况会需要将px值转换为对应的dp/sp
- * 对应方法[Number.px2dp]/[Number.px2sp]
- */
-val <T : Number>T.px2dp: T       // [xxhdpi](360 -> 120)
-    get() = (this.toFloat() / displayMetrics.density + 0.5f) as T
-
-val <T : Number>T.px2sp: T       // [xxhdpi](360 -> 120)
-    get() = (this.toFloat() / displayMetrics.scaledDensity + 0.5f) as T
+    get() = displayMetrics.scaledDensity
 
 
 fun getStatusBarHeight(): Int {
     var result = 0
-    val resourceId = app.resources.getIdentifier("status_bar_height", "dimen", "android")
+    val resourceId = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android")
     if (resourceId > 0) {
-        result = app.resources.getDimensionPixelSize(resourceId)
+        result = Resources.getSystem().getDimensionPixelSize(resourceId)
     }
     return result
 }
