@@ -6,15 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.pdog18.layoutmanager.LayoutManagerActivity">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <com.pdog18.layoutmanager.CView
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
         android:layout_width="match_parent"
-        android:background="#33f5f555"
-        android:layout_height="100dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        android:layout_height="180dp" />
 </android.support.constraint.ConstraintLayout>
