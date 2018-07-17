@@ -8,6 +8,11 @@ import androidx.core.graphics.withTranslation
 import kt.pdog18.com.core.ext.dp
 
 
+/**
+ * 这个指数图需要传入两个数据
+ * 1. [baseLineValue] -> 这个值是预计值，Float类型 ，例如 10.8f
+ * 2. [realValueArray] -> 这个值是实际值数组，FloatArray类型，例如[10.8f,12f,14f,8f]
+ */
 class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
     init {
@@ -28,7 +33,7 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private val pathEffect = DashPathEffect(floatArrayOf(5f.dp, 5f.dp), 0f)
 
     private var baseLineValue = 0f
-    private var realData: FloatArray = floatArrayOf()
+    private var realValueArray: FloatArray = floatArrayOf()
 
 
     private var shader: Shader = LinearGradient(0f, 0f, 360f.dp, 0f,
@@ -41,7 +46,7 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
     fun setValue(baseValue: Float, realData: FloatArray) {
         this.baseLineValue = baseValue
-        this.realData = realData
+        this.realValueArray = realData
 
         if (width != 0) {
             bindData()
@@ -82,7 +87,7 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     }
 
     private fun bindData() {
-        val data = realData
+        val data = realValueArray
         if (data.isEmpty()) {
             return
         } else {
