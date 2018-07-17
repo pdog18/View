@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.pdog18.layoutmanager.LayoutManagerActivity">
 
-    <com.pdog18.layoutmanager.CView
-        android:paddingStart="18dp"
-        android:paddingEnd="18dp"
+    <com.pdog18.layoutmanager.DAChart
         android:layout_width="match_parent"
-        android:layout_height="180dp" />
+        android:layout_height="180dp"
+        android:background="#526AE5"
+        android:paddingEnd="18dp"
+        android:id="@+id/da_chart"
+        android:paddingStart="18dp" />
 </android.support.constraint.ConstraintLayout>

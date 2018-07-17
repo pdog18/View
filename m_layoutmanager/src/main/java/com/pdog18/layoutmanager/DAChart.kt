@@ -7,15 +7,12 @@ import android.view.View
 import androidx.core.graphics.withTranslation
 import kt.pdog18.com.core.ext.dp
 
-class CView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
+
+class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
     init {
         setLayerType(View.LAYER_TYPE_SOFTWARE, null)
     }
-
-    //    #7793FD <-- start color
-
-    private val lightBlue = Color.parseColor("#BFD7FF")
 
     private val whitePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         strokeCap = Paint.Cap.ROUND
@@ -24,38 +21,55 @@ class CView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     }
 
     private val lightBluePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = lightBlue
+        color = Color.parseColor("#BFD7FF")
         strokeCap = Paint.Cap.ROUND
     }
 
     private val pathEffect = DashPathEffect(floatArrayOf(5f.dp, 5f.dp), 0f)
 
-    private val mockBaseLineValue = 10.8f
-    private val mockData = floatArrayOf(10.8f, 9f, 8f, 6f, 7.5f, 8f, 8.5f, 9f, 9.5f, 10f, 10.8f, 11.8f, 12.8f)
+    private var baseLineValue = 0f
+    private var realData: FloatArray = floatArrayOf()
+
+
+    private var shader: Shader = LinearGradient(0f, 0f, 360f.dp, 0f,
+        Color.parseColor("#7793FD"),
+        Color.WHITE, Shader.TileMode.CLAMP)
+
 
     private val pathByData = Path()
     private val endPointOfPath = PointF()
 
+    fun setValue(baseValue: Float, realData: FloatArray) {
+        this.baseLineValue = baseValue
+        this.realData = realData
+
+        if (width != 0) {
+            bindData()
+        }
+        invalidate()
+    }
+
     override fun onDraw(canvas: Canvas) {
-        canvas.drawColor(Color.parseColor("#526AE5"))
 
         canvas.withTranslation(paddingStart.toFloat(), height / 2f) {
 
+            //0. 终点 淡蓝色点
+            drawBaseLinePoint(this)
+
             //1. 基准虚线
             drawBaseDashLine(this, lightBluePaint)
-
-            //2. 基础原点
-            drawBaseLinePoint(this, lightBluePaint)
 
             //4. 实际值
             drawRealValuePath(this, pathByData, whitePaint)
 
             //5. 终点
-            drawEndPoint(this, endPointOfPath, whitePaint, lightBluePaint)
+            drawAtticPoint(this, endPointOfPath)
         }
     }
 
-    private fun drawEndPoint(canvas: Canvas, point: PointF, whitePaint: Paint, lightBluePaint: Paint) {
+    private fun drawAtticPoint(canvas: Canvas, point: PointF) {
+        lightBluePaint.strokeWidth = 6f.dp
+        canvas.drawPoint(0f, 0f, lightBluePaint)
 
         whitePaint.strokeWidth = 6f.dp
         canvas.drawPoint(point.x, point.y, whitePaint)
@@ -64,18 +78,19 @@ class CView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+        bindData()
+    }
 
-
-        val data = mockData
+    private fun bindData() {
+        val data = realData
         if (data.isEmpty()) {
             return
         } else {
-            setValuePath(mockBaseLineValue, data, pathByData)
+            setValuePath(baseLineValue, data, pathByData)
         }
     }
 
     private fun setValuePath(baseLine: Float, array: FloatArray, path: Path) {
-
         val percentWidth = getPercentWidth(array)
         val percentHeight = getPercentHeight(baseLine, array)
 
@@ -83,7 +98,13 @@ class CView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         array.withIndex().map {
             val x = percentWidth * it.index
             val y = percentHeight * (baseLine - it.value)
-            path.lineTo(x, y)
+
+            if (it.index == 0) {
+                path.moveTo(x, y)
+            } else {
+                path.lineTo(x, y)
+            }
+
 
             if (it.index == array.size - 1) {
                 endPointOfPath.set(x, y)
@@ -124,12 +145,8 @@ class CView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
     }
 
-    private fun drawBaseLinePoint(canvas: Canvas, paint: Paint) {
-        paint.strokeWidth = 6f.dp
-        canvas.drawPoint(0f, 0f, paint)
-
+    private fun drawBaseLinePoint(canvas: Canvas) {
         lightBluePaint.strokeWidth = 16f.dp
-
         val originAlpha = lightBluePaint.alpha
         lightBluePaint.alpha = 100
         canvas.drawPoint(endPointOfPath.x, endPointOfPath.y, lightBluePaint)
@@ -138,6 +155,8 @@ class CView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
     private fun drawRealValuePath(canvas: Canvas, path: Path, paint: Paint) {
         paint.strokeWidth = 2f.dp
+        paint.shader = shader
         canvas.drawPath(path, paint)
+        paint.shader = null
     }
 }
