@@ -6,9 +6,12 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateInterpolator
+import android.view.animation.LinearInterpolator
+import android.view.animation.OvershootInterpolator
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.graphics.withRotation
+import androidx.core.graphics.withScale
 import androidx.core.graphics.withTranslation
 import kt.pdog18.com.core.ext.dp
 import timber.log.Timber
@@ -20,12 +23,26 @@ import timber.log.Timber
  * 2. [realValueArray] -> 这个值是实际值数组，FloatArray类型，例如[10.8f,12f,14f,8f]
  */
 class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
+    init {
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+    }
+
+    private val rocketAnim = ObjectAnimator.ofFloat(this, "launchRocket", 1f)
+    private val destinationAnim = ObjectAnimator.ofFloat(this, "destination", 1f)
+
 
     private val pathMeasure = PathMeasure()
 
-    private var rocketVisibility = false
+    private val interpolator = OvershootInterpolator(5f)
 
-    private val animator = ObjectAnimator.ofFloat(this, "launchRocket", 1f)
+    companion object {
+        const val ROCKET_VISIBLE = 0
+        const val ROCKET_GONE = 1
+        const val ROCKET_SCALEING = 2
+
+    }
+
+    private var rocketVisibility = ROCKET_VISIBLE
 
 
     private val rocket = Path().apply {
@@ -36,43 +53,64 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     }
 
 
-    private val rocketPosition = FloatArray(2)
-    private val rocketTan = FloatArray(2)
+    private val pathMeasurePoint = FloatArray(2)
+    private val tan = FloatArray(2)
 
     private var rocketDegrees = 0f
-    private val segmentEndPoint = PointF()
-    private val segmentPath = Path()
+    private val rocketPoint = PointF()
+    private val rocketTraces = Path()
 
 
+    private val destinationPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        strokeCap = Paint.Cap.ROUND
+    }
+
+    @Suppress("unused")
+    private var destination: Float = 0f
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+
+    @Suppress("unused")
     private var launchRocket: Float = 0f
         set(value) {
-            pathMeasure.getPosTan(value * pathMeasure.length, rocketPosition, rocketTan)
-            rocketDegrees = Math.toDegrees(Math.atan2(rocketTan[1].toDouble(), rocketTan[0].toDouble())).toFloat()
-            segmentEndPoint.set(rocketPosition[0], rocketPosition[1])
+            val pathLength = pathMeasure.length
+            pathMeasure.getPosTan(value * pathLength, pathMeasurePoint, tan)
 
-            segmentPath.reset()
-            pathMeasure.getSegment(0f, value * pathMeasure.length, segmentPath, true)
+            rocketDegrees = Math.toDegrees(Math.atan2(tan[1].toDouble(), tan[0].toDouble())).toFloat()
+            rocketPoint.set(pathMeasurePoint[0], pathMeasurePoint[1])
+
+            rocketTraces.reset()
+            pathMeasure.getSegment(0f, value * pathLength, rocketTraces, true)
 
             invalidate()
         }
 
     fun doAnim() {
-        animator.apply {
+        rocketAnim.apply {
             duration = 1800
             interpolator = AccelerateInterpolator()
             doOnStart {
-                rocketVisibility = true
+                rocketVisibility = ROCKET_VISIBLE
             }
             doOnEnd {
-                rocketVisibility = false
+                rocketVisibility = ROCKET_SCALEING
+                playDestinationAnim()
             }
         }.start()
     }
 
-    init {
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-
+    private fun playDestinationAnim() {
+        destinationAnim
+            .apply {
+                interpolator = LinearInterpolator()
+            }
+            .setDuration(1000L)
+            .start()
     }
+
 
     private val whitePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         strokeCap = Paint.Cap.ROUND
@@ -85,7 +123,7 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         strokeCap = Paint.Cap.ROUND
     }
 
-    private val pathEffect = DashPathEffect(floatArrayOf(5f.dp, 5f.dp), 0f)
+    private val baselinePathEffect = DashPathEffect(floatArrayOf(5f.dp, 5f.dp), 0f)
 
     private var baseLineValue = 0f
     private var realValueArray: FloatArray = floatArrayOf()
@@ -95,9 +133,6 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         Color.parseColor("#7793FD"),
         Color.WHITE, Shader.TileMode.CLAMP)
 
-
-    private val pathByData = Path()
-    private val endPointOfPath = PointF()
 
     fun setValue(baseValue: Float, realData: FloatArray) {
         this.baseLineValue = baseValue
@@ -117,27 +152,16 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             drawBaseDashLine(this, lightBluePaint)
 
             //2. 终点（1, 实心原点， 2, 带有透明度背景原点， 3,扩散出然后消失的圆）
-            drawDestinationPoint(this, segmentEndPoint)
+            drawDestinationPoint(this, rocketPoint, destinationPaint)
 
             //3. 实际值 的折线 （伴随动画）
-            drawRealValuePath(this, segmentPath, whitePaint)
+            drawRocketTraces(this, rocketTraces, whitePaint)
 
             //4. 动画过程中的实际值折线前方的箭头
             drawRocket(this, whitePaint)
 
             //5. 起点
             drawOriginPoint(this, lightBluePaint)
-        }
-    }
-
-    private fun drawRocket(canvas: Canvas, paint: Paint) {
-        if (!rocketVisibility) {
-            return
-        }
-        canvas.withTranslation(segmentEndPoint.x, segmentEndPoint.y) {
-            canvas.withRotation(rocketDegrees) {
-                canvas.drawPath(rocket, paint)
-            }
         }
     }
 
@@ -152,34 +176,29 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         if (data.isEmpty()) {
             return
         } else {
-            setValuePath(baseLineValue, data, pathByData)
+            setValuePath(baseLineValue, data, Path())
         }
     }
 
     private fun setValuePath(baseLine: Float, array: FloatArray, path: Path) {
-        val percentWidth = getPercentWidth(array)
-        val percentHeight = getPercentHeight(baseLine, array)
+        val cellWidth = getCellWidth(array)
+        val cellHeight = getCellHeight(baseLine, array)
 
         array.withIndex().map {
-            val x = percentWidth * it.index
-            val y = percentHeight * (baseLine - it.value)
+            val x = cellWidth * it.index
+            val y = cellHeight * (baseLine - it.value)
 
             if (it.index == 0) {
                 path.moveTo(x, y)
             } else {
                 path.lineTo(x, y)
             }
-
-
-            if (it.index == array.size - 1) {
-                endPointOfPath.set(x, y)
-            }
         }
 
         pathMeasure.setPath(path, false)
     }
 
-    private fun getPercentWidth(array: FloatArray): Float {
+    private fun getCellWidth(array: FloatArray): Float {
         val lineLength = width.toFloat() - paddingStart - paddingEnd /* lineLengthPercentOfWidth */
 
         return if (array.size == 1) {
@@ -189,20 +208,16 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         }
     }
 
-    private fun getPercentHeight(baseLine: Float, array: FloatArray): Float {
+    private fun getCellHeight(baseLine: Float, array: FloatArray): Float {
         val maxDValue = Math.abs(array.max()!! - baseLine)
         val minDValue = Math.abs(array.min()!! - baseLine)
 
-        //上/下相对于基准线的最大值
+        //  上/下相对于基准线的最大值
         val dValue = Math.max(maxDValue, minDValue)
 
         return when (dValue) {
             0f -> 0f
-            else -> {
-                val lineHeight = height / 4f
-                //每一份的高度
-                lineHeight / dValue
-            }
+            else -> (height / 4f) / dValue  //  每一份的高度
         }
     }
 
@@ -212,33 +227,67 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
         paint.strokeWidth = 2f.dp
         paint.style = Paint.Style.STROKE
-        paint.pathEffect = pathEffect
+        paint.pathEffect = baselinePathEffect
         canvas.drawLine(0f, 0f, lineLength, 0f, paint)
         paint.pathEffect = null
     }
 
-    private fun drawDestinationPoint(canvas: Canvas, point: PointF) {
-        if (rocketVisibility) {
+    private fun drawDestinationPoint(canvas: Canvas, point: PointF, paint: Paint) {
+        if (rocketVisibility == ROCKET_VISIBLE) {
             return
         }
 
-        lightBluePaint.strokeWidth = 16f.dp
-        lightBluePaint.alpha = 153 /* 40% alpha */
-        canvas.drawPoint(point.x, point.y, lightBluePaint)
-        lightBluePaint.alpha = 255 /* 0% alpha*/
 
-        whitePaint.strokeWidth = 6f.dp
-        canvas.drawPoint(point.x, point.y, whitePaint)
+        paint.color = Color.parseColor("#BFD7FF")
+        paint.alpha = (255 * (1 - destination)).toInt()
+        paint.strokeWidth = 32f.dp * destination
+        canvas.drawPoint(point.x, point.y, paint)
+
+
+        paint.color = Color.parseColor("#BFD7FF")
+        paint.alpha = 153 /* 40% alpha */
+        paint.strokeWidth = 16f.dp * destination
+        canvas.drawPoint(point.x, point.y, paint)
+
+
+        Timber.d("AAA   paint.strokeWidth = ${paint.strokeWidth}")
+
+        paint.alpha = 255 /* 0% alpha*/
+        paint.color = Color.WHITE
+        paint.strokeWidth = 3f.dp + 3f.dp * interpolator.getInterpolation(destination)
+        Timber.d("BBB   paint.strokeWidth = ${paint.strokeWidth}")
+        canvas.drawPoint(point.x, point.y, paint)
     }
 
 
-    private fun drawRealValuePath(canvas: Canvas, path: Path, paint: Paint) {
+    private fun drawRocketTraces(canvas: Canvas, path: Path, paint: Paint) {
         paint.strokeWidth = 2f.dp
         paint.shader = shader
         canvas.drawPath(path, paint)
         paint.shader = null
     }
 
+
+    private fun drawRocket(canvas: Canvas, paint: Paint) {
+        when (rocketVisibility) {
+            ROCKET_VISIBLE -> {
+                canvas.withTranslation(rocketPoint.x, rocketPoint.y) {
+                    canvas.withRotation(rocketDegrees) {
+                        canvas.drawPath(rocket, paint)
+                    }
+                }
+            }
+            ROCKET_SCALEING -> {
+                val scaleFactor = 1 - destination
+                canvas.withTranslation(rocketPoint.x, rocketPoint.y) {
+                    canvas.withScale(scaleFactor, scaleFactor, 2f.dp, 0f) {
+                        canvas.drawPath(rocket, paint)
+                    }
+                }
+            }
+        }
+
+    }
 
     private fun drawOriginPoint(canvas: Canvas, paint: Paint) {
         paint.strokeWidth = 6f.dp
