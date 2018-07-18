@@ -11,19 +11,18 @@ class LayoutManagerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_layout_manager)
 
         da_chart.setOnClickListener {
-            da_chart.setValue(20.8f, floatArrayOf(10.8f,
-                0.8f,
-                0.8f,
+            da_chart.setValue(20.8f, floatArrayOf(20.8f,
                 20.8f,
-                10.8f,
-                50.8f,
-                10.8f,
-                2.8f,
-                10.8f,
-                13.8f
+                20.8f,
+                20.8f,
+                20.8f,
+                20.8f
                 ))
         }
 
 
+        btn.setOnClickListener {
+            da_chart.doAnim()
+        }
     }
 }

@@ -7,10 +7,21 @@
     tools:context="com.pdog18.layoutmanager.LayoutManagerActivity">
 
     <com.pdog18.layoutmanager.DAChart
+        android:id="@+id/da_chart"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:background="#526AE5"
         android:paddingEnd="18dp"
-        android:id="@+id/da_chart"
         android:paddingStart="18dp" />
+
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:text="doAnim"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

@@ -1,11 +1,17 @@
 package com.pdog18.layoutmanager
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.AccelerateInterpolator
+import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
+import androidx.core.graphics.withRotation
 import androidx.core.graphics.withTranslation
 import kt.pdog18.com.core.ext.dp
+import timber.log.Timber
 
 
 /**
@@ -15,8 +21,57 @@ import kt.pdog18.com.core.ext.dp
  */
 class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
+    private val pathMeasure = PathMeasure()
+
+    private var rocketVisibility = false
+
+    private val animator = ObjectAnimator.ofFloat(this, "launchRocket", 1f)
+
+
+    private val rocket = Path().apply {
+        lineTo(0f, (-2f).dp)
+        lineTo(4f.dp, 0f)
+        lineTo(0f, 2f.dp)
+        close()
+    }
+
+
+    private val rocketPosition = FloatArray(2)
+    private val rocketTan = FloatArray(2)
+
+    private var rocketDegrees = 0f
+    private val segmentEndPoint = PointF()
+    private val segmentPath = Path()
+
+
+    private var launchRocket: Float = 0f
+        set(value) {
+            pathMeasure.getPosTan(value * pathMeasure.length, rocketPosition, rocketTan)
+            rocketDegrees = Math.toDegrees(Math.atan2(rocketTan[1].toDouble(), rocketTan[0].toDouble())).toFloat()
+            segmentEndPoint.set(rocketPosition[0], rocketPosition[1])
+
+            segmentPath.reset()
+            pathMeasure.getSegment(0f, value * pathMeasure.length, segmentPath, true)
+
+            invalidate()
+        }
+
+    fun doAnim() {
+        animator.apply {
+            duration = 1800
+            interpolator = AccelerateInterpolator()
+            doOnStart {
+                rocketVisibility = true
+            }
+            doOnEnd {
+                rocketVisibility = false
+            }
+        }.start()
+    }
+
     init {
         setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+
     }
 
     private val whitePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -48,7 +103,7 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         this.baseLineValue = baseValue
         this.realValueArray = realData
 
-        if (width != 0) {
+        if (width != 0) {       //确保已经有宽度了
             bindData()
         }
         invalidate()
@@ -58,26 +113,32 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
         canvas.withTranslation(paddingStart.toFloat(), height / 2f) {
 
-            //0. 终点 淡蓝色点
-            drawBaseLinePoint(this)
-
             //1. 基准虚线
             drawBaseDashLine(this, lightBluePaint)
 
-            //4. 实际值
-            drawRealValuePath(this, pathByData, whitePaint)
+            //2. 终点（1, 实心原点， 2, 带有透明度背景原点， 3,扩散出然后消失的圆）
+            drawDestinationPoint(this, segmentEndPoint)
 
-            //5. 终点
-            drawAtticPoint(this, endPointOfPath)
+            //3. 实际值 的折线 （伴随动画）
+            drawRealValuePath(this, segmentPath, whitePaint)
+
+            //4. 动画过程中的实际值折线前方的箭头
+            drawRocket(this, whitePaint)
+
+            //5. 起点
+            drawOriginPoint(this, lightBluePaint)
         }
     }
 
-    private fun drawAtticPoint(canvas: Canvas, point: PointF) {
-        lightBluePaint.strokeWidth = 6f.dp
-        canvas.drawPoint(0f, 0f, lightBluePaint)
-
-        whitePaint.strokeWidth = 6f.dp
-        canvas.drawPoint(point.x, point.y, whitePaint)
+    private fun drawRocket(canvas: Canvas, paint: Paint) {
+        if (!rocketVisibility) {
+            return
+        }
+        canvas.withTranslation(segmentEndPoint.x, segmentEndPoint.y) {
+            canvas.withRotation(rocketDegrees) {
+                canvas.drawPath(rocket, paint)
+            }
+        }
     }
 
 
@@ -99,7 +160,6 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         val percentWidth = getPercentWidth(array)
         val percentHeight = getPercentHeight(baseLine, array)
 
-
         array.withIndex().map {
             val x = percentWidth * it.index
             val y = percentHeight * (baseLine - it.value)
@@ -115,6 +175,8 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
                 endPointOfPath.set(x, y)
             }
         }
+
+        pathMeasure.setPath(path, false)
     }
 
     private fun getPercentWidth(array: FloatArray): Float {
@@ -133,9 +195,15 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
         //上/下相对于基准线的最大值
         val dValue = Math.max(maxDValue, minDValue)
-        val lineHeight = height / 4f
-        //每一份的高度
-        return lineHeight / dValue
+
+        return when (dValue) {
+            0f -> 0f
+            else -> {
+                val lineHeight = height / 4f
+                //每一份的高度
+                lineHeight / dValue
+            }
+        }
     }
 
 
@@ -147,21 +215,33 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         paint.pathEffect = pathEffect
         canvas.drawLine(0f, 0f, lineLength, 0f, paint)
         paint.pathEffect = null
-
     }
 
-    private fun drawBaseLinePoint(canvas: Canvas) {
+    private fun drawDestinationPoint(canvas: Canvas, point: PointF) {
+        if (rocketVisibility) {
+            return
+        }
+
         lightBluePaint.strokeWidth = 16f.dp
-        val originAlpha = lightBluePaint.alpha
-        lightBluePaint.alpha = 100
-        canvas.drawPoint(endPointOfPath.x, endPointOfPath.y, lightBluePaint)
-        lightBluePaint.alpha = originAlpha
+        lightBluePaint.alpha = 153 /* 40% alpha */
+        canvas.drawPoint(point.x, point.y, lightBluePaint)
+        lightBluePaint.alpha = 255 /* 0% alpha*/
+
+        whitePaint.strokeWidth = 6f.dp
+        canvas.drawPoint(point.x, point.y, whitePaint)
     }
+
 
     private fun drawRealValuePath(canvas: Canvas, path: Path, paint: Paint) {
         paint.strokeWidth = 2f.dp
         paint.shader = shader
         canvas.drawPath(path, paint)
         paint.shader = null
+    }
+
+
+    private fun drawOriginPoint(canvas: Canvas, paint: Paint) {
+        paint.strokeWidth = 6f.dp
+        canvas.drawPoint(0f, 0f, paint)
     }
 }
