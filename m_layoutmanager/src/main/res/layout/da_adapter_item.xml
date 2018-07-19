@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="18dp"
+    app:cardCornerRadius="8dp">
+
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guide_line_68dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="68dp" />
+
+        <ImageView
+            android:id="@+id/img_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/guide_line_68dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="38dp"
+            app:layout_constraintBottom_toBottomOf="@id/guide_line_68dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/guide_line_68dp"
+            app:layout_constraintEnd_toStartOf="@id/img_arrow"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="38dp"
+            app:layout_constraintBottom_toBottomOf="@+id/guide_line_68dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_bottom"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:paddingEnd="18dp"
+            android:paddingStart="38dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guide_line_68dp">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="#F3F3F3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.pdog18.layoutmanager.ProgressView
+                android:layout_width="180dp"
+                android:id="@+id/pv_forecasts"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_forecasts_left_text"
+                app:layout_constraintStart_toStartOf="@id/tv_forecasts_left_text"
+                app:layout_constraintTop_toTopOf="@id/tv_forecasts_left_text" />
+
+            <com.pdog18.layoutmanager.ProgressView
+                android:layout_width="180dp"
+                android:layout_height="0dp"
+                android:id="@+id/pv_actual"
+                app:layout_constraintBottom_toBottomOf="@id/tv_actual_left_text"
+                app:layout_constraintStart_toStartOf="@id/tv_actual_left_text"
+                app:layout_constraintTop_toTopOf="@id/tv_actual_left_text" />
+
+            <TextView
+                android:id="@+id/tv_forecasts_left_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="预估值"
+                android:textColor="#FFB1B1"
+                app:layout_constraintBottom_toTopOf="@id/tv_actual_left_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_actual_left_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="实际值"
+                android:textColor="#FFB1B1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_forecasts_left_text" />
+
+
+
+            <TextView
+                android:id="@+id/tv_forecasts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_actual" />
+            <TextView
+                android:id="@+id/tv_actual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_forecasts"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>
