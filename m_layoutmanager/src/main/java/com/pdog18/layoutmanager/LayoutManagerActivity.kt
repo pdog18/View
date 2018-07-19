@@ -3,6 +3,7 @@ package com.pdog18.layoutmanager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_layout_manager.*
+import kt.pdog18.com.core.util.toast
 
 class LayoutManagerActivity : AppCompatActivity() {
 
@@ -10,7 +11,7 @@ class LayoutManagerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_layout_manager)
 
-        da_chart.setOnClickListener {
+        btn.setOnClickListener {
             da_chart.setValue(20.8f, floatArrayOf(
                 20.8f,
                 10.8f,
@@ -22,12 +23,11 @@ class LayoutManagerActivity : AppCompatActivity() {
                 20.8f,
                 30.8f,
                 40.8f
-                ))
+            ))
         }
 
-
-        btn.setOnClickListener {
-            da_chart.doAnim()
+        da_chart.setOnLaunchRocketEndListener {
+            toast("launch rocket success !")
         }
     }
 }

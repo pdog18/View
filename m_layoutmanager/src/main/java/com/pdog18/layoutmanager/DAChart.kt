@@ -14,7 +14,6 @@ import androidx.core.graphics.withRotation
 import androidx.core.graphics.withScale
 import androidx.core.graphics.withTranslation
 import kt.pdog18.com.core.ext.dp
-import timber.log.Timber
 
 
 /**
@@ -39,6 +38,7 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         const val ROCKET_VISIBLE = 0
         const val ROCKET_GONE = 1
         const val ROCKET_SCALEING = 2
+        val BFD7FF = Color.parseColor("#BFD7FF")
 
     }
 
@@ -88,7 +88,7 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             invalidate()
         }
 
-    fun doAnim() {
+    private fun launchRocket() {
         rocketAnim.apply {
             duration = 1800
             interpolator = AccelerateInterpolator()
@@ -106,6 +106,9 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         destinationAnim
             .apply {
                 interpolator = LinearInterpolator()
+                doOnEnd {
+                    launchRocketEndListener?.invoke()
+                }
             }
             .setDuration(1000L)
             .start()
@@ -119,7 +122,7 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     }
 
     private val lightBluePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#BFD7FF")
+        color = BFD7FF
         strokeCap = Paint.Cap.ROUND
     }
 
@@ -141,7 +144,6 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         if (width != 0) {       //确保已经有宽度了
             bindData()
         }
-        invalidate()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -177,6 +179,7 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             return
         } else {
             setValuePath(baseLineValue, data, Path())
+            launchRocket()
         }
     }
 
@@ -237,25 +240,21 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             return
         }
 
-
-        paint.color = Color.parseColor("#BFD7FF")
+        paint.color = BFD7FF
         paint.alpha = (255 * (1 - destination)).toInt()
         paint.strokeWidth = 32f.dp * destination
         canvas.drawPoint(point.x, point.y, paint)
 
 
-        paint.color = Color.parseColor("#BFD7FF")
+        paint.color = BFD7FF
         paint.alpha = 153 /* 40% alpha */
         paint.strokeWidth = 16f.dp * destination
         canvas.drawPoint(point.x, point.y, paint)
 
 
-        Timber.d("AAA   paint.strokeWidth = ${paint.strokeWidth}")
-
         paint.alpha = 255 /* 0% alpha*/
         paint.color = Color.WHITE
         paint.strokeWidth = 3f.dp + 3f.dp * interpolator.getInterpolation(destination)
-        Timber.d("BBB   paint.strokeWidth = ${paint.strokeWidth}")
         canvas.drawPoint(point.x, point.y, paint)
     }
 
@@ -292,5 +291,11 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private fun drawOriginPoint(canvas: Canvas, paint: Paint) {
         paint.strokeWidth = 6f.dp
         canvas.drawPoint(0f, 0f, paint)
+    }
+
+    var launchRocketEndListener: (() -> Unit)? = null
+
+    fun setOnLaunchRocketEndListener(block: (() -> Unit)?) {
+        this.launchRocketEndListener = block
     }
 }
