@@ -2,8 +2,8 @@ package com.pdog18.layoutmanager
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import androidx.core.widget.toast
 import kotlinx.android.synthetic.main.activity_layout_manager.*
-import kt.pdog18.com.core.util.toast
 
 class LayoutManagerActivity : AppCompatActivity() {
 

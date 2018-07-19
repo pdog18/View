@@ -26,6 +26,7 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         setLayerType(View.LAYER_TYPE_SOFTWARE, null)
     }
 
+
     private val rocketAnim = ObjectAnimator.ofFloat(this, "launchRocket", 1f)
     private val destinationAnim = ObjectAnimator.ofFloat(this, "destination", 1f)
 
@@ -299,3 +300,4 @@ class DAChart(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         this.launchRocketEndListener = block
     }
 }
+
