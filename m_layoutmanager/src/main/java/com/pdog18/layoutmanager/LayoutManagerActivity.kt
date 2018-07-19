@@ -12,7 +12,7 @@ class LayoutManagerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_layout_manager)
 
-        btn.setOnClickListener {
+        da_chart.setOnClickListener {
             da_chart.setValue(20.8f, floatArrayOf(
                 20.8f,
                 10.8f,
