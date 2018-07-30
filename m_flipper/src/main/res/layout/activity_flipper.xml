@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <kt.pdog18.com.module_flipper.Flipper
+    <pdog18.com.module_flipper.Flipper
         android:id="@+id/flipper"
         android:layout_width="match_parent"
         android:layout_height="300px"

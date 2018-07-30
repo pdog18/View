@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <kt.pdog18.com.module_wave.WaveView
+    <pdog18.com.module_wave.WaveView
         android:id="@+id/bezier"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

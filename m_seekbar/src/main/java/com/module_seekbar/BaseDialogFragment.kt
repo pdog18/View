@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.TranslateAnimation
-import kt.pdog18.com.core.ext.dp
+import pdog18.com.core.ext.dp
 
 /**
  * 全屏的dialogfragment

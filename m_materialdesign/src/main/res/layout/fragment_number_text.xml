@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <kt.pdog18.com.module_materialdesign.widget.NumberTextView
+        <pdog18.com.module_materialdesign.widget.NumberTextView
             android:id="@+id/tv_3"
             android:layout_width="wrap_content"
             android:layout_height="100dp" />

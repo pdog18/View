@@ -8,8 +8,8 @@ import android.graphics.PointF
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.graphics.withTranslation
-import kt.pdog18.com.core.ext.dp
-import kt.pdog18.com.core.ext.sp
+import pdog18.com.core.ext.dp
+import pdog18.com.core.ext.sp
 
 
 class Math1View(context: Context, attrs: AttributeSet?) : View(context, attrs) {

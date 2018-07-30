@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <kt.pdog18.com.module_spider.SpiderWebView
+    <pdog18.com.module_spider.SpiderWebView
         android:id="@+id/swb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

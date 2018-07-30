@@ -7,7 +7,7 @@
     tools:ignore="HardcodedText"
     android:orientation="vertical">
 
-    <kt.pdog18.com.module_proterduff.ProterDuffView
+    <pdog18.com.module_proterduff.ProterDuffView
         android:id="@+id/pdv"
         android:layout_width="512px"
         android:layout_height="512px"

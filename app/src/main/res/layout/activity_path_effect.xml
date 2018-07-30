@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.a18.path.patcheffect.PathEffectActivity">
 
-    <kt.pdog18.com.module_patheffect.PathEffectView
+    <pdog18.com.module_patheffect.PathEffectView
         android:id="@+id/pev"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

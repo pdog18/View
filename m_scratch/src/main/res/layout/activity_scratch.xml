@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <kt.pdog18.com.module_scratch.ScratchView
+    <pdog18.com.module_scratch.ScratchView
         android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

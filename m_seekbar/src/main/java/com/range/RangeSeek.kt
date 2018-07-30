@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.graphics.withTranslation
-import kt.pdog18.com.core.ext.dp
+import pdog18.com.core.ext.dp
 import timber.log.Timber
 
 

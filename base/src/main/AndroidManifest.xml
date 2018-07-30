@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="kt.pdog18.com.base">
+    package="pdog18.com.base">
 
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />

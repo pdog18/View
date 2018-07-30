@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <kt.pdog18.com.module_constraint.widget.Bottom
+    <pdog18.com.module_constraint.widget.Bottom
         android:layout_width="0dp"
         android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="parent"

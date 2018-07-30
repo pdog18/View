@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <kt.pdog18.com.module_patheffect.PathEffectView
+    <pdog18.com.module_patheffect.PathEffectView
         android:id="@+id/pev"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

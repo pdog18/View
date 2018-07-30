@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kt.pdog18.com.module_transition.TransitionActivity">
+    tools:context="pdog18.com.module_transition.TransitionActivity">
 
     <TextView
         android:layout_width="wrap_content"

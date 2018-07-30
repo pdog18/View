@@ -1,6 +1,6 @@
 package com.module_math
 
-import kt.pdog18.com.base.BaseFragment
+import pdog18.com.base.BaseFragment
 
 class Math1Fragment : BaseFragment() {
     override fun getLayoutId(): Int {

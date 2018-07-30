@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <kt.pdog18.com.module_parabola.ParabolaView
+    <pdog18.com.module_parabola.ParabolaView
         android:id="@+id/pv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

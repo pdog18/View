@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <kt.pdog18.com.module_arcseekbar.ArcSeekbar
+    <pdog18.com.module_arcseekbar.ArcSeekbar
         android:layout_width="150dp"
         android:id="@+id/dv"
         android:background="@color/colorPrimary"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content" />
 
 
-    <kt.pdog18.com.module_arcseekbar.ArcView
+    <pdog18.com.module_arcseekbar.ArcView
         android:layout_width="match_parent"
         android:id="@+id/arcseekbar2"
         android:background="@color/colorPrimary"
