@@ -112,6 +112,11 @@ class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr)
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
+        if (!isLarge) {// 缩小时修正offset
+            offsetX *= scaleFraction
+            offsetY *= scaleFraction
+        }
+
         canvas.withTranslation(offsetX, offsetY) {
             canvas.withTranslation(centerPoint.x, centerPoint.y) {
                 val scale = smallScale + (largeScale - smallScale) * scaleFraction
