@@ -22,7 +22,9 @@ class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr)
     private val offsetX by lazy { (width - bitmap.width) / 2f }
     private val offsetY by lazy { (height - bitmap.height) / 2f }
 
-    private val largeScale by lazy { getScale(true) }
+    private val overScaleFraction = 1.5f
+
+    private val largeScale by lazy { getScale(true) * overScaleFraction }
     private val smallScale by lazy { getScale(false) }
 
     private var isLarge = false
