@@ -11,12 +11,26 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import android.widget.OverScroller
 import androidx.core.graphics.withScale
 import androidx.core.graphics.withTranslation
 import pdog18.com.core.ext.dp
 
 
-class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr) {
+class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr), Runnable {
+    override fun run() {
+        if (!scroller.computeScrollOffset()) {
+            return
+        }
+        offsetX = scroller.currX.toFloat()
+        offsetY = scroller.currY.toFloat()
+
+        invalidate()
+
+        postOnAnimation(this)
+    }
+
+
     private val p = Paint()
     private val bitmap: Bitmap = getBitmap(resources, R.mipmap.xx, 260.dp)
 
@@ -24,6 +38,8 @@ class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr)
         PointF((width - bitmap.width) / 2f,
             (height - bitmap.height) / 2f)
     }
+
+    private val scroller = OverScroller(context)
 
     private var offsetX = 0f
     private var offsetY = 0f
@@ -62,7 +78,22 @@ class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr)
             offsetY = Math.min(Math.max(-heightLimit, offsetY), heightLimit)
 
             invalidate()
-            return true
+            return false
+        }
+
+        override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+            val xLimit = (bitmap.width * largeScale - width) / 2
+            val yLimit = (bitmap.height * largeScale - height) / 2
+
+            scroller.fling(
+                offsetX.toInt(), offsetY.toInt(),
+                velocityX.toInt(), velocityY.toInt(),
+                -xLimit.toInt(), xLimit.toInt(),
+                -yLimit.toInt(), yLimit.toInt())
+
+
+            postOnAnimation(this@ScaleImageView)
+            return false
         }
     }).apply {
         setOnDoubleTapListener(object : GestureDetector.SimpleOnGestureListener() {
