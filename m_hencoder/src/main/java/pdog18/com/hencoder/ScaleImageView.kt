@@ -12,6 +12,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.widget.OverScroller
+import androidx.core.animation.doOnEnd
 import androidx.core.graphics.withScale
 import androidx.core.graphics.withTranslation
 import pdog18.com.core.ext.dp
@@ -52,6 +53,15 @@ class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr)
     private var isLarge = false
 
     private val scaleAnimation = ObjectAnimator.ofFloat(this, "scaleFraction", 1f)
+        .apply {
+            doOnEnd {
+                if (!isLarge) {
+                    offsetX = 0f
+                    offsetY = 0f
+                }
+            }
+        }
+
 
     @Suppress("unused")
     private var scaleFraction: Float = 0f
@@ -112,12 +122,8 @@ class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr)
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        if (!isLarge) {// 缩小时修正offset
-            offsetX *= scaleFraction
-            offsetY *= scaleFraction
-        }
 
-        canvas.withTranslation(offsetX, offsetY) {
+        canvas.withTranslation(offsetX * scaleFraction, offsetY * scaleFraction) {
             canvas.withTranslation(centerPoint.x, centerPoint.y) {
                 val scale = smallScale + (largeScale - smallScale) * scaleFraction
 
