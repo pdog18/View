@@ -47,8 +47,20 @@ class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr)
     private var gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
         override fun onDown(e: MotionEvent?) = true
         override fun onScroll(e1: MotionEvent, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
+            if (!isLarge) {
+                return true
+            }
+
+            val widthLimit = (bitmap.width * largeScale - width) / 2
+            val heightLimit = (bitmap.height * largeScale - height) / 2
+
             offsetX -= distanceX
             offsetY -= distanceY
+
+            // 不能超过边界
+            offsetX = Math.min(Math.max(-widthLimit, offsetX), widthLimit)
+            offsetY = Math.min(Math.max(-heightLimit, offsetY), heightLimit)
+
             invalidate()
             return true
         }
