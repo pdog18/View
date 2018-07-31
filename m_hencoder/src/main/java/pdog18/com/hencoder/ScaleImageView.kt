@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.PointF
 import android.util.AttributeSet
 import android.view.GestureDetector
@@ -27,12 +26,9 @@ class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr)
         offsetY = scroller.currY.toFloat()
 
         invalidate()
-
         postOnAnimation(this)
     }
 
-
-    private val p = Paint()
     private val bitmap: Bitmap = getBitmap(resources, R.mipmap.xx, 260.dp)
 
     private val centerPoint by lazy {
@@ -61,7 +57,6 @@ class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr)
                 }
             }
         }
-
 
     @Suppress("unused")
     private var scaleFraction: Float = 0f
@@ -101,16 +96,22 @@ class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr)
                 -xLimit.toInt(), xLimit.toInt(),
                 -yLimit.toInt(), yLimit.toInt())
 
-
             postOnAnimation(this@ScaleImageView)
             return false
         }
     }).apply {
         setOnDoubleTapListener(object : GestureDetector.SimpleOnGestureListener() {
-            override fun onDoubleTap(e: MotionEvent?): Boolean {
-                if (!isLarge) scaleAnimation.start() else scaleAnimation.reverse()
-
+            override fun onDoubleTap(e: MotionEvent): Boolean {
                 isLarge = !isLarge
+
+                if (isLarge) {
+                    offsetX = width / 2 - e.x
+                    offsetY = height / 2 - e.y
+                    scaleAnimation.start()
+                } else {
+                    scaleAnimation.reverse()
+                }
+
                 return false
             }
         })
@@ -122,13 +123,12 @@ class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr)
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-
         canvas.withTranslation(offsetX * scaleFraction, offsetY * scaleFraction) {
             canvas.withTranslation(centerPoint.x, centerPoint.y) {
                 val scale = smallScale + (largeScale - smallScale) * scaleFraction
 
                 canvas.withScale(scale, scale, bitmap.width / 2f, bitmap.height / 2f) {
-                    canvas.drawBitmap(bitmap, 0f, 0f, p)
+                    canvas.drawBitmap(bitmap, 0f, 0f, null)
                 }
             }
         }
