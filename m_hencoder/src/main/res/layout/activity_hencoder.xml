@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <pdog18.com.hencoder.ScaleImageView
-        android:id="@+id/scale_image_view"
+    <pdog18.com.hencoder.MultiTouchView
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </android.support.v7.widget.LinearLayoutCompat>
