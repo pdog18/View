@@ -1,1 +1,14 @@
 apply from: config
+dependencies {
+    api([
+        Deps.app_compat_v7,
+        Deps.design,
+//            Deps.preference,
+//            Deps.palette,
+        Deps.recyclerview,
+//            Deps.support_annotations,
+//            Deps.cardview,
+//            Deps.flexbox_layout,
+        Deps.constraint_layout,
+    ])
+}
