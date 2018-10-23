@@ -20,6 +20,7 @@ class AutoFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         button.setOnClickListener {
             TransitionManager.beginDelayedTransition(transitions_container)
+            visible = !visible
             text.visibility = if (visible) View.VISIBLE else View.GONE
         }
     }
