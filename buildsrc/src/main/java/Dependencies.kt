@@ -26,7 +26,7 @@ object Versions {
     const val version_code = 1
     const val version_name = "1.0"
 
-    internal const val kotlin_version = "1.2.41"
+    internal const val kotlin_version = "1.2.71"
     internal const val gradle_build_tools_version = "3.0.1"
 
     internal const val support_library_version = "27.1.1"
@@ -58,7 +58,7 @@ object Deps {
     const val ktx = "androidx.core:core-ktx:$ktx_version"
 
 
-    const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     const val kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     const val app_compat_v7 = "com.android.support:appcompat-v7:$support_library_version"
     const val design = "com.android.support:design:$support_library_version"

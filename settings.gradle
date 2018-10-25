@@ -1,4 +1,4 @@
-include ':app',  ':buildsrc', ':m_cardlist', ':m_nest', ':m_math', ':m_seekbar', ':m_layoutmanager',
+include ':app',  ':buildsrc', ':m_cardlist', ':m_nest', ':m_math', ':m_seekbar', ':m_layoutmanager', ':m_support',
     ':base',
     ':resource',
     ':m_transition',

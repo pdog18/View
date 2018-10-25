@@ -26,7 +26,7 @@ dependencies {
     api "com.android.support:support-annotations:$support_library_version"
 
 
-    api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     api "com.android.support.constraint:constraint-layout:$constraint_layout_version"
 
     api "com.jakewharton.timber:timber:$timber_version"

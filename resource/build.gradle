@@ -1,14 +1,14 @@
 apply from: config
 dependencies {
     api([
-        Deps.app_compat_v7,
-        Deps.design,
-//            Deps.preference,
-//            Deps.palette,
-        Deps.recyclerview,
-//            Deps.support_annotations,
-//            Deps.cardview,
-//            Deps.flexbox_layout,
-        Deps.constraint_layout,
+        // Support series
+        "com.android.support:appcompat-v7:$support_library_version",
+        "com.android.support:design:$support_library_version",
+        "com.android.support:preference-v14:$support_library_version",
+        "com.android.support:palette-v7:$support_library_version",
+        "com.android.support:recyclerview-v7:$support_library_version",
+        "com.android.support:cardview-v7:$support_library_version",
+        "com.android.support:support-annotations:$support_library_version",
+        "com.android.support.constraint:constraint-layout:$constraint_layout_version"
     ])
 }
