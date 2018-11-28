@@ -1,3 +1,7 @@
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
 dependencies {
     implementation project(":base")
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
 }

@@ -1,11 +1,11 @@
 package pdog18.com.module_transition;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.transition.Slide;
-import android.support.transition.TransitionManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.transition.Slide;
+import androidx.transition.TransitionManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;

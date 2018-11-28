@@ -1,7 +1,7 @@
 package pdog18.com.module_transition
 
 import android.os.Bundle
-import android.support.transition.TransitionManager
+import androidx.transition.TransitionManager
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_auto.*
 import pdog18.com.base.BaseFragment

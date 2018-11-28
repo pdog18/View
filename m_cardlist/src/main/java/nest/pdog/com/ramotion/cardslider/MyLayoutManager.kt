@@ -1,19 +1,19 @@
 package nest.pdog.com.ramotion.cardslider
 
 import android.graphics.Rect
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import timber.log.Timber
 
 
-class MyLayoutManager : RecyclerView.LayoutManager() {
-    override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
-        return RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+class MyLayoutManager : androidx.recyclerview.widget.RecyclerView.LayoutManager() {
+    override fun generateDefaultLayoutParams(): androidx.recyclerview.widget.RecyclerView.LayoutParams {
+        return androidx.recyclerview.widget.RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
     var totalHeight: Int = 0
 
-    override fun onLayoutChildren(recycler: RecyclerView.Recycler?, state: RecyclerView.State?) {
+    override fun onLayoutChildren(recycler: androidx.recyclerview.widget.RecyclerView.Recycler?, state: androidx.recyclerview.widget.RecyclerView.State?) {
         detachAndScrapAttachedViews(recycler)
 
 
@@ -41,7 +41,7 @@ class MyLayoutManager : RecyclerView.LayoutManager() {
 
     var verticalScrollOffset = 0
 
-    override fun scrollVerticallyBy(dy: Int, recycler: RecyclerView.Recycler?, state: RecyclerView.State?): Int {
+    override fun scrollVerticallyBy(dy: Int, recycler: androidx.recyclerview.widget.RecyclerView.Recycler?, state: androidx.recyclerview.widget.RecyclerView.State?): Int {
         Timber.d("itemCount = ${itemCount}")
         Timber.d("childCount = ${childCount}")
 

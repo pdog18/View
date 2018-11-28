@@ -1,7 +1,7 @@
 package com.range
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.module_seekbar.R
 import kotlinx.android.synthetic.main.activity_range_seek.*
 import timber.log.Timber

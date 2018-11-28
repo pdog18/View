@@ -6,7 +6,6 @@ dependencies {
     // ReactiveX series
     api "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
     api "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
-    api 'com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:2.2.1'
 
     // Retrofit series
     api "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -17,22 +16,25 @@ dependencies {
     api "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
 
     // Support series
-    api "com.android.support:appcompat-v7:$support_library_version"
-    api "com.android.support:design:$support_library_version"
-    api "com.android.support:preference-v14:$support_library_version"
-    api "com.android.support:palette-v7:$support_library_version"
-    api "com.android.support:recyclerview-v7:$support_library_version"
-    api "com.android.support:cardview-v7:$support_library_version"
-    api "com.android.support:support-annotations:$support_library_version"
+    api 'androidx.appcompat:appcompat:1.0.2'
+    api 'com.google.android.material:material:1.1.0-alpha01'
+    api 'androidx.legacy:legacy-preference-v14:1.0.0'
+    api 'androidx.palette:palette:1.0.0'
+    api 'androidx.recyclerview:recyclerview:1.0.0'
+    api 'androidx.cardview:cardview:1.0.0'
+    api 'androidx.annotation:annotation:1.0.0'
+    api 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    api 'com.google.android:flexbox:1.0.0'
 
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    api "com.android.support.constraint:constraint-layout:$constraint_layout_version"
 
     api "com.jakewharton.timber:timber:$timber_version"
 
     api "com.google.code.gson:gson:$gson_version"
-    api "androidx.core:core-ktx:$ktx_version"
+    api "androidx.core:core-ktx:1.0.1"
+
+    api 'com.github.pdog18:dimension-extensions:1.0'
 
     api "com.facebook.stetho:stetho:$stetho_version"
     api "com.facebook.stetho:stetho-okhttp3:$stetho_version"
@@ -46,11 +48,9 @@ dependencies {
     kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
 
 
-    api 'com.android.support:multidex:1.0.3'
+    api 'androidx.multidex:multidex:2.0.0'
     api 'com.github.javaparser:javaparser-core:3.5.5'
-    api 'com.google.android:flexbox:0.3.1'
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
-    api 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     api('com.github.bumptech.glide:recyclerview-integration:4.3.1') {
         transitive = false
     }

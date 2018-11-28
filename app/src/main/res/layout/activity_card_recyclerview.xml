@@ -18,7 +18,7 @@
         android:onClick="btn"
         android:layout_height="wrap_content" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:background="@color/colorAccent"
@@ -26,6 +26,6 @@
         android:layout_height="300dp">
 
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

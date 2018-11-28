@@ -10,7 +10,7 @@ import pdog18.com.core.ext.dp
 /**
  * 全屏的dialogfragment
  */
-abstract class BaseDialogFragment : android.support.v4.app.DialogFragment() {
+abstract class BaseDialogFragment : androidx.fragment.app.DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = Dialog(activity!!)
         with(dialog.window) {

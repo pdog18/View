@@ -1,7 +1,7 @@
 package pdog18.com.module_bezier
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.WindowManager
 import com.alibaba.android.arouter.facade.annotation.Route
 

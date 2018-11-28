@@ -5,7 +5,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import android.support.multidex.MultiDexApplication
+import androidx.multidex.MultiDexApplication
 
 import com.facebook.stetho.Stetho
 

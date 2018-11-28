@@ -1,9 +1,8 @@
 package com.pdog18.layoutmanager
 
+import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import androidx.core.widget.toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_layout_manager.*
 
 class LayoutManagerActivity : AppCompatActivity() {
@@ -28,10 +27,10 @@ class LayoutManagerActivity : AppCompatActivity() {
         }
 
         da_chart.setOnLaunchRocketEndListener {
-            toast("launch rocket success !")
+            startActivity(Intent(this@LayoutManagerActivity,MainActivity::class.java))
         }
 
-        rv.layoutManager = LinearLayoutManager(this)
+        rv.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         rv.adapter = DAAdapter()
     }
 }

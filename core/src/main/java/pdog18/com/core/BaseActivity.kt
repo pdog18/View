@@ -2,13 +2,11 @@ package pdog18.com.core
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import pdog18.com.core.tool.IMMLeaks
+import androidx.appcompat.app.AppCompatActivity
 
 abstract class BaseActivity : AppCompatActivity() {
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        IMMLeaks.fixFocusedViewLeak(this.application) // 修复 InputMethodManager 引发的内存泄漏
         startCreate()
         initData(intent)
         setContentView(getLayoutId())

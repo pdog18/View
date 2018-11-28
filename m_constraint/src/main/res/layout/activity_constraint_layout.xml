@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constrain"
@@ -55,14 +55,14 @@
         app:layout_constraintCircleRadius="120dp" />
 
 
-    <android.support.constraint.Barrier
+    <androidx.constraintlayout.widget.Barrier
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/barrier"
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="button7,button6"/>
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
         android:textSize="72sp"
         app:layout_constraintTop_toBottomOf="@+id/barrier"
         app:layout_constraintLeft_toLeftOf="parent"/>
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/middle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
         android:textSize="36sp"
         app:layout_constraintBaseline_toBaselineOf="@id/large"
         app:layout_constraintLeft_toRightOf="@id/large" />
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,4 +87,4 @@
         app:layout_constraintBaseline_toBaselineOf="@id/large"
         app:layout_constraintLeft_toRightOf="@id/middle" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

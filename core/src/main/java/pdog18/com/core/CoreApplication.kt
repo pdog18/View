@@ -2,15 +2,11 @@ package pdog18.com.core
 
 import android.app.Application
 import com.alibaba.android.arouter.launcher.ARouter
-import pdog18.com.core.ext.Ext
-import pdog18.com.core.tool.ToastHelper
 
 class CoreApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         debugInstall(this)
-        ToastHelper.init(this)
-        Ext.with(this)
 
         if (BuildConfig.DEBUG) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
             ARouter.openLog()     // 打印日志

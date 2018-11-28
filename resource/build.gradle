@@ -1,14 +1,19 @@
 apply from: config
+apply plugin: 'kotlin-android'
 dependencies {
     api([
         // Support series
-        "com.android.support:appcompat-v7:$support_library_version",
-        "com.android.support:design:$support_library_version",
-        "com.android.support:preference-v14:$support_library_version",
-        "com.android.support:palette-v7:$support_library_version",
-        "com.android.support:recyclerview-v7:$support_library_version",
-        "com.android.support:cardview-v7:$support_library_version",
-        "com.android.support:support-annotations:$support_library_version",
-        "com.android.support.constraint:constraint-layout:$constraint_layout_version"
+        'androidx.appcompat:appcompat:1.0.2',
+        'com.google.android.material:material:1.1.0-alpha01',
+        'androidx.legacy:legacy-preference-v14:1.0.0',
+        'androidx.palette:palette:1.0.0',
+        'androidx.recyclerview:recyclerview:1.0.0',
+        'androidx.cardview:cardview:1.0.0',
+        'androidx.annotation:annotation:1.0.0',
+        'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
     ])
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

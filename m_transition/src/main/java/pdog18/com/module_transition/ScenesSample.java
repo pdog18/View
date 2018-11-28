@@ -17,12 +17,12 @@ package pdog18.com.module_transition;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.transition.ChangeBounds;
-import android.support.transition.Scene;
-import android.support.transition.Slide;
-import android.support.transition.TransitionManager;
-import android.support.transition.TransitionSet;
+import androidx.annotation.Nullable;
+import androidx.transition.ChangeBounds;
+import androidx.transition.Scene;
+import androidx.transition.Slide;
+import androidx.transition.TransitionManager;
+import androidx.transition.TransitionSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;

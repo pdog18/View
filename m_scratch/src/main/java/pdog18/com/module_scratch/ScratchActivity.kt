@@ -1,7 +1,7 @@
 package pdog18.com.module_scratch
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 class ScratchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

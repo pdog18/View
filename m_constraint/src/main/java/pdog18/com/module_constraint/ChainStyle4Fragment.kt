@@ -3,7 +3,7 @@ package pdog18.com.module_constraint
 
 import android.animation.ValueAnimator
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import android.view.View
 import androidx.core.animation.doOnEnd
 import kotlinx.android.synthetic.main.fragment_match_constraint4.*

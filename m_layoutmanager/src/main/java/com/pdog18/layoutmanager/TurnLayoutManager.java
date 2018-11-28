@@ -2,10 +2,10 @@ package com.pdog18.layoutmanager;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.support.annotation.Dimension;
-import android.support.annotation.IntDef;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Dimension;
+import androidx.annotation.IntDef;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
