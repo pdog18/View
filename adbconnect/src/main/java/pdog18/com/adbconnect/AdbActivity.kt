@@ -1,4 +1,4 @@
-package pdog18.com.module_adbconnect
+package pdog18.com.adbconnect
 
 import android.annotation.SuppressLint
 import android.content.Context

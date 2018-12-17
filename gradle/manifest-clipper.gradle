@@ -1,8 +1,5 @@
 import groovy.xml.QName
 
-
-
-
 def android = this.project.extensions.android
 android.applicationVariants.all { variant ->
     variant.outputs.all { output ->

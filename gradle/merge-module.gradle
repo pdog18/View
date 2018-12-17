@@ -20,16 +20,15 @@ def mergeLibrary() {
                 skipMap << project
             }
         } catch (ignored) {
-            if (project.name == "buildSrc") {
-                println( "== buildSrc")
-                skipMap << project
-                return
-            }
-
-            if (project.property("buildSrc").toBoolean()) {
-                skipMap << project
-                return
-            }
+//            if (project.name == "buildSrc") {
+//                skipMap << project
+//                return
+//            }
+//
+//            if (project.property("buildSrc").toBoolean()) {
+//                skipMap << project
+//                return
+//            }
             missMap << project
         }
     }
