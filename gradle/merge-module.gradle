@@ -1,0 +1,44 @@
+// 这里的 this 就是 [:app]
+this.afterEvaluate {
+    mergeLibrary()
+}
+
+/**
+ * subProject 中的 [gradle.properties] 中声明了 {application=true}, 那么该project 不会被依赖进项目(:app)中
+ * 如果rootProject 下的其他目录没有被手动依赖也没有声明{application=false}的，都不会被依赖进项目
+ */
+def mergeLibrary() {
+    def mergeMap = []
+    def skipMap = []
+    def missMap = []
+
+    this.rootProject.subprojects.each { project ->
+        try {
+            if (!project.property('application').toBoolean()) {
+                mergeMap << project
+            } else {
+                skipMap << project
+            }
+        } catch (ignored) {
+            if (project.name == "buildSrc") {
+                println( "== buildSrc")
+                skipMap << project
+                return
+            }
+
+            if (project.property("buildSrc").toBoolean()) {
+                skipMap << project
+                return
+            }
+            missMap << project
+        }
+    }
+
+    println("mergeMap ->  ${mergeMap}")
+    println("skipMap -> ${skipMap}")
+    println("missMap -> ${missMap}")
+
+    mergeMap.each { project ->
+        this.dependencies.implementation project.project
+    }
+}

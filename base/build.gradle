@@ -1,4 +1,4 @@
-apply from: config
+apply from: rootProject.file("gradle/module-config.gradle")
 
 dependencies {
     api project(":core")

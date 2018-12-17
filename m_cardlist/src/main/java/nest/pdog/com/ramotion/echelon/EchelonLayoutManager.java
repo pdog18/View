@@ -13,7 +13,7 @@ public class EchelonLayoutManager extends RecyclerView.LayoutManager {
     private int mItemViewHeight;
     private int mScrollOffset;
 
-    public EchelonLayoutManager(Context _) {
+    public EchelonLayoutManager(Context context) {
     }
 
     @Override

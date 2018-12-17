@@ -1,23 +1,23 @@
-apply from: config
+apply from: rootProject.file("gradle/module-config.gradle")
+
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
 
     // ReactiveX series
-    api "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
-    api "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    api Deps.rx_android
 
     // Retrofit series
-    api "com.squareup.retrofit2:retrofit:$retrofit_version"
-    api "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
-    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    api "com.squareup.retrofit2:converter-scalars:$retrofit_version"
-
-    api "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
+    api([
+            Deps.retrofit,
+            Deps.retrofit_rxjava_adapter,
+            Deps.retrofit_gson_converter,
+            Deps.retrofit_scalars_converter
+    ])
 
     // Support series
     api 'androidx.appcompat:appcompat:1.0.2'
-    api 'com.google.android.material:material:1.1.0-alpha01'
+//    api 'com.google.android.material:material:1.1.0-alpha01'
     api 'androidx.legacy:legacy-preference-v14:1.0.0'
     api 'androidx.palette:palette:1.0.0'
     api 'androidx.recyclerview:recyclerview:1.0.0'
@@ -27,34 +27,32 @@ dependencies {
     api 'com.google.android:flexbox:1.0.0'
 
 
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    api Deps.kotlin
+    api Deps.timber
+    api Deps.gson
 
-    api "com.jakewharton.timber:timber:$timber_version"
-
-    api "com.google.code.gson:gson:$gson_version"
     api "androidx.core:core-ktx:1.0.1"
 
-    api 'com.github.pdog18:dimension-extensions:1.0'
+    api 'com.pdog.util:dimension-extensions:0.9.0'
 
-    api "com.facebook.stetho:stetho:$stetho_version"
-    api "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+    api "com.facebook.stetho:stetho:${Versions.stetho_version}"
+    api "com.facebook.stetho:stetho-okhttp3:${Versions.stetho_version}"
 
-    api "com.github.bumptech.glide:glide:$glide_version"
-    kapt "com.github.bumptech.glide:compiler:$glide_version"
+    api "com.github.bumptech.glide:glide:${Versions.glide_version}"
+    kapt "com.github.bumptech.glide:compiler:${Versions.glide_version}"
 
 
-    api "com.alibaba:arouter-api:$arouter_api_version"
-    api "com.alibaba:arouter-annotation:$arouter_annotation_version"
-    kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
+    api "com.alibaba:arouter-api:${Versions.arouter_api_version}"
+    api "com.alibaba:arouter-annotation:${Versions.arouter_annotation_version}"
+    kapt "com.alibaba:arouter-compiler:${Versions.arouter_compiler_version}"
 
 
     api 'androidx.multidex:multidex:2.0.0'
-    api 'com.github.javaparser:javaparser-core:3.5.5'
+
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     api('com.github.bumptech.glide:recyclerview-integration:4.3.1') {
         transitive = false
     }
-    api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
-    api 'com.sdsmdg.harjot:materialshadows:1.2.5'
+//    api 'com.sdsmdg.harjot:materialshadows:1.2.5'
 }

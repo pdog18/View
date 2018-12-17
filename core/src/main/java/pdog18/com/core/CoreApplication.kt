@@ -1,9 +1,9 @@
 package pdog18.com.core
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.alibaba.android.arouter.launcher.ARouter
 
-class CoreApplication : Application() {
+class CoreApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         debugInstall(this)

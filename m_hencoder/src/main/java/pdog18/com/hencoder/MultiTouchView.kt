@@ -5,7 +5,7 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import pdog18.com.core.ext.dp
+import com.pdog.dimension.dp
 
 class MultiTouchView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     val bitmap = getBitmap(resources, R.mipmap.xx, 260.dp)

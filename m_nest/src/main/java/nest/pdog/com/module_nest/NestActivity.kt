@@ -2,6 +2,7 @@ package nest.pdog.com.module_nest
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_nest.*
 import timber.log.Timber
 
@@ -11,7 +12,7 @@ class NestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nest)
 
-        appbar_layout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+        appbar_layout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             Timber.d("appBarLayout.height = ${appBarLayout.height}")
             Timber.d("verticalOffset = ${verticalOffset}")
 
@@ -20,6 +21,6 @@ class NestActivity : AppCompatActivity() {
             } else {
                 tv_title.text = null
             }
-        }
+        })
     }
 }

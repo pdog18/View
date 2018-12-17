@@ -5,7 +5,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import pdog18.com.core.ext.dp
+import com.pdog.dimension.dp
 import timber.log.Timber
 
 class GameView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {

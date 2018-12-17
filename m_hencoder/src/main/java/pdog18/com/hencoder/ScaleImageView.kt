@@ -14,10 +14,11 @@ import android.widget.OverScroller
 import androidx.core.animation.doOnEnd
 import androidx.core.graphics.withScale
 import androidx.core.graphics.withTranslation
-import pdog18.com.core.ext.dp
+import com.pdog.dimension.dp
 
 
 class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr), Runnable {
+    @SuppressLint("NewApi")
     override fun run() {
         if (!scroller.computeScrollOffset()) {
             return
@@ -85,7 +86,7 @@ class ScaleImageView(context: Context, attr: AttributeSet) : View(context, attr)
             invalidate()
             return false
         }
-
+        @SuppressLint("NewApi")
         override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
             val xLimit = (bitmap.width * largeScale - width) / 2
             val yLimit = (bitmap.height * largeScale - height) / 2

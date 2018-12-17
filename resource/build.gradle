@@ -1,5 +1,5 @@
-apply from: config
-apply plugin: 'kotlin-android'
+apply from: rootProject.file("gradle/module-config.gradle")
+
 dependencies {
     api([
         // Support series
@@ -12,7 +12,6 @@ dependencies {
         'androidx.annotation:annotation:1.0.0',
         'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
     ])
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {
     mavenCentral()

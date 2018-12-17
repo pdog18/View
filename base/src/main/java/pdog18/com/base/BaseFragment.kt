@@ -18,7 +18,7 @@ abstract class BaseFragment : androidx.fragment.app.Fragment() {
 
 
     inline fun <reified T : Annotation> Any.getClassAnnotation(): T {
-        return this::class.java.getAnnotation(T::class.java)
+        return this::class.java.getAnnotation(T::class.java)!!
     }
 
 //

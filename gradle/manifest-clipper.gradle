@@ -1,0 +1,77 @@
+import groovy.xml.QName
+
+
+
+
+def android = this.project.extensions.android
+android.applicationVariants.all { variant ->
+    variant.outputs.all { output ->
+        output.processManifest.doLast {
+
+            println("ManifestClipper <<<<")
+            // Stores the path to the maifest.
+            String manifestPath = "$manifestOutputDirectory/AndroidManifest.xml"
+            // Stores the contents of the manifest.
+            updateManifest(new File(manifestPath))
+        }
+    }
+}
+
+def updateManifest(File androidManifestFile) {
+    def fileReader = new FileReader(androidManifestFile)
+    def androidManifestXmlNode = new XmlParser().parse(fileReader)
+
+    clipper(androidManifestXmlNode)
+
+    // Write the manifest file
+    def pw = new PrintWriter(androidManifestFile)
+    new XmlNodePrinter(pw).print(androidManifestXmlNode)
+}
+
+def clipper(Node androidManifest) {
+    def MAIN_ACTION = "android.intent.action.MAIN"
+    def LAUNCHER_CATEGORY = "android.intent.category.LAUNCHER"
+    def MAIN_ACTIVITY = "com.example.a18.path.MainActivity"
+
+
+    def components = androidManifest[new QName("application")][new QName("activity")]
+    components.findAll { activity ->
+        getNodeAttributeName(activity) != MAIN_ACTIVITY
+    }.each { activity ->
+        def intentFilters = activity[new QName("intent-filter")]
+
+        intentFilters.each { intentFilter ->
+            def actions = intentFilter[new QName("action")]
+            def categories = intentFilter[new QName("category")]
+
+            actions.each { action ->
+                def actionName = getNodeAttributeName(action)
+                if (actionName == MAIN_ACTION) {
+                    intentFilter.remove(action)
+                    println("remove action success  , at ${getNodeAttributeName(activity)}")
+                }
+            }
+
+            categories.each { category ->
+                def categoryName = getNodeAttributeName(category)
+                if (categoryName == LAUNCHER_CATEGORY) {
+                    intentFilter.remove(category)
+                    println("remove category success }, at ${getNodeAttributeName(activity)}")
+                }
+            }
+
+            // empty intent-filter node, we remove itself
+            def childrenSize = intentFilter.children().size()
+            if (childrenSize == 0) {
+                activity.remove(intentFilter)
+            }
+        }
+
+    }
+}
+
+def getNodeAttributeName(Node node) {
+    def NAME_WITH_NAME_SPACE = new QName("http://schemas.android.com/apk/res/android", "name", "android")
+
+    return node.attribute(NAME_WITH_NAME_SPACE)
+}

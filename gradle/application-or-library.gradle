@@ -1,0 +1,24 @@
+this.applyApplicationOrLibrary()
+
+/**
+ * subProject 中的 [gradle.properties] 中声明了 {application=true}, 那么该project 会以 application 形式构建
+ * 如果在rootProject 没有处理，那么没有声明的都会以 library 构建
+ */
+def applyApplicationOrLibrary() {
+    if (isApplication()) {
+        apply plugin: 'com.android.application'
+        println("${this.project} -> application")
+    } else {
+        apply plugin: 'com.android.library'
+        println("${this.project} -> library")
+    }
+}
+
+
+def isApplication() {
+    try {
+        return this.project.property('application').toBoolean()
+    } catch (ignored) {
+        return true
+    }
+}

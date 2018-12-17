@@ -7,7 +7,6 @@ import kotlinx.android.synthetic.main.fragment_auto.*
 import pdog18.com.base.BaseFragment
 import pdog18.com.base.Layout
 
-@Layout(R.layout.fragment_auto)
 class AutoFragment : BaseFragment() {
 
     private var visible: Boolean = false

@@ -5,9 +5,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
-import okhttp3.logging.HttpLoggingInterceptor.Level.NONE
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -17,13 +14,6 @@ import java.util.concurrent.TimeUnit
 private val baseUrl = "http://gank.io/api/"
 
 private val client = OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor().apply {
-            level =
-                    if (BuildConfig.DEBUG)
-                        BODY
-                    else
-                        NONE
-        })
         .addNetworkInterceptor(StethoInterceptor())
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
