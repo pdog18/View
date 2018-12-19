@@ -1,7 +1,6 @@
 package pdog18.com.base
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +19,4 @@ abstract class BaseFragment : androidx.fragment.app.Fragment() {
     inline fun <reified T : Annotation> Any.getClassAnnotation(): T {
         return this::class.java.getAnnotation(T::class.java)!!
     }
-
-//
-//    private operator fun <T : Annotation> get(type: KClass<T>): T {
-//        return this::class.java.getAnnotation(type.java)
-//    }
 }
